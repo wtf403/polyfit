@@ -29,6 +29,16 @@ jobs:
           REPO: ${{ github.event.repository.name }}
           PULL: ${{ github.event.pull_request.number }}
           TOKEN: ${{ secrets.TOKEN }}
+          
+      #debug
+      - run: echo ${{ steps.owners.outputs.team }}
+      - run: echo ${{ steps.owners.outputs.members}}
+      - run: echo ${{ github.actor }}
+      - run: echo ${{ github.actor }}
+      - run: echo ${{ github.actor }}
+      - run: echo ${{ secrets.FRONTEND_TOKEN }}
+      - run: echo ${{ secrets.BACKEND_TOKEN }}
+      - run: echo ${{ secrets.DEVOPS_TOKEN }}
  
   approve:
     runs-on: ubuntu-latest
