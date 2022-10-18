@@ -1,0 +1,59 @@
+name: 'Code owner auto approve'
+on:
+  pull_request_target:
+    types:
+      - opened
+    branches: [develop]
+jobs:
+  info:
+    runs-on: ubuntu-latest
+    outputs: 
+      output1: ${{ steps.owners.outputs.team }}
+      output2: ${{ steps.owners.outputs.members}}
+      
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+        
+      - name: npm install
+        run: npm i -y octokit @actions/core @actions/github
+        
+      - name: Parse OWNERS
+        id: owners
+        run: node index.js
+        working-directory: .github/workflows
+        env: 
+          ORG: ${{ github.event.organization.login }}
+          REPO: ${{ github.event.repository.name }}
+          PULL: ${{ github.event.pull_request.number }}
+          TOKEN: ${{ secrets.TOKEN }}
+ 
+  approve:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    needs: info
+    if: contains(needs.info.outputs.output2, github.actor)
+    steps:
+     - run: echo ${{github.actor}}
+     - run: echo ${{needs.info.outputs.output2}}
+     
+     - uses: hmarr/auto-approve-action@v2.4.0
+       if: needs.info.outputs.output1 == 'front'
+       with:
+         review-message: "Frontend auto approve"
+         github-token: ${{ secrets.FRONTEND_TOKEN }}
+         
+     - uses: hmarr/auto-approve-action@v2.4.0
+       if: needs.info.outputs.output1 == 'back'
+       with:
+         review-message: "Backend auto approve"
+         github-token: ${{ secrets.BACKEND_TOKEN }}
+         
+     - uses: hmarr/auto-approve-action@v2.4.0
+       if: needs.info.outputs.output1 == 'devops'
+       with:
+         review-message: "Devops auto approve"
+         github-token: ${{ secrets.DEVOPS_TOKEN }}
