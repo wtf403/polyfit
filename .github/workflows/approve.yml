@@ -34,11 +34,9 @@ jobs:
       - run: echo ${{ steps.owners.outputs.team }}
       - run: echo ${{ steps.owners.outputs.members}}
       - run: echo ${{ github.actor }}
-      - run: echo ${{ github.actor }}
-      - run: echo ${{ github.actor }}
-      - run: echo ${{ secrets.FRONTEND_TOKEN }}
-      - run: echo ${{ secrets.BACKEND_TOKEN }}
-      - run: echo ${{ secrets.DEVOPS_TOKEN }}
+      - run: echo ${{ secrets.TOKEN_FRONTEND }}
+      - run: echo ${{ secrets.TOKEN_BACKEND }}
+      - run: echo ${{ secrets.TOKEN_DEVOPS }}
  
   approve:
     runs-on: ubuntu-latest
@@ -46,24 +44,21 @@ jobs:
       pull-requests: write
     needs: info
     if: contains(needs.info.outputs.output2, github.actor)
-    steps:
-     - run: echo ${{github.actor}}
-     - run: echo ${{needs.info.outputs.output2}}
-     
-     - uses: hmarr/auto-approve-action@v2.4.0
-       if: needs.info.outputs.output1 == 'front'
-       with:
-         review-message: "Frontend auto approve"
-         github-token: ${{ secrets.FRONTEND_TOKEN }}
+    steps:     
+      - uses: hmarr/auto-approve-action@v2.4.0
+        if: needs.info.outputs.output1 == 'front'
+        with:
+          github-token: ${{ secrets.TOKEN_FRONTEND }}
+          review-message: "Frontend auto approve"
          
-     - uses: hmarr/auto-approve-action@v2.4.0
-       if: needs.info.outputs.output1 == 'back'
-       with:
-         review-message: "Backend auto approve"
-         github-token: ${{ secrets.BACKEND_TOKEN }}
+      - uses: hmarr/auto-approve-action@v2.4.0
+        if: needs.info.outputs.output1 == 'back'
+        with:
+          github-token: ${{ secrets.TOKEN_BACKEND }}
+          review-message: "Backend auto approve"
          
-     - uses: hmarr/auto-approve-action@v2.4.0
-       if: needs.info.outputs.output1 == 'devops'
-       with:
-         review-message: "Devops auto approve"
-         github-token: ${{ secrets.DEVOPS_TOKEN }}
+      - uses: hmarr/auto-approve-action@v2.4.0
+        if: needs.info.outputs.output1 == 'devops'
+        with:
+          github-token: ${{ secrets.TOKEN_DEVOPS }}
+          review-message: "Devops auto approve"
