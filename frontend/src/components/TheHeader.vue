@@ -5,18 +5,19 @@
             <nav class="header__nav nav">
                 <ul class="nav__list">
                     <li class="nav__item">
-                        <button class="nav__link">ГЛАВНАЯ</button>
+                        <router-link class="nav__link" to="/">ГЛАВНАЯ </router-link>
                     </li>
                     <li class="nav__item">
-                        <button class="nav__link">ТРЕНИРОВКИ</button>
+                        <router-link class="nav__link" to="/workout">ТРЕНИРОВКИ</router-link>
                     </li>
                     <li class="nav__item">
-                        <button class="nav__link">КАЛЕНДАРЬ</button>
+                        <router-link class="nav__link" to="/calendar">КАЛЕНДАРЬ </router-link>
                     </li>
                 </ul>
             </nav>
             <div class="header__auth auth">
                 <router-link class="auth__reg" to="/reg">РЕГИСТРАЦИЯ</router-link>
+                <span>|</span>
                 <router-link class="auth__login" to="/log">ВОЙТИ</router-link>
             </div>
         </div>
@@ -31,6 +32,14 @@
 </script>
 
 <style scoped>
+
+    .header__wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 40px;
+    }
     .nav__list {
         display: flex;
         flex-direction: row;
@@ -52,8 +61,6 @@
     .auth__reg {
         color: #000;
         font-size: 14px;
-        border-right: 1px solid #000;
-        padding-right: 14px;
     }
 
     .auth__login {
