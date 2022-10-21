@@ -35,6 +35,8 @@
           "stylelint.validate": ["css", "less", "postcss", "vue"], // Add vue files
           "vetur.validation.style": false, // Disable vetur style validation
           "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": true
+            "source.fixAll.ediroconfig": true
             "source.fixAll.stylelint": true
           },
         }
