@@ -13,17 +13,40 @@
 - Фронты и бэки синхранизируются в ветке develop мёржами из фича веток, напрямую в development коммитить запрещено
 - Власть админа (@tifylop) безгранична. Админ трогает репу только в черезвычайных случаях. Логин и пароль лежат в дискуссиях тимы @admin
 
-### Про CI/CD:
-- При мёрже в delelop
-    - [ ] Auto approve, если codeowner правит свои файлы
-    - [ ] Добовляет тег с именем фичи
-- При мёрже в release
-    - [ ] eslint
-    - [ ] editorconfig
-    - [ ] prettier
-- При мёрже в master
-    - [ ] Деплой на сервак
-    - [ ] Удаление фича веток
+### Get Started:
 
+1. **Настроить Редактор**
 
-![force push](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/b2be0d21-0718-4dc1-a555-9fba679696dc/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221018%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221018T165431Z&X-Amz-Expires=86400&X-Amz-Signature=032b602540082ea8789f43d91c2f296c452e42f214e37b95aca6753919a89214&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject)
+   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
+   - [StyleLint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+
+   - [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+
+   - [EditorConfig](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+
+   - В настройки добавить
+   ```
+   "[vue]": {
+    "editor.defaultFormatter": null
+    },
+    ```
+
+    В Intellij Idea по идее всё, кроме ESLint плагина должно работать из коробки
+
+2. **Настроить ssh в github**
+
+3. **Скопировать репу по ssh**
+   `git clone git@github.com:polyfit-live/polyfit.git`
+4. **Создать и переключиться в фича ветку**
+   `git checkout -b feat/front/create-yet-another-feature`
+5. **Cделать побольше коммитов**
+   `git add . `
+   `git commit -m 'create header navigation'`
+
+6. **Запушить изменения на remote**
+   ` git push --set-upstream origin feat/front/create-yet-another-component`
+
+7. **Зайти на гитхаб, создать пулл реквест, проверить тесты**
+
+8. **Если тесты не прошли выяснить в чём дело, закоммитить правки (новый PR создавать не нужно), обратиться за помощью**
