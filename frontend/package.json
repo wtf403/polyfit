@@ -39,26 +39,16 @@
     "stylelint-order": "^5.0.0",
     "vue-template-compiler": "^2.6.14"
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "@babel/eslint-parser"
-    },
-    "rules": {}
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not dead"
   ],
   "lint-staged": {
-    "*.{vue|js|scss|css|html}": "npm run lint"
+    "*.vue": [
+      "npm run lint:stylelint",
+      "npm run lint:eslint",
+      "git add"
+    ]
   }
 }
