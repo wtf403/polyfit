@@ -47,8 +47,7 @@
   "lint-staged": {
     "*.vue": [
       "npm run lint:stylelint",
-      "npm run lint:eslint",
-      "git add"
+      "npm run lint:eslint"
     ]
   }
 }

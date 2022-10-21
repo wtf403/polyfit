@@ -27,9 +27,17 @@
 
    - В настройки добавить
    ```
-   "[vue]": {
-    "editor.defaultFormatter": null
-    },
+        {
+          "css.validate": false, // Disable built-in lint
+          "less.validate": false, // Disable built-in lint
+          "scss.validate": false, // Disable built-in lint
+          "stylelint.enable": true, // Enable stylelint
+          "stylelint.validate": ["css", "less", "postcss", "vue"], // Add vue files
+          "vetur.validation.style": false, // Disable vetur style validation
+          "editor.codeActionsOnSave": {
+            "source.fixAll.stylelint": true
+          },
+        }
     ```
 
     В Intellij Idea по идее всё, кроме ESLint плагина должно работать из коробки
