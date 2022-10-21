@@ -10,7 +10,7 @@
     "lint:eslint": "eslint --ext .vue src/",
     "fix": "npm-run-all --parallel -c fix:*",
     "fix:stylelint": "stylelint --fix **/*.vue",
-    "fit:eslint": "eslint --fix --ext .vue src",
+    "fix:eslint": "eslint --fix --ext .vue src",
     "prepare": "cd .. && husky install"
   },
   "dependencies": {
