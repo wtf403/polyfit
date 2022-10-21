@@ -20,6 +20,16 @@
                 <TypesCard></TypesCard>
             </div>
         </section>
+
+        <section class="functions">
+            <div class="functions__wrapper wrapper">
+                <img :src="require(`@/assets/functions image.png`)" alt="#" class="functions__image">
+                <div class="functions__content">
+                    <h1 class="functions__heading advantages__heading">Достоинства PolyFit</h1>
+                    <FunctionsList></FunctionsList>
+                </div>
+            </div>
+        </section>
     </div>
     
     
@@ -28,10 +38,13 @@
 <script>
     import AdvantagesCard from '@/components/AdvantagesCard'
     import TypesCard from '@/components/TypesCard'
+    import FunctionsList from '@/components/FunctionsList'
+
     export default {
         components: {
             AdvantagesCard,
             TypesCard,
+            FunctionsList,
         }
     }
 </script>
@@ -64,6 +77,33 @@
         text-align: center;
         margin-top: 100px;
         margin-bottom: 70px;
+    }
+
+    .functions__wrapper {
+        margin-top: 120px;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .functions__heading {
+        margin: 0;
+        margin-bottom: 50px;
+        width: 100%;
+        padding-left: 80px;
+        text-align: left;
+    }
+
+    .functions__image {
+        max-width: 50%;
+    }
+
+    @media (max-width: 1000px) {
+        .functions__wrapper {
+        margin-top: 120px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     }
     
 </style>

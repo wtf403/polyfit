@@ -31,6 +31,8 @@
         flex-direction: row;
         column-gap: 21px;
         flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 20px;
     }
     .types-card__wrapper {
         background-color: black;
