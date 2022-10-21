@@ -30,6 +30,13 @@
                 </div>
             </div>
         </section>
+
+        <section class="start">
+            <div class="start__wrapper wrapper">
+                <h1 class="start__heading advantages__heading">Начни свою первую тренировку</h1>
+                <button class="start__button">Тренироваться</button>
+            </div>
+        </section>
     </div>
     
     
@@ -105,5 +112,27 @@
         align-items: center;
     }
     }
+
+    .start__wrapper {
+        background-image: url('../assets/start image.png');
+        width:100%;
+        height: 750px;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+    }
     
+    .start__button {
+        color: #F76C1E;
+        border: 2px solid #F76C1E;
+        border-radius: 8px;
+        padding: 14px 16px;
+        background-color: none;
+        font-weight: 500;
+        font-size: 22px;
+    }
+
+    .start__heading {
+        margin-bottom: 15px;
+    }
 </style>
