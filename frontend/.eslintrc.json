@@ -4,7 +4,7 @@
     "node": true,
     "es6": true
   },
-  "extends": ["eslint:recommended", "plugin:vue/essential", "eslint:recommended"],
+  "extends": ["plugin:vue/recommended", "eslint:recommended"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
@@ -27,7 +27,7 @@
     "eqeqeq": "error",
     "eol-last": "error",
     "func-call-spacing": ["error", "never"],
-    "indent": ["error", 4, {
+    "indent": ["error", 2, {
       "SwitchCase": 1,
       "ignoredNodes": ["TemplateLiteral *"]
     }],
@@ -55,6 +55,54 @@
     "space-before-blocks": ["error", "always"],
     "space-in-parens": ["error", "never"],
     "spaced-comment": "error",
-    "template-curly-spacing": ["error", "never"]
+    "template-curly-spacing": ["error", "never"],
+    "vue/component-definition-name-casing": ["error", "PascalCase"],
+    "vue/html-closing-bracket-spacing": ["error", {
+      "startTag": "never",
+      "endTag": "never",
+      "selfClosingTag": "always"
+    }],
+    "vue/html-end-tags": "error",
+    "vue/html-indent": ["error", 2, {
+      "attribute": 1,
+      "baseIndent": 1,
+      "closeBracket": 0,
+      "alignAttributesVertically": true,
+      "ignores": []
+    }],
+    "vue/html-quotes": [ "error", "double", { "avoidEscape": false } ],
+    "vue/html-self-closing": ["error", {
+      "html": {
+        "void": "never",
+        "normal": "always",
+        "component": "always"
+      },
+      "svg": "always",
+      "math": "always"
+    }],
+    "vue/max-attributes-per-line":  ["error", {
+      "singleline": {
+        "max": 8
+      },
+      "multiline": {
+        "max": 1
+      }
+    }],
+    "vue/multiline-html-element-content-newline": ["error", {
+        "ignoreWhenEmpty": true,
+        "allowEmptyLines": false
+    }],
+    "vue/singleline-html-element-content-newline": ["error", {
+    "ignoreWhenNoAttributes": true,
+    "ignoreWhenEmpty": true,
+    "ignores": ["pre", "textarea", "a", "router-link"]
+    }],
+    "vue/mustache-interpolation-spacing": ["error", "never"],
+    "vue/no-template-shadow": "error",
+    "vue/prop-name-casing": ["error", "camelCase"],
+    "vue/component-tags-order": ["error", {
+      "order": [ [ "script", "template" ], "style" ]
+    }],
+    "vue/this-in-template": ["error", "never"]
   }
 }

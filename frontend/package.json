@@ -5,11 +5,18 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "npm-run-all --parallel -c lint:*",
+    "lint:stylelint": "stylelint **/*.vue",
+    "lint:eslint": "eslint --ext .vue src/",
+    "fix": "npm-run-all --parallel -c fix:*",
+    "fix:stylelint": "stylelint --fix **/*.vue",
+    "fit:eslint": "eslint --fix --ext .vue src",
+    "prepare": "cd .. && husky install"
   },
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
+    "npm-run-all": "^4.1.5",
     "vue": "^2.6.14",
     "vue-router": "^3.6.5",
     "vuex": "^3.6.2"
@@ -20,10 +27,15 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
+    "@vue/runtime-dom": "latest",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.7.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "postcss-html": "^1.5.0",
     "stylelint": "^14.14.0",
     "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard": "^29.0.0",
     "stylelint-order": "^5.0.0",
     "vue-template-compiler": "^2.6.14"
   },
@@ -45,5 +57,8 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "lint-staged": {
+    "*.{vue|js|scss|css|html}": "npm run lint"
+  }
 }
