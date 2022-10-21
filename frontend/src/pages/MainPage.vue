@@ -10,9 +10,14 @@
         <section class="advantages">
             <div class="advantages__wrapper wrapper">
                 <h1 class="advantages__heading">Преимущества <br> онлайн тренировок</h1>
-                <div class="advantages__list">
-                    <AdvantagesCard></AdvantagesCard>
-                </div>
+                <AdvantagesCard></AdvantagesCard>
+            </div>
+        </section>
+
+        <section class="types">
+            <div class="types__wrapper wrapper">
+                <h1 class="types__heading advantages__heading">Виды тренировок и упражений</h1>
+                <TypesCard></TypesCard>
             </div>
         </section>
     </div>
@@ -22,9 +27,11 @@
 
 <script>
     import AdvantagesCard from '@/components/AdvantagesCard'
+    import TypesCard from '@/components/TypesCard'
     export default {
         components: {
-            AdvantagesCard
+            AdvantagesCard,
+            TypesCard,
         }
     }
 </script>
