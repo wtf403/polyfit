@@ -33,7 +33,7 @@
 
         <section class="start">
             <div class="start__wrapper wrapper">
-                <h1 class="start__heading advantages__heading">Начни свою первую тренировку</h1>
+                <h1 class="start__heading advantages__heading">Начни свою <br> первую тренировку</h1>
                 <button class="start__button">Тренироваться</button>
             </div>
         </section>
@@ -126,13 +126,15 @@
         color: #F76C1E;
         border: 2px solid #F76C1E;
         border-radius: 8px;
-        padding: 14px 16px;
+        padding: 10px 16px;
         background-color: none;
         font-weight: 500;
         font-size: 22px;
+        background-color: #fafafc;
     }
 
     .start__heading {
         margin-bottom: 15px;
+        margin-top: 50px;
     }
 </style>
