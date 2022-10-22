@@ -94,6 +94,7 @@ export default {
     margin-bottom: 70px;
     font-weight: 500;
     font-size: 56px;
+    line-height: 1.1;
     text-align: center;
   }
 

@@ -2,27 +2,39 @@
   <div class="functions__list">
     <div class="function__item">
       <img :src="require(`@/assets/functions icon.svg`)" alt="#" class="functions__icon">
-      <h3>Бесплатные онлайн тренировки </h3>
+      <h3 class="function__title">
+        Бесплатные онлайн тренировки
+      </h3>
     </div>
     <div class="function__item">
       <img :src="require(`@/assets/functions icon.svg`)" alt="#" class="functions__icon">
-      <h3>Большая коллекция упражнений разных типов на все части тела</h3>
+      <h3 class="function__title">
+        Большая коллекция упражнений разных типов на все части тела
+      </h3>
     </div>
     <div class="function__item">
       <img :src="require(`@/assets/functions icon.svg`)" alt="#" class="functions__icon">
-      <h3>Рекомандации на основе индивидуальных параметрах и личных способностях</h3>
+      <h3 class="function__title">
+        Рекомандации на основе индивидуальных параметрах и личных способностях
+      </h3>
     </div>
     <div class="function__item">
       <img :src="require(`@/assets/functions icon.svg`)" alt="#" class="functions__icon">
-      <h3>Удобный интерфейс и управление</h3>
+      <h3 class="function__title">
+        Удобный интерфейс и управление
+      </h3>
     </div>
     <div class="function__item">
       <img :src="require(`@/assets/functions icon.svg`)" alt="#" class="functions__icon">
-      <h3>Гибкая настройка профиля</h3>
+      <h3 class="function__title">
+        Гибкая настройка профиля
+      </h3>
     </div>
     <div class="function__item">
       <img :src="require(`@/assets/functions icon.svg`)" alt="#" class="functions__icon">
-      <h3>Отслеживание своего прогресса и статистики пройденных занятий</h3>
+      <h3 class="function__title">
+        Отслеживание своего прогресса и статистики пройденных занятий
+      </h3>
     </div>
   </div>
 </template>
@@ -40,6 +52,7 @@ export default {
       flex-wrap: wrap;
       justify-content: center;
       row-gap: 26px;
+      padding-right: 40px;
     }
 
     .function__item {
@@ -47,11 +60,13 @@ export default {
       flex-direction: row;
       align-items: center;
       padding-left: 80px;
-      font-weight: 400;
-      font-size: 18px;
-      line-height: 1.3;
       column-gap: 20px;
     }
 
+    .function__title {
+      font-weight: 400;
+      font-size: 22px;
+      line-height: 1.3;
+    }
 </style>
 
