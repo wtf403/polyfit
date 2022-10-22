@@ -48,12 +48,14 @@ export default {
   }
 
   .types-card__wrapper {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 450px;
     height: 450px;
     background-color: black;
+    border-radius: 8px;
   }
 
   .types-card__title {
@@ -77,5 +79,11 @@ export default {
 
   .types-card__wrapper--bg-orange {
     background-color: #ec882c;
+  }
+
+  .types-card__img {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
   }
 </style>

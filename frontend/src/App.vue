@@ -26,11 +26,12 @@ export default {
     margin: 0;
     padding: 0;
     font-weight: 400;
-    font-size: 16px, sans-serif;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
   }
 
   .wrapper {
-    max-width: 1400px;
+    max-width: 1440px;
     margin: 0 auto;
   }
 

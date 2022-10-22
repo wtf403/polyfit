@@ -39,7 +39,7 @@ export default {
       flex-direction: column;
       flex-wrap: wrap;
       justify-content: center;
-      row-gap: 40px;
+      row-gap: 26px;
     }
 
     .function__item {
@@ -47,9 +47,11 @@ export default {
       flex-direction: row;
       align-items: center;
       padding-left: 80px;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.3;
       column-gap: 20px;
     }
-
 
 </style>
 
