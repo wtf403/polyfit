@@ -1,7 +1,7 @@
 <template>
   <div class="adv-card">
     <div class="adv-card__wrapper">
-      jj<img :src="require(`@/assets/plan.svg`)" alt="#" class="adv-card__img">
+      <img :src="require(`@/assets/plan.svg`)" alt="#" class="adv-card__img">
       <h3 class="adv-card__title">
         Планируйте
       </h3>
@@ -24,7 +24,7 @@
         Контролируйте
       </h3>
       <p class="adv-card__description">
-        Следите за своим физическим состоянием самостоятельно
+        Следите за&nbsp;своим физическим состоянием самостоятельно
       </p>
     </div>
     <div class="adv-card__wrapper">
@@ -42,7 +42,7 @@
         Здоровая пища
       </h3>
       <p class="adv-card__description">
-        Питайтесь здоровой и полезной едой согласно рекомандациям
+        Питайтесь здоровой и&nbsp;полезной едой согласно рекомандациям
       </p>
     </div>
     <div class="adv-card__wrapper">
@@ -51,7 +51,7 @@
         Отдыхайте
       </h3>
       <p class="adv-card__description">
-        Между занятиями важно помнить о сне и отдыхе
+        Между занятиями важно помнить о&nbsp;сне и&nbsp;отдыхе
       </p>
     </div>
     <div class="adv-card__wrapper">
@@ -60,7 +60,7 @@
         Бегайте
       </h3>
       <p class="adv-card__description">
-        Не забывайте бегать на улице,в зале или на беговой дорожке
+        Не забывайте бегать на улице, в зале или на беговой дорожке
       </p>
     </div>
   </div>
@@ -78,6 +78,7 @@ export default {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
+      align-items: center;
       row-gap: 80px;
       max-width: 1400px;
       column-gap: 80px;

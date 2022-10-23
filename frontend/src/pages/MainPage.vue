@@ -46,9 +46,7 @@
         <h1 class="start__heading advantages__heading">
           Начни свою <br> первую тренировку
         </h1>
-        <button class="start__button">
-          Тренироваться
-        </button>
+        <router-link class="start__button" to="/workout">Тренировки</router-link>
       </div>
     </section>
   </div>
@@ -73,6 +71,7 @@ export default {
     height: 750px;
     padding-left: 40px;
     background-image: url('../assets/hero cover.png');
+    background-position: center;
   }
 
   .hero__heading {
@@ -95,6 +94,7 @@ export default {
     margin-bottom: 70px;
     font-weight: 500;
     font-size: 56px;
+    line-height: 1.1;
     text-align: center;
   }
 
@@ -132,17 +132,23 @@ export default {
     width: 100%;
     height: 750px;
     background-image: url('../assets/start image.png');
+    background-position: bottom;
+    background-size: cover;
   }
 
   .start__button {
-    padding: 10px 16px;
-    color: #f76c1e;
+    padding: 13px 16px 11px;
+    color: white;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 14px;
+    line-height: 1.1;
+    text-transform: uppercase;
+    background: #f76c1e;
     background-color: none;
-    background-color: #fafafc;
-    border: 2px solid #f76c1e;
-    border-radius: 8px;
+    border: none;
+    border-radius: 14px;
+    border-radius: 10px;
+    cursor: pointer;
   }
 
   .start__heading {
