@@ -1,15 +1,6 @@
 <template>
   <div>
-    <h1>
-      vdfbvzdfb
-    </h1>
-    <h1>
-      vdfbvzdfb
-    </h1>
-    <h1>
-      vdfbvzdfb
-    </h1>
-    <div class="hero">
+    <section class="hero">
       <div class="hero__wrapper wrapper">
         <h1 class="hero__heading">
           Занимайся <br> планированием
@@ -18,38 +9,113 @@
           Создай расписание занятий и под строй <br> под свой распорядок дня.
         </p>
       </div>
-    </div>
+    </section>
+
+    <section class="calendar-list">
+      <div class="wrapper">
+        <div class="calendar-list__head">
+          <h3 class="calendar-list__heading">
+            Выбери свою тренировку!
+          </h3>
+          <p class="calendar-list__month">
+            Ноябрь
+          </p>
+        </div>
+        <ul class="day-week__list">
+          <li class="day-week__item">
+            пондельник
+          </li>
+          <li class="day-week__item">
+            вторник
+          </li>
+          <li class="day-week__item">
+            среда
+          </li>
+          <li class="day-week__item">
+            четверг
+          </li>
+          <li class="day-week__item">
+            пятница
+          </li>
+          <li class="day-week__item">
+            суббота
+          </li>
+          <li class="day-week__item">
+            воскресенье
+          </li>
+        </ul>
+      </div>
+
+      <!-- <div class="calendar__wrapper">
+        <ul v-for="day in days" :key="day.id" class="calendar__list">
+          <li class="calendar__item">
+            <p class="calendar__day">
+              {{day.number}}
+            </p>
+            <ul v-for="workout in workouts" :key="workout.id" class="workout__list">
+              <li class="workout__item">
+                <WorkoutCard />
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div> -->
+    </section>
   </div>
 </template>
 
 <script>
 export default {
-
 };
 </script>
 
 <style  scoped>
-  .hero__wrapper {
-    height: 750px;
-    padding-left: 40px;
-    background-image: url('../assets/hero cover (1).png');
-    background-position: center;
-  }
 
-  .hero__heading {
-    padding-top: 458px;
-    padding-left: 40px;
-    font-weight: 700;
-    font-size: 64px;
-    line-height: 1.1;
-  }
+.hero {
+  padding-top: 65px;
+}
 
-  .hero__description {
-    margin-top: 20px;
-    padding-left: 40px;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 1.3;
-  }
+.hero__wrapper {
+  height: 750px;
+  padding-left: 40px;
+  background-image: url('../assets/hero cover (1).png');
+  background-position: center;
+}
+
+.hero__heading {
+  padding-top: 458px;
+  padding-left: 40px;
+  font-weight: 700;
+  font-size: 64px;
+  line-height: 1.1;
+}
+
+.hero__description {
+  margin-top: 20px;
+  padding-left: 40px;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.calendar-list__head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.calendar-list__heading, .calendar-list__month {
+  font-size: 36px;
+}
+
+.day-week__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 35px;
+  padding: 0 60px;
+}
+
 
 </style>
