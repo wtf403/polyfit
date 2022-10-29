@@ -23,7 +23,7 @@
         </div>
         <ul class="day-week__list">
           <li class="day-week__item">
-            пондельник
+            понедельник
           </li>
           <li class="day-week__item">
             вторник
@@ -46,26 +46,48 @@
         </ul>
       </div>
 
-      <!-- <div class="calendar__wrapper">
-        <ul v-for="day in days" :key="day.id" class="calendar__list">
-          <li class="calendar__item">
+      <div class="calendar__wrapper">
+        <ul class="calendar__list">
+          <li v-for="(day, index) in days" :key="index" class="calendar__item">
             <p class="calendar__day">
               {{day.number}}
             </p>
-            <ul v-for="workout in workouts" :key="workout.id" class="workout__list">
-              <li class="workout__item">
-                <WorkoutCard />
+            <ul class="calendar__workouts workouts">
+              <li v-for="(workout, i) in day.workout" :key="i" class="workouts__item">
+                {{workout}}
               </li>
             </ul>
           </li>
         </ul>
-      </div> -->
+      </div>
     </section>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      days: [],
+    };
+  },
+
+  mounted() {
+    this.fetchDays();
+  },
+
+  methods: {
+    async fetchDays() {
+      try {
+        const response = await fetch('https://my-json-server.typicode.com/KreshX/fakeApi/db');
+        const daysResponse = await response.json();
+        this.days = JSON.parse(JSON.stringify(daysResponse)).days;
+      } catch (e) {
+        alert('Ошибка');
+      }
+    },
+  },
+
 };
 </script>
 
@@ -119,3 +141,5 @@ export default {
 
 
 </style>
+
+
