@@ -1,5 +1,6 @@
 <template>
   <div>
+    <MyDialog :show="dialogVisible" @hideDialog="hideDialog" />
     <section class="hero">
       <div class="hero__wrapper wrapper">
         <h1 class="hero__heading">
@@ -65,7 +66,7 @@
               <p class="calendar__day">
                 {{day.number}}
               </p>
-              <button class="calender__button">
+              <button class="calender__button" @click="showDialog">
                 +
               </button>
             </div>
@@ -83,13 +84,16 @@
 
 <script>
 import WorkoutCard from '@/components/WorkoutCard';
+import MyDialog from '@/components/MyDialog';
 export default {
   components: {
     WorkoutCard,
+    MyDialog,
   },
   data() {
     return {
       days: [],
+      dialogVisible: false,
     };
   },
 
@@ -106,6 +110,17 @@ export default {
       } catch (e) {
         alert('Ошибка');
       }
+    },
+
+    showDialog() {
+      console.log(1);
+      this.dialogVisible = true;
+      console.log(this.dialogVisible);
+    },
+
+    hideDialog() {
+      this.dialogVisible = false;
+      console.log(this.dialogVisible);
     },
   },
 
