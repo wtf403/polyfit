@@ -17,9 +17,21 @@
           <h3 class="calendar-list__heading">
             Выбери свою тренировку!
           </h3>
-          <p class="calendar-list__month">
-            Ноябрь
-          </p>
+          <div class="calendar-list__choose-month">
+            <button class="calendar-list__button">
+              <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.85706 0.856934L1.52372 6.19027L6.85706 11.5236" stroke="#F76C1E" stroke-width="1.4" stroke-linecap="round" />
+              </svg>
+            </button>
+            <p class="calendar-list__month">
+              Ноябрь
+            </p>
+            <button class="calendar-list__button">
+              <svg width="8" height="13" viewBox="0 0 8 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.14294 0.856934L6.47628 6.19027L1.14294 11.5236" stroke="#F76C1E" stroke-width="1.4" stroke-linecap="round" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -133,6 +145,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 20px;
   padding: 0 40px;
 }
 
@@ -196,6 +209,21 @@ export default {
   padding: 0 6px;
   font-weight: 700;
   font-size: 32px;
+}
+
+.calendar-list__button {
+  height: 25px;
+  padding: 0 9px;
+  background: rgba(246, 108, 30, 0.2);
+  border: none;
+  border-radius: 50%;
+}
+
+.calendar-list__choose-month {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 10px;
 }
 
 </style>
