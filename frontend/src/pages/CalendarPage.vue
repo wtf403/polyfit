@@ -21,6 +21,9 @@
             Ноябрь
           </p>
         </div>
+      </div>
+
+      <div class="calendar__wrapper">
         <ul class="day-week__list">
           <li class="day-week__item">
             понедельник
@@ -44,17 +47,19 @@
             воскресенье
           </li>
         </ul>
-      </div>
-
-      <div class="calendar__wrapper">
         <ul class="calendar__list">
           <li v-for="(day, index) in days" :key="index" class="calendar__item">
-            <p class="calendar__day">
-              {{day.number}}
-            </p>
+            <div class="calendar__add">
+              <p class="calendar__day">
+                {{day.number}}
+              </p>
+              <button class="calender__button">
+                +
+              </button>
+            </div>
             <ul class="calendar__workouts workouts">
               <li v-for="(workout, i) in day.workout" :key="i" class="workouts__item">
-                {{workout}}
+                <WorkoutCard :workout="workout" />
               </li>
             </ul>
           </li>
@@ -65,7 +70,11 @@
 </template>
 
 <script>
+import WorkoutCard from '@/components/WorkoutCard';
 export default {
+  components: {
+    WorkoutCard,
+  },
   data() {
     return {
       days: [],
@@ -135,10 +144,59 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  min-width: 1440px;
+  max-width: 1440px;
+  margin: 0 auto;
   margin-top: 35px;
-  padding: 0 60px;
+  padding: 0 40px;
 }
 
+.day-week__item {
+  width: 194px;
+  text-align: center;
+}
+
+.calendar__add {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  margin-bottom: 10px;
+  padding: 0 10px;
+  padding-top: 13px;
+}
+
+.calender__button {
+  width: 40px;
+  height: 40px;
+  color: #f76c1e;
+  font-weight: 700;
+  background: #ffffff;
+  border: 1px solid #f76c1e;
+  border-radius: 8px;
+}
+
+.calendar__list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  min-width: 1440px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.calendar__item {
+  width: 194px;
+  height: 194px;
+  border: 1px solid #d5d5d5;
+}
+
+.calendar__day {
+  padding: 0 6px;
+  font-weight: 700;
+  font-size: 32px;
+}
 
 </style>
 
