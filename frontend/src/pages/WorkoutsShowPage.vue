@@ -76,6 +76,26 @@
         </div>
       </div>
     </section>
+    <section class="exercises">
+      <div class="exercises__wrapper">
+        <h3 class="exercises__title">
+          Перечень упражнений
+        </h3>
+        <ul class="exercises__list">
+          <li v-for="(exercise, index) in workout.exercises" :key="index" class="exercises__item">
+            <img :src="exercise.exerciseImage" alt="Image for exercise" class="exercises__image">
+            <div class="exercises__info">
+              <h4 class="exercises__name">
+                {{exercise.exerciseName}}
+              </h4>
+              <p class="exercises__count">
+                {{exercise.exerciseCount}}
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -88,7 +108,7 @@ export default {
   data() {
     return {
       workout: {
-        image: 'https://img.freepik.com/free-photo/athletic-shirtless-young-male-fitness-model-holds-dumbbell-with-light-isolated-dark-background_613910-22.jpg?w=1480&t=st=1667063079~exp=1667063679~hmac=ebd522c91dd0ecb771513586dd6b2de158418ab6a15222e07dca384bc5cbcf90',
+        image: 'https://images.unsplash.com/photo-1581009137042-c552e485697a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
         name: 'Тренируем нашу выносливость',
         type: 'Силовая',
         cal: 140,
@@ -99,18 +119,73 @@ export default {
         exercises: [
           {
             exerciseName: 'Подъем на носки',
-            exerciseImage: '',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/001.webp',
             exerciseCount: '16 повторений',
           },
           {
-            exerciseName: 'Подъем на носки',
-            exerciseImage: '',
+            exerciseName: 'Приседания',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/002.webp',
+            exerciseCount: '20 повторений',
+          },
+          {
+            exerciseName: 'Пружинка в приседе нонстоп',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/004x002.webp',
             exerciseCount: '16 повторений',
           },
           {
-            exerciseName: 'Подъем на носки',
-            exerciseImage: '',
+            exerciseName: 'Высокая планка',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/150.webp',
             exerciseCount: '16 повторений',
+          },
+          {
+            exerciseName: 'Колени в пол в планке на локтях',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/157.webp',
+            exerciseCount: '12 повторений',
+          },
+          {
+            exerciseName: 'Руки-локти в планке',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/158.webp',
+            exerciseCount: '12 повторений',
+          },
+          {
+            exerciseName: 'Жим от плеч двумя руками',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/196.webp',
+            exerciseCount: '16 повторений',
+          },
+          {
+            exerciseName: 'Пружинка в гиперэкстензии',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/226x225.webp',
+            exerciseCount: '16 повторений',
+          },
+          {
+            exerciseName: 'Разведение гантелей лежа на 2 счета',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/250.webp',
+            exerciseCount: '12 повторений',
+          },
+          {
+            exerciseName: 'Жим узкий- французский поочередно на 2 счета',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/262.webp',
+            exerciseCount: '12 повторений',
+          },
+          {
+            exerciseName: 'Опускание согнутых ног по одной',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/276.webp',
+            exerciseCount: '18 повторений',
+          },
+          {
+            exerciseName: 'Пружинка скручивания руки за головой',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/278x277.webp',
+            exerciseCount: '16 повторений',
+          },
+          {
+            exerciseName: 'Ситапы',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/285.webp',
+            exerciseCount: '20 повторений',
+          },
+          {
+            exerciseName: 'Крисс-кросс сидя колено-локоть',
+            exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/292.webp',
+            exerciseCount: '24 повторений',
           },
         ],
       },
@@ -129,10 +204,28 @@ export default {
 }
 
 .workout__cover{
+  width: 100%;
   max-width: 664px;
   height: auto;
+  max-height: 640px;
   border-radius: 16px;
   object-fit: cover;
+}
+
+@media screen and (max-width: 1080px) {
+  .workout__cover{
+    max-width: 464px;
+  }
+}
+
+@media screen and (max-width: 848px) {
+  .workout__wrapper {
+    flex-direction: column;
+  }
+
+  .workout__cover{
+    max-width: 100%;
+  }
 }
 
 .workout__info {
@@ -170,7 +263,7 @@ export default {
 }
 
 .workout__start {
-  padding: 13px 16px 14px;
+  padding: 16px 16px 14px;
   color: white;
   font-weight: 500;
   font-size: 18px;
@@ -189,7 +282,7 @@ export default {
 }
 
 .workout__add-calendar {
-  padding: 13px 16px 14px;
+  padding: 16px 16px 14px;
   color: #f66c1e;
   font-weight: 500;
   font-size: 18px;
@@ -246,5 +339,71 @@ export default {
   font-variant: small-caps;
   line-height: 1;
   text-transform: lowercase;
+}
+
+
+.exercises__wrapper {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.exercises__title {
+  margin: 40px auto;
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.exercises__list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  justify-content: center;
+  row-gap: 20px;
+  column-gap: 10px;
+}
+
+.exercises__item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 332px;
+}
+
+.exercises__image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.exercises__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.exercises__name {
+  display: -webkit-box;
+  max-height: 48px;
+  overflow: hidden;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.exercises__count {
+  padding: 8px 12px;
+  color: #f66c1e;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1;
+  background-color: #f6f6f6;
+  border-radius: 8px;
 }
 </style>
