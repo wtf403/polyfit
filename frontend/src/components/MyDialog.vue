@@ -34,13 +34,13 @@
               <p class="cards__time">
                 22 минуты
               </p>
-              <p>
+              <p class="cards__time">
                 •
               </p>
               <p class="cards__level">
                 средне
               </p>
-              <p>
+              <p class="cards__time">
                 •
               </p>
               <p class="cards__burning">
@@ -142,7 +142,8 @@ export default {
   top: 7px;
   left: 167px;
   padding: 0 5px;
-  border: 2px solid;
+  padding-bottom: 3px;
+  border: 1px solid;
   border-radius: 50%;
 }
 

@@ -2,9 +2,11 @@
   <div class="card__wrapper">
     <img :src="require('@/assets/workout49.png')" alt="workout" class="card__img">
     <div class="card__desc-block">
-      <p class="card__type">
-        {{workout.type}}
-      </p>
+      <div class="card__type-wrap">
+        <p class="card__type">
+          {{workout.type}}
+        </p>
+      </div>
       <p class="card__heading">
         {{workout.title}}
       </p>
@@ -60,4 +62,9 @@ export default {
     color: rgba(0, 0, 0, 0.8);
     font-size: 10px;
   }
+
+  .card__heading {
+    font-size: 14px;
+  }
+
 </style>

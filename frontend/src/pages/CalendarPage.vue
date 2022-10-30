@@ -242,6 +242,7 @@ export default {
   column-gap: 10px;
 }
 
+
 </style>
 
 
