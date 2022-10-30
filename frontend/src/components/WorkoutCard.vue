@@ -13,7 +13,7 @@
           {{workout.time}} минут •
         </p>
         <p class="card__level">
-          {{workout.level}}
+          {{workout.defficulty}}
         </p>
       </div>
     </div>
