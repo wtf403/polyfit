@@ -113,14 +113,11 @@ export default {
     },
 
     showDialog() {
-      console.log(1);
       this.dialogVisible = true;
-      console.log(this.dialogVisible);
     },
 
     hideDialog() {
       this.dialogVisible = false;
-      console.log(this.dialogVisible);
     },
   },
 
