@@ -68,7 +68,8 @@
         </p>
       </div>
       <div class="workout__actions">
-        <a href="#" class="workout__start">Начать тренировку</a>
+        <router-link to="/player" class="workout__start">Начать тренировку</router-link>
+        <!-- <a to="/player" class="workout__start">Начать тренировку</a> -->
         <a href="#" class="workout__add-calendar">Добавить в календарь</a>
       </div>
     </div>

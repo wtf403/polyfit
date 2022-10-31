@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import MainPage from '@/pages/MainPage';
 import CalendarPage from '@/pages/CalendarPage';
 import WorkoutsShowPage from '@/pages/WorkoutsShowPage';
+import WorkoutPlayerPage from '@/pages/WorkoutPlayerPage';
 
 Vue.use(VueRouter);
 
@@ -21,6 +22,11 @@ const routes = [
   {
     path: '/workout',
     component: WorkoutsShowPage,
+  },
+
+  {
+    path: '/player',
+    component: WorkoutPlayerPage,
   },
 ];
 
