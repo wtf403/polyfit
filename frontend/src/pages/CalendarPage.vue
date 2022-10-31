@@ -113,14 +113,11 @@ export default {
     },
 
     showDialog() {
-      console.log(1);
       this.dialogVisible = true;
-      console.log(this.dialogVisible);
     },
 
     hideDialog() {
       this.dialogVisible = false;
-      console.log(this.dialogVisible);
     },
   },
 
@@ -221,9 +218,10 @@ export default {
 }
 
 .calendar__day {
-  padding: 0 6px;
+  width: 50px;
   font-weight: 700;
   font-size: 32px;
+  text-align: center;
 }
 
 .calendar-list__button {
@@ -240,6 +238,7 @@ export default {
   align-items: center;
   column-gap: 10px;
 }
+
 
 </style>
 

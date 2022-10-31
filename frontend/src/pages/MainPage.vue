@@ -16,7 +16,11 @@
         <h1 class="advantages__heading">
           Преимущества <br> онлайн тренировок
         </h1>
-        <AdvantagesCard />
+        <div class="advantages__list">
+          <img :src="require(`@/assets/advantages-man.png`)" alt="advantages-man" class="avantages__img--man">
+          <AdvantagesCard />
+          <img :src="require(`@/assets/advantages-woman.png`)" alt="advantages-woman" class="avantages__img--woman">
+        </div>
       </div>
     </section>
 
@@ -67,92 +71,98 @@ export default {
 </script>
 
 <style  scoped>
-  .hero__wrapper {
-    height: 750px;
-    padding-left: 40px;
-    background-image: url('../assets/hero cover.png');
-    background-position: center;
-  }
 
-  .hero__heading {
-    padding-top: 431px;
-    padding-bottom: 27px;
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 64px;
-  }
+.advantages__list {
+  display: flex;
+  flex-direction: row;
+}
 
-  .hero__description {
-    color: #f6f6f6;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 1.3;
-  }
+.hero__wrapper {
+  height: 750px;
+  padding-left: 40px;
+  background-image: url('../assets/hero cover.png');
+  background-position: center;
+}
 
-  .advantages__heading {
-    margin-top: 100px;
-    margin-bottom: 70px;
-    font-weight: 500;
-    font-size: 56px;
-    line-height: 1.1;
-    text-align: center;
-  }
+.hero__heading {
+  padding-top: 431px;
+  padding-bottom: 27px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 64px;
+}
 
+.hero__description {
+  color: #f6f6f6;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.advantages__heading {
+  margin-top: 100px;
+  margin-bottom: 70px;
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+.functions__wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: 120px;
+}
+
+.functions__heading {
+  width: 100%;
+  margin: 0;
+  margin-bottom: 50px;
+  padding-left: 80px;
+  text-align: left;
+}
+
+.functions__image {
+  max-width: 50%;
+}
+
+@media (max-width: 1000px) {
   .functions__wrapper {
-    display: flex;
-    flex-direction: row;
-    margin-top: 120px;
-  }
-
-  .functions__heading {
-    width: 100%;
-    margin: 0;
-    margin-bottom: 50px;
-    padding-left: 80px;
-    text-align: left;
-  }
-
-  .functions__image {
-    max-width: 50%;
-  }
-
-  @media (max-width: 1000px) {
-    .functions__wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 120px;
-    }
-  }
-
-  .start__wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    height: 750px;
-    background-image: url('../assets/start image.png');
-    background-position: bottom;
-    background-size: cover;
+    margin-top: 120px;
   }
+}
 
-  .start__button {
-    padding: 13px 16px 11px;
-    color: white;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 1.1;
-    text-transform: uppercase;
-    background: #f76c1e;
-    background-color: none;
-    border: none;
-    border-radius: 14px;
-    border-radius: 10px;
-    cursor: pointer;
-  }
+.start__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 750px;
+  background-image: url('../assets/start image.png');
+  background-position: bottom;
+  background-size: cover;
+}
 
-  .start__heading {
-    margin-top: 50px;
-    margin-bottom: 15px;
-  }
+.start__button {
+  padding: 13px 16px 11px;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  background: #f76c1e;
+  background-color: none;
+  border: none;
+  border-radius: 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.start__heading {
+  margin-top: 50px;
+  margin-bottom: 15px;
+}
 </style>
