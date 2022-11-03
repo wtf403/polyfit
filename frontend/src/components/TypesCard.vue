@@ -52,7 +52,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 450px;
+    width: 32%;
     height: 450px;
     background-color: black;
     border-radius: 8px;
@@ -62,12 +62,14 @@ export default {
     margin-bottom: 10px;
     padding-top: 20px;
     color: #ffffff;
+    font-weight: 400;
     font-size: 34px;
     text-align: center;
   }
 
   .types-card__description {
     color: #ffffff;
+    font-weight: 400;
     font-size: 14px;
     line-height: 1.4;
     text-align: center;
@@ -85,5 +87,31 @@ export default {
     position: absolute;
     bottom: 0;
     width: 100%;
+  }
+
+  @media (max-width: 1024px){
+    .types-card__wrapper{
+      height: 400px;
+    }
+  }
+
+  @media (max-width: 600px){
+    .types-card__wrapper{
+      height: 180px;
+      padding-right: 2%;
+      padding-left: 2%;
+    }
+
+    .types-card__title{
+      font-size: 12px;
+    }
+
+    .types-card__description{
+      font-size: 7.2px;
+    }
+
+    .types-card__img{
+      width: 80%;
+    }
   }
 </style>

@@ -3,6 +3,12 @@
     <div class="header__wrapper wrapper">
       <router-link class="header__link-logo" to="/">
         <img :src="require(`@/assets/logo.svg`)" alt="logo" class="header__logo">
+        <img
+          :src="require(`@/assets/logo.svg`)"
+          alt="logo"
+          class="header__logo--mobile"
+          :srcset="require('@/assets/logo.svg') + ' 1.5x'"
+        >
       </router-link>
       <nav class="header__nav nav">
         <ul class="nav__list">
@@ -21,6 +27,7 @@
         <router-link class="auth__reg" to="/reg">Регистрация</router-link>
         <span>|</span>
         <router-link class="auth__login" to="/log">Войти</router-link>
+        <img :src="require('@/assets/account_icon.png')" alt="#" class="auth__account-icon" :srcset="require('@/assets/account_icon.png') + ' 1.2x'">
       </div>
     </div>
   </div>
@@ -43,6 +50,7 @@ export default {
   backdrop-filter: blur(8px);
 }
 
+
 .header__wrapper {
   display: flex;
   flex-direction: row;
@@ -60,7 +68,7 @@ export default {
 .nav__link {
   padding-bottom: 2px;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 84%;
   text-transform: uppercase;
   border: none;
 }
@@ -70,7 +78,11 @@ export default {
 }
 
 .header__link-logo {
-  width: 200px;
+  width: 18%;
+}
+
+.header__logo--mobile{
+  display: none;
 }
 
 .auth {
@@ -98,5 +110,39 @@ export default {
   text-transform: uppercase;
   background-color: #f66c1e;
   border-radius: 8px;
+}
+
+.auth__account-icon{
+  display: none;
+}
+
+@media (max-width: 600px){
+  .header__logo{
+    display: none;
+  }
+
+  .header__logo--mobile{
+    display: block;
+  }
+
+  nav{
+    display: none;
+  }
+
+  .auth__login{
+    display: none;
+  }
+
+  .auth__reg{
+    display: none;
+  }
+
+  .auth > span{
+    display: none;
+  }
+
+  .auth__account-icon{
+    display: block;
+  }
 }
 </style>

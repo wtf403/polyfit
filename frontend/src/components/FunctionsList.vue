@@ -59,7 +59,7 @@ export default {
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding-left: 80px;
+      padding-left: 10%;
       column-gap: 20px;
     }
 
@@ -67,6 +67,12 @@ export default {
       font-weight: 400;
       font-size: 22px;
       line-height: 1.3;
+    }
+
+    @media (max-width: 600px) {
+      .function__title{
+        font-size: 14.6px;
+      }
     }
 </style>
 
