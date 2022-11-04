@@ -17,9 +17,9 @@
           Преимущества <br> онлайн тренировок
         </h1>
         <div class="advantages__list">
-          <img :src="require(`@/assets/advantages-man.png`)" alt="advantages-man" class="avantages__img--man">
+          <img :src="require(`@/assets/advantages-man.png`)" alt="advantages-man" class="advantages__img--man">
           <AdvantagesCard />
-          <img :src="require(`@/assets/advantages-woman.png`)" alt="advantages-woman" class="avantages__img--woman">
+          <img :src="require(`@/assets/advantages-woman.png`)" alt="advantages-woman" class="advantages__img--woman">
         </div>
       </div>
     </section>
@@ -36,10 +36,12 @@
     <section class="functions">
       <div class="functions__wrapper wrapper">
         <img :src="require(`@/assets/functions image.png`)" alt="#" class="functions__image">
+        <img :src="require(`@/assets/functions image (ipad pro).png`)" alt="#" class="functions__image--ipad-pro">
         <div class="functions__content">
           <h1 class="functions__heading advantages__heading">
             Достоинства PolyFit
           </h1>
+          <img :src="require(`@/assets/functions image (mobile).png`)" alt="#" class="functions__image--mobile">
           <FunctionsList />
         </div>
       </div>
@@ -78,15 +80,17 @@ export default {
 }
 
 .hero__wrapper {
-  height: 750px;
-  padding-left: 40px;
+  height: 100%;
+  padding-bottom: 5%;
+  padding-left: 1.5%;
   background-image: url('../assets/hero cover.png');
-  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .hero__heading {
-  padding-top: 431px;
-  padding-bottom: 27px;
+  padding-top: 40%;
+  padding-bottom: 2%;
   color: #ffffff;
   font-weight: 700;
   font-size: 64px;
@@ -100,7 +104,7 @@ export default {
 }
 
 .advantages__heading {
-  margin-top: 100px;
+  margin-top: 9%;
   margin-bottom: 70px;
   font-weight: 500;
   font-size: 56px;
@@ -126,24 +130,21 @@ export default {
   max-width: 50%;
 }
 
-@media (max-width: 1000px) {
-  .functions__wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 120px;
-  }
+.functions__image--ipad-pro, .functions__image--mobile {
+  display: none;
 }
+
 
 .start__wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 750px;
+  padding-bottom: 36%;
   background-image: url('../assets/start image.png');
+  background-repeat: no-repeat;
   background-position: bottom;
-  background-size: cover;
+  background-size: 100%;
 }
 
 .start__button {
@@ -164,5 +165,56 @@ export default {
 .start__heading {
   margin-top: 50px;
   margin-bottom: 15px;
+}
+
+@media (max-width: 1024px) {
+  .functions__wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 120px;
+  }
+
+  .functions__image{
+    display: none;
+  }
+
+  .functions__image--ipad-pro{
+    display: block;
+    max-width: 50%;
+  }
+
+  .advantages__wrapper{
+    margin-right: 5%;
+    margin-left: 5%;
+  }
+
+  .advantages__img--man, .advantages__img--woman {
+    display: none;
+  }
+
+  .start__wrapper{
+    padding-bottom: 38%;
+  }
+}
+
+@media (max-width: 600px){
+  .hero__heading, .advantages__heading{
+    font-size: 28px;
+  }
+
+  .hero__description, .start__button{
+    font-size: 12px;
+  }
+
+  .functions__image--ipad-pro{
+    display: none;
+  }
+
+  .functions__image--mobile{
+    display: block;
+    width: 100%;
+    margin-bottom: 5%;
+  }
 }
 </style>
