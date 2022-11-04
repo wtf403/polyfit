@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import MainPage from '@/pages/MainPage';
 import CalendarPage from '@/pages/CalendarPage';
-import WorkoutsShowPage from '@/pages/WorkoutsShowPage';
+import WorkoutsPage from '@/pages/WorkoutsPage';
 import WorkoutPlayerPage from '@/pages/WorkoutPlayerPage';
 
 Vue.use(VueRouter);
@@ -21,7 +21,7 @@ const routes = [
 
   {
     path: '/workout',
-    component: WorkoutsShowPage,
+    component: WorkoutsPage,
   },
 
   {
