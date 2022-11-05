@@ -1,5 +1,5 @@
 <template>
-  <div class="workouts-settings__dropdown dropdown">
+  <div class="dropdown__block">
     <div class="dropdown__wrapper">
       <p class="dropdown__selected-text">
         {{dropdownSelected}}
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style scoped>
-.dropdown {
+.dropdown__block {
   position: relative;
 }
 
@@ -52,7 +52,7 @@ export default {
   width: 210px;
   height: 48px;
   padding: 8px 8px 8px 16px;
-  background: none;
+  background: white;
   border: 2px solid #e6e8ec;
   border-radius: 12px;
 }
@@ -65,6 +65,7 @@ export default {
 }
 
 .dropdown__dropdown-button {
+  z-index: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -79,16 +80,17 @@ export default {
 
 .dropdown__content {
   position: absolute;
-  bottom: -80px;
-  z-index: 5;
+  bottom: -94px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 12px;
   width: 210px;
-  padding: 20px 16px 8px;
+  padding: 20px 16px 12px;
+  background: rgba(255, 255, 255, 0.9);
   border: 2px solid #e6e8ec;
   border-top: none;
   border-radius: 0 0 8px 8px;
+  backdrop-filter: blur(8px);
 }
 
 .dropdown__link {

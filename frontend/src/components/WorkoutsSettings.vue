@@ -13,7 +13,12 @@
     </div>
     <div class="workouts-settings__filters filters">
       <div class="filters__base">
-        <DropdownComponent :dropdown-content="dropdowns.sorter" />
+        <div class="filters__dropdowm dropdown">
+          <DropdownComponent :dropdown-content="dropdowns.sorter" />
+        </div>
+        <div class="filters__radio radio">
+          <RadioComponent :radio-content="radio.type" />
+        </div>
       </div>
     </div>
   </div>
@@ -21,12 +26,14 @@
 
 <script>
 import DropdownComponent from '@/components/WorkoutsSettingsDropdown';
+import RadioComponent from '@/components/WorkoutsSettingsRadio';
 
 
 export default {
   name: 'WorkoutsSettingsComponent',
   components: {
     DropdownComponent,
+    RadioComponent,
   },
   props: ['workouts'],
   data() {
@@ -36,6 +43,14 @@ export default {
           new: 'По новизне',
           cal: 'По каллориям',
           time: 'По длительности',
+        },
+      },
+      radio: {
+        type: {
+          all: 'Все тренировки',
+          power: 'Силовые',
+          speed: 'Скоростные',
+          stamina: 'Выносливые',
         },
       },
     };
@@ -92,38 +107,11 @@ export default {
   width: 332px;
 }
 
-.workouts-settings__image {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 16px;
-}
-
-.workouts-settings__info {
+.filters__base {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
-}
-
-.workouts-settings__name {
-  display: -webkit-box;
-  max-height: 48px;
-  overflow: hidden;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 1;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-}
-
-.workouts-settings__count {
-  padding: 8px 12px;
-  color: #f66c1e;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 1;
-  background-color: #f6f6f6;
-  border-radius: 8px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 12px;
 }
 </style>
