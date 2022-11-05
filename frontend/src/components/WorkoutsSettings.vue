@@ -20,7 +20,39 @@
           <RadioComponent :radio-content="radio.type" />
         </div>
         <div class="filters__open">
-          <FiltersButton />
+          <FiltersButton @open-filters="ShowFilters()" />
+        </div>
+      </div>
+      <div v-if="showFilters" class="filters__inputs">
+        <div class="filters__dropdowm dropdown">
+          <p class="dropdown__category">
+            Ваш пол
+          </p>
+          <DropdownComponent :dropdown-content="dropdowns.gender" />
+        </div>
+        <div class="filters__dropdowm dropdown">
+          <p class="dropdown__category">
+            Инвентарь
+          </p>
+          <DropdownComponent :dropdown-content="dropdowns.inventory" />
+        </div>
+        <div class="filters__dropdowm dropdown">
+          <p class="dropdown__category">
+            Группа мышц
+          </p>
+          <DropdownComponent :dropdown-content="dropdowns.muscles" />
+        </div>
+        <div class="filters__dropdowm dropdown">
+          <p class="dropdown__category">
+            Сложность
+          </p>
+          <DropdownComponent :dropdown-content="dropdowns.difficulty" />
+        </div>
+        <div class="filters__range range">
+          <p class="range__category">
+            Продолжительность
+          </p>
+          <RangeComponent />
         </div>
       </div>
     </div>
@@ -31,6 +63,8 @@
 import DropdownComponent from '@/components/WorkoutsSettingsDropdown';
 import RadioComponent from '@/components/WorkoutsSettingsRadio';
 import FiltersButton from '@/components/WorkoutsSettingsButton';
+import RangeComponent from '@/components/WorkoutsSettingsRange';
+
 
 
 export default {
@@ -39,16 +73,46 @@ export default {
     DropdownComponent,
     RadioComponent,
     FiltersButton,
+    RangeComponent,
   },
   props: ['workouts'],
   data() {
     return {
+      showFilters: false,
       dropdowns: {
         sorter: {
           new: 'По новизне',
           cal: 'По каллориям',
           time: 'По длительности',
         },
+        gender: {
+          all: 'Для всех',
+          man: 'Мужской',
+          woman: 'Женский',
+        },
+        inventory: {
+          all: 'Не имеет значения',
+          hall: 'В зале с оборудованием',
+          free_weight: 'Свободный вес',
+          your_weight: 'Свой вес',
+          expander: 'С эспандером',
+        },
+        muscles: {
+          all: 'Все группы мышц',
+          breast: 'Мышцы груди',
+          back: 'Мышцы спины',
+          belly: 'Мышцы живота',
+          legs: 'Мышцы ног',
+          neck: 'Мышцы шеи',
+          hands: 'Мышцы рук',
+        },
+        difficulty: {
+          all: 'Все сложности',
+          easy: 'Легко',
+          norm: 'Средне',
+          hard: 'Сложно',
+        },
+
       },
       radio: {
         type: {
@@ -59,6 +123,12 @@ export default {
         },
       },
     };
+  },
+  methods: {
+    ShowFilters() {
+      this.showFilters = !this.showFilters;
+      console.log(111);
+    },
   },
 };
 </script>
@@ -118,5 +188,23 @@ export default {
   justify-content: space-between;
   align-items: center;
   row-gap: 12px;
+}
+
+.filters__inputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  row-gap: 12px;
+  margin-top: 20px;
+}
+
+.dropdown__category, .range__category {
+  margin-bottom: 8px;
+  color: #b1b5c4;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+  text-transform: uppercase;
 }
 </style>

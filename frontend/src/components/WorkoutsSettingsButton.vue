@@ -21,6 +21,7 @@ export default {
   methods: {
     ButtonActive() {
       this.buttonActive = !this.buttonActive;
+      this.$emit('open-filters');
     },
   },
 };
