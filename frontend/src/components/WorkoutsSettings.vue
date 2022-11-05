@@ -19,6 +19,9 @@
         <div class="filters__radio radio">
           <RadioComponent :radio-content="radio.type" />
         </div>
+        <div class="filters__open">
+          <FiltersButton />
+        </div>
       </div>
     </div>
   </div>
@@ -27,6 +30,7 @@
 <script>
 import DropdownComponent from '@/components/WorkoutsSettingsDropdown';
 import RadioComponent from '@/components/WorkoutsSettingsRadio';
+import FiltersButton from '@/components/WorkoutsSettingsButton';
 
 
 export default {
@@ -34,6 +38,7 @@ export default {
   components: {
     DropdownComponent,
     RadioComponent,
+    FiltersButton,
   },
   props: ['workouts'],
   data() {
