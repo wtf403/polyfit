@@ -23,38 +23,40 @@
           <FiltersButton @open-filters="ShowFilters()" />
         </div>
       </div>
-      <div v-if="showFilters" class="filters__inputs">
-        <div class="filters__dropdowm dropdown">
-          <p class="dropdown__category">
-            Ваш пол
-          </p>
-          <DropdownComponent :dropdown-content="dropdowns.gender" />
+      <Transition name="bounce">
+        <div v-if="showFilters" class="filters__inputs">
+          <div class="filters__dropdowm dropdown">
+            <p class="dropdown__category">
+              Ваш пол
+            </p>
+            <DropdownComponent :dropdown-content="dropdowns.gender" />
+          </div>
+          <div class="filters__dropdowm dropdown">
+            <p class="dropdown__category">
+              Инвентарь
+            </p>
+            <DropdownComponent :dropdown-content="dropdowns.inventory" />
+          </div>
+          <div class="filters__dropdowm dropdown">
+            <p class="dropdown__category">
+              Группа мышц
+            </p>
+            <DropdownComponent :dropdown-content="dropdowns.muscles" />
+          </div>
+          <div class="filters__dropdowm dropdown">
+            <p class="dropdown__category">
+              Сложность
+            </p>
+            <DropdownComponent :dropdown-content="dropdowns.difficulty" />
+          </div>
+          <div class="filters__range range">
+            <p class="range__category">
+              Продолжительность
+            </p>
+            <RangeComponent />
+          </div>
         </div>
-        <div class="filters__dropdowm dropdown">
-          <p class="dropdown__category">
-            Инвентарь
-          </p>
-          <DropdownComponent :dropdown-content="dropdowns.inventory" />
-        </div>
-        <div class="filters__dropdowm dropdown">
-          <p class="dropdown__category">
-            Группа мышц
-          </p>
-          <DropdownComponent :dropdown-content="dropdowns.muscles" />
-        </div>
-        <div class="filters__dropdowm dropdown">
-          <p class="dropdown__category">
-            Сложность
-          </p>
-          <DropdownComponent :dropdown-content="dropdowns.difficulty" />
-        </div>
-        <div class="filters__range range">
-          <p class="range__category">
-            Продолжительность
-          </p>
-          <RangeComponent />
-        </div>
-      </div>
+      </Transition>
     </div>
   </div>
 </template>
@@ -75,7 +77,6 @@ export default {
     FiltersButton,
     RangeComponent,
   },
-  props: ['workouts'],
   data() {
     return {
       showFilters: false,
@@ -206,5 +207,23 @@ export default {
   font-size: 12px;
   line-height: 1;
   text-transform: uppercase;
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+
+.bounce-leave-active {
+  animation: bounce-in 0.2s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: translateY(-16px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 </style>

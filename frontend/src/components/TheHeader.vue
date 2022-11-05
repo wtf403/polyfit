@@ -15,8 +15,8 @@
           <li class="nav__item" :class="{'nav__item--active': $route.path == '/'}">
             <router-link class="nav__link" to="/">Главная</router-link>
           </li>
-          <li class="nav__item" :class="{'nav__item--active': $route.path == '/workout'}">
-            <router-link class="nav__link" to="/workout">Тренировки</router-link>
+          <li class="nav__item" :class="{'nav__item--active': $route.path == '/workouts'}">
+            <router-link class="nav__link" to="/workouts">Тренировки</router-link>
           </li>
           <li class="nav__item" :class="{'nav__item--active': $route.path == '/calendar'}">
             <router-link class="nav__link" to="/calendar">Календарь</router-link>
