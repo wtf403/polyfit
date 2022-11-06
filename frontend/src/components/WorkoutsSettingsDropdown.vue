@@ -35,6 +35,10 @@ export default {
     DropdownSelect(object) {
       this.dropdownSelected = object;
       this.dropdownActive = !this.dropdownActive;
+      this.DropdownEmit(object);
+    },
+    DropdownEmit() {
+      this.$emit('get-dropdown', this.dropdownSelected);
     },
   },
 };

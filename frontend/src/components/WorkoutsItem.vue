@@ -1,23 +1,28 @@
 <template>
-  <a href="/workouts/info" class="workouts-content__workouts-card workouts-card">
+  <router-link to="/workouts/info" class="workouts-content__workouts-card workouts-card">
     <img :src="workout.image" alt="Image for workout" class="workouts-card__image">
     <div class="workouts-card__info">
       <div class="workouts-card__flags">
         <p
           class="workouts-card__type"
           :class="{ 'workouts-card__type--speed': workout.type=='Скоростная', 'workouts-card__type--stamina': workout.type=='Выносливость' }"
-        >{{workout.type}}</p>
+        >
+          {{workout.type}}
+        </p>
         <p
+          v-if="workout.rec"
           class="
           workouts-card__recomandate"
-        >Рекомендуем</p>
+        >
+          Рекомендуем
+        </p>
       </div>
       <h3 class="workouts-card__name">{{workout.name}}</h3>
       <p class="workouts-card__features">
-        ⏱️ {{workout.time}} мин. • 💪 {{workout.defficulty}} • 🔥 {{workout.time}} Ккал
+        ⏱️ {{workout.time}} мин. • 💪 {{workout.defficulty}} • 🔥 {{workout.cal}} Ккал
       </p>
     </div>
-  </a>
+  </router-link>
 </template>
 
 <script>

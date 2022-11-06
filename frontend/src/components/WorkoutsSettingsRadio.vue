@@ -24,6 +24,10 @@ export default {
   methods: {
     radioSelect(object) {
       this.radioSelected = object;
+      this.RadioEmit;
+    },
+    RadioEmit(object) {
+      this.$emit('get-radio', object);
     },
   },
 };

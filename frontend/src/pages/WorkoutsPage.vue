@@ -1,12 +1,12 @@
 <template>
   <div>
     <section class="workouts-settings">
-      <WorkoutsSettings :workout="workout" />
+      <WorkoutsSettings @change-sort="ChangeSort" @change-type="ChangeType" />
     </section>
     <section class="workouts-content">
       <div class="workouts-content__wrapper">
         <ul class="workouts-content__list">
-          <li v-for="(workout, index) in workouts" :key="index" class="workouts-content__item">
+          <li v-for="(workout, index) in sortWorkouts" :key="index" class="workouts-content__item">
             <WorkoutsItem :workout="workout" />
           </li>
         </ul>
@@ -26,6 +26,8 @@ export default {
   },
   data() {
     return {
+      varSort: 'По новизне',
+      varType: 'Все тренировки',
       workouts: [{
         image: require('@/assets/WorkoutImage-0.png'),
         name: 'Работа над резервной копией',
@@ -171,6 +173,23 @@ export default {
         rec: false,
       }],
     };
+  },
+  computed: {
+    sortWorkouts() {
+      let variant = this.varSort;
+      if (variant === 'По новизне') { return this.workouts; }
+      return this.workouts.slice().sort(function(a, b) {
+        { return ((variant === 'По длительности') ? (a.time > b.time) : (a.cal > b.cal)) ? 1 : -1; }
+      });
+    },
+  },
+  methods: {
+    ChangeSort(variant) {
+      this.varSort = variant;
+    },
+    ChangeType(variant) {
+      this.varType = variant;
+    },
   },
 };
 </script>

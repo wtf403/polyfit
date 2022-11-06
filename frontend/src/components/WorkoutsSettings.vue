@@ -14,10 +14,10 @@
     <div class="workouts-settings__filters filters">
       <div class="filters__base">
         <div class="filters__dropdowm dropdown">
-          <DropdownComponent :dropdown-content="dropdowns.sorter" />
+          <DropdownComponent :dropdown-content="dropdowns.sorter" @get-dropdown="MySort" />
         </div>
         <div class="filters__radio radio">
-          <RadioComponent :radio-content="radio.type" />
+          <RadioComponent :radio-content="radio.type" @get-radio="MyType" />
         </div>
         <div class="filters__open">
           <FiltersButton @open-filters="ShowFilters()" />
@@ -128,7 +128,13 @@ export default {
   methods: {
     ShowFilters() {
       this.showFilters = !this.showFilters;
-      console.log(111);
+    },
+    MySort(variant) {
+      this.$emit('change-sort', variant);
+    },
+    MyType(variant) {
+      alert(123);
+      this.$emit('change-type', variant);
     },
   },
 };
