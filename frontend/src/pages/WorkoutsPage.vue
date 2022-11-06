@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="workouts-settings">
-      <WorkoutsSettings @change-sort="ChangeSort" @change-type="ChangeType" />
+      <WorkoutsSettings @change-sort="ChangeSort" @change-type="ChangeType" @change-range="ChangeTime" />
     </section>
     <section class="workouts-content">
       <div class="workouts-content__wrapper">
@@ -28,6 +28,7 @@ export default {
     return {
       varSort: 'По новизне',
       varType: 'all',
+      varTime: [0, 67],
       workouts: [{
         image: require('@/assets/WorkoutImage-0.png'),
         name: 'Работа над резервной копией',
@@ -178,7 +179,9 @@ export default {
     sortWorkouts() {
       let variant = this.varSort;
       let type = this.varType;
+      let time = this.varTime;
       let list = this.sortByType(this.workouts, type);
+      list = this.sortByTime(list, time);
       if (variant === 'По новизне') { return list; }
       return list.slice().sort(function(a, b) {
         { return ((variant === 'По длительности') ? (a.time > b.time) : (a.cal > b.cal)) ? 1 : -1; }
@@ -192,11 +195,17 @@ export default {
       if (type === 'speed') { return list = list.filter(function(item) { return item.type === 'Скоростная'; }); }
       return list;
     },
+    sortByTime(list, time) {
+      return list.filter(function(item) { return (item.time <= time[1]) & (item.time >= time[0]); });
+    },
     ChangeSort(variant) {
       this.varSort = variant;
     },
     ChangeType(variant) {
       this.varType = variant;
+    },
+    ChangeTime(minTime, maxTime) {
+      this.varTime = [minTime, maxTime];
     },
   },
 };

@@ -53,7 +53,7 @@
             <p class="range__category">
               Продолжительность
             </p>
-            <RangeComponent />
+            <RangeComponent @get-range="MyRange" />
           </div>
         </div>
       </Transition>
@@ -135,6 +135,9 @@ export default {
     MyType(variant) {
       this.$emit('change-type', variant);
     },
+    MyRange(minTime, maxTime) {
+      this.$emit('change-range', minTime, maxTime);
+    },
   },
 };
 </script>
@@ -200,7 +203,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   row-gap: 12px;
   margin-top: 20px;
 }
