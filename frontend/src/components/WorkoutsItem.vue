@@ -19,7 +19,7 @@
       </div>
       <h3 class="workouts-card__name">{{workout.name}}</h3>
       <p class="workouts-card__features">
-        ⏱️ {{workout.time}} мин. • 💪 {{workout.defficulty}} • 🔥 {{workout.cal}} Ккал
+        ⏱️ {{workout.time}} мин. • 💪 {{workout.difficulty}} • 🔥 {{workout.cal}} Ккал
       </p>
     </div>
   </router-link>

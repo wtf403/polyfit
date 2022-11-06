@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="workouts-settings">
-      <WorkoutsSettings @change-sort="ChangeSort" @change-type="ChangeType" @change-range="ChangeTime" />
+      <WorkoutsSettings @change-sort="ChangeSort" @change-type="ChangeType" @change-range="ChangeTime" @change-difficulty="ChangeDifficulty" />
     </section>
     <section class="workouts-content">
       <div class="workouts-content__wrapper">
@@ -29,12 +29,13 @@ export default {
       varSort: 'По новизне',
       varType: 'all',
       varTime: [0, 67],
+      varDifficulty: 'all',
       workouts: [{
         image: require('@/assets/WorkoutImage-0.png'),
         name: 'Работа над резервной копией',
         type: 'Силовая',
         cal: 113,
-        defficulty: 'средне',
+        difficulty: 'средне',
         time: 22,
         rec: true,
       },
@@ -43,7 +44,7 @@ export default {
         name: 'Тренируем нашу выносливость',
         type: 'Скоростная',
         cal: 140,
-        defficulty: 'легко',
+        difficulty: 'легко',
         time: 25,
         rec: true,
       },
@@ -52,7 +53,7 @@ export default {
         name: 'Тренировка на различные группы мышц',
         type: 'Скоростная',
         cal: 260,
-        defficulty: 'сложно',
+        difficulty: 'сложно',
         time: 30,
         rec: true,
       },
@@ -61,7 +62,7 @@ export default {
         name: 'Бубновый валет',
         type: 'Выносливость',
         cal: 132,
-        defficulty: 'легко',
+        difficulty: 'легко',
         time: 23,
         rec: false,
       },
@@ -70,7 +71,7 @@ export default {
         name: 'Мощь! И не только',
         type: 'Выносливость',
         cal: 288,
-        defficulty: 'сложно',
+        difficulty: 'сложно',
         time: 33,
         rec: false,
       },
@@ -79,7 +80,7 @@ export default {
         name: 'Безграничные возможности',
         type: 'Силовая',
         cal: 180,
-        defficulty: 'средне',
+        difficulty: 'средне',
         time: 29,
         rec: false,
       },
@@ -88,7 +89,7 @@ export default {
         name: 'На благо своего здоровья',
         type: 'Скоростная',
         cal: 102,
-        defficulty: 'средне',
+        difficulty: 'средне',
         time: 16,
         rec: false,
       },
@@ -97,7 +98,7 @@ export default {
         name: 'Стремление к усовершенствованию',
         type: 'Силовая',
         cal: 174,
-        defficulty: 'сложно',
+        difficulty: 'сложно',
         time: 35,
         rec: false,
       },
@@ -106,7 +107,7 @@ export default {
         name: 'Улучшаем свои характеристики',
         type: 'Скоростная',
         cal: 94,
-        defficulty: 'легко',
+        difficulty: 'легко',
         time: 20,
         rec: false,
       },
@@ -115,7 +116,7 @@ export default {
         name: 'Равномерная тренировка с направленностью на ноги',
         type: 'Выносливость',
         cal: 110,
-        defficulty: 'средне',
+        difficulty: 'средне',
         time: 18,
         rec: false,
       },
@@ -124,7 +125,7 @@ export default {
         name: 'Утро бывает добрым',
         type: 'Силовая',
         cal: 112,
-        defficulty: 'легко',
+        difficulty: 'легко',
         time: 21,
         rec: false,
       },
@@ -133,7 +134,7 @@ export default {
         name: 'На все тело',
         type: 'Силовая',
         cal: 380,
-        defficulty: 'средне',
+        difficulty: 'средне',
         time: 67,
         rec: false,
       },
@@ -142,7 +143,7 @@ export default {
         name: 'Утепляемся сами!',
         type: 'Выносливость',
         cal: 263,
-        defficulty: 'сложно',
+        difficulty: 'сложно',
         time: 46,
         rec: false,
       },
@@ -151,7 +152,7 @@ export default {
         name: 'Держим свое тело в тонусе',
         type: 'Силовая',
         cal: 140,
-        defficulty: 'легко',
+        difficulty: 'легко',
         time: 24,
         rec: false,
       },
@@ -160,7 +161,7 @@ export default {
         name: 'Тренировка, которая вгоняет В ритм жизни',
         type: 'Скоростная',
         cal: 116,
-        defficulty: 'средне',
+        difficulty: 'средне',
         time: 23,
         rec: false,
       },
@@ -169,7 +170,7 @@ export default {
         name: 'Динамика и энергия',
         type: 'Выносливость',
         cal: 292,
-        defficulty: 'средне',
+        difficulty: 'средне',
         time: 46,
         rec: false,
       }],
@@ -180,8 +181,10 @@ export default {
       let variant = this.varSort;
       let type = this.varType;
       let time = this.varTime;
+      let difficulty = this.varDifficulty;
       let list = this.sortByType(this.workouts, type);
       list = this.sortByTime(list, time);
+      list = this.sortByDifficulty(list, difficulty);
       if (variant === 'По новизне') { return list; }
       return list.slice().sort(function(a, b) {
         { return ((variant === 'По длительности') ? (a.time > b.time) : (a.cal > b.cal)) ? 1 : -1; }
@@ -192,7 +195,13 @@ export default {
     sortByType(list, type) {
       if (type === 'power') { return list.filter(function(item) { return item.type === 'Силовая'; }); }
       if (type === 'stamina') { return list.filter(function(item) { return item.type === 'Выносливость'; }); }
-      if (type === 'speed') { return list = list.filter(function(item) { return item.type === 'Скоростная'; }); }
+      if (type === 'speed') { return list.filter(function(item) { return item.type === 'Скоростная'; }); }
+      return list;
+    },
+    sortByDifficulty(list, difficulty) {
+      if (difficulty === 'Легко') { return list.filter(function(item) { return item.difficulty === 'легко'; }); }
+      if (difficulty === 'Средне') { return list.filter(function(item) { return item.difficulty === 'средне'; }); }
+      if (difficulty === 'Сложно') { return list.filter(function(item) { return item.difficulty === 'сложно'; }); }
       return list;
     },
     sortByTime(list, time) {
@@ -203,6 +212,9 @@ export default {
     },
     ChangeType(variant) {
       this.varType = variant;
+    },
+    ChangeDifficulty(difficulty) {
+      this.varDifficulty = difficulty;
     },
     ChangeTime(minTime, maxTime) {
       this.varTime = [minTime, maxTime];
@@ -221,7 +233,7 @@ export default {
 .workouts-content__list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 20px;
   list-style: none;
 }

@@ -13,7 +13,7 @@
     </div>
     <div class="workouts-settings__filters filters">
       <div class="filters__base">
-        <div class="filters__dropdowm dropdown">
+        <div class="filters__dropdowm dropdown" style="z-index: 9;">
           <DropdownComponent :dropdown-content="dropdowns.sorter" @get-dropdown="MySort" />
         </div>
         <div class="filters__radio radio">
@@ -47,7 +47,7 @@
             <p class="dropdown__category">
               Сложность
             </p>
-            <DropdownComponent :dropdown-content="dropdowns.difficulty" />
+            <DropdownComponent :dropdown-content="dropdowns.difficulty" @get-dropdown="MyDifficulty" />
           </div>
           <div class="filters__range range">
             <p class="range__category">
@@ -137,6 +137,9 @@ export default {
     },
     MyRange(minTime, maxTime) {
       this.$emit('change-range', minTime, maxTime);
+    },
+    MyDifficulty(difficulty) {
+      this.$emit('change-difficulty', difficulty);
     },
   },
 };
