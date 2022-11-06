@@ -52,7 +52,7 @@
         <h1 class="start__heading advantages__heading">
           Начни свою <br> первую тренировку
         </h1>
-        <router-link class="start__button" to="/workout">Тренировки</router-link>
+        <router-link class="start__button" to="/workouts">Тренировки</router-link>
       </div>
     </section>
   </div>

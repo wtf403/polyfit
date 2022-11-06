@@ -133,7 +133,6 @@ export default {
       this.$emit('change-sort', variant);
     },
     MyType(variant) {
-      alert(123);
       this.$emit('change-type', variant);
     },
   },

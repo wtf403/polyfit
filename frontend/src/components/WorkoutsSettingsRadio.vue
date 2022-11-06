@@ -2,7 +2,7 @@
   <div class="radio__wrapper">
     <ul class="radio__list">
       <li v-for="(item, index) in radioContent" :key="index" class="radio__item">
-        <input :id="index" v-model="radioSelected" :value="index" class="radio__input" type="radio" name="radio">
+        <input :id="index" v-model="radioSelected" :value="index" class="radio__input" type="radio" name="radio" @change="RadioEmit">
         <label class="radio__label" :for="index">
           {{item}}
         </label>
@@ -22,12 +22,8 @@ export default {
     };
   },
   methods: {
-    radioSelect(object) {
-      this.radioSelected = object;
-      this.RadioEmit;
-    },
-    RadioEmit(object) {
-      this.$emit('get-radio', object);
+    RadioEmit() {
+      this.$emit('get-radio', this.radioSelected);
     },
   },
 };

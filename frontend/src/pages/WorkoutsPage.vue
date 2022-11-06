@@ -27,11 +27,11 @@ export default {
   data() {
     return {
       varSort: 'По новизне',
-      varType: 'Все тренировки',
+      varType: 'all',
       workouts: [{
         image: require('@/assets/WorkoutImage-0.png'),
         name: 'Работа над резервной копией',
-        type: 'силовая',
+        type: 'Силовая',
         cal: 113,
         defficulty: 'средне',
         time: 22,
@@ -177,13 +177,21 @@ export default {
   computed: {
     sortWorkouts() {
       let variant = this.varSort;
-      if (variant === 'По новизне') { return this.workouts; }
-      return this.workouts.slice().sort(function(a, b) {
+      let type = this.varType;
+      let list = this.sortByType(this.workouts, type);
+      if (variant === 'По новизне') { return list; }
+      return list.slice().sort(function(a, b) {
         { return ((variant === 'По длительности') ? (a.time > b.time) : (a.cal > b.cal)) ? 1 : -1; }
       });
     },
   },
   methods: {
+    sortByType(list, type) {
+      if (type === 'power') { return list.filter(function(item) { return item.type === 'Силовая'; }); }
+      if (type === 'stamina') { return list.filter(function(item) { return item.type === 'Выносливость'; }); }
+      if (type === 'speed') { return list = list.filter(function(item) { return item.type === 'Скоростная'; }); }
+      return list;
+    },
     ChangeSort(variant) {
       this.varSort = variant;
     },
