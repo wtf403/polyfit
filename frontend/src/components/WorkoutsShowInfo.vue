@@ -28,12 +28,12 @@
             Ккал
           </p>
         </li>
-        <li class="workout__features-item workout__features-item--defficulty">
+        <li class="workout__features-item workout__features-item--difficulty">
           <p class="workout__features-icon">
             💪
           </p>
           <p class="workout__features-content">
-            {{workout.defficulty}}
+            {{workout.difficulty}}
           </p>
           <p class="workout__features-title">
             уровень
@@ -197,7 +197,7 @@ export default {
   background: #ffecec;
 }
 
-.workout__features-item--defficulty {
+.workout__features-item--difficulty {
   background: #fff6e9;
 }
 
@@ -215,10 +215,12 @@ export default {
 
 .workout__features-content {
   margin-bottom: 4px;
+  overflow: hidden;
   font-weight: 500;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1;
   text-transform: lowercase;
+  hyphens: manual;
 }
 
 .workout__features-title {

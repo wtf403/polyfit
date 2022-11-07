@@ -25,7 +25,7 @@ export default {
         name: 'Тренируем нашу выносливость',
         type: 'Силовая',
         cal: 140,
-        defficulty: 'Легкий',
+        difficulty: 'Легкий',
         time: 25,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
@@ -103,6 +103,11 @@ export default {
         ],
       },
     };
+  },
+  mounted() {
+    let exercoses = this.workout.exercises;
+    this.workout = this.$route.query.item;
+    this.workout['exercises'] = exercoses;
   },
 };
 </script>
