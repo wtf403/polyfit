@@ -1,6 +1,8 @@
 <template>
-  <router-link to="/workouts/info" class="workouts-content__workouts-card workouts-card">
-    <img :src="workout.image" alt="Image for workout" class="workouts-card__image">
+  <router-link :to="{ path: '/workouts/'+workout.id, query: {item: workout}}" class="workouts-content__workouts-card workouts-card">
+    <div class="workouts-card__cover">
+      <img :src="workout.image" alt="Image for workout" class="workouts-card__image">
+    </div>
     <div class="workouts-card__info">
       <div class="workouts-card__flags">
         <p
@@ -30,6 +32,11 @@
 export default {
   name: 'WorkoutsItemComponent',
   props: ['workout'],
+  data() {
+    return {
+      // workout: this.$route.query;
+    };
+  },
 };
 </script>
 
@@ -39,11 +46,20 @@ export default {
   width: 320px;
 }
 
+
+.workouts-card__cover {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
 .workouts-card__image {
   width: 100%;
   height: 200px;
-  border-radius: 16px;
   object-fit: cover;
+  transition: all 250ms ease-in-out;
 }
 
 .workouts-card__flags {
@@ -56,7 +72,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 18px;
-  padding: 1px 6px 0;
+  padding: 0 6px;
   color: white;
   font-weight: 400;
   font-size: 12px;
@@ -93,7 +109,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 8px 6px 0;
+  padding: 6px 6px 0;
 }
 
 .workouts-card__name {
@@ -110,4 +126,13 @@ export default {
   font-size: 16px;
   line-height: 1.1;
 }
+
+.workouts-card:hover .workouts-card__name{
+  text-decoration: underline;
+}
+
+.workouts-card:hover .workouts-card__image {
+  transform: scale(1.05);
+}
+
 </style>

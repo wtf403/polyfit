@@ -26,7 +26,7 @@ const routes = [
   },
 
   {
-    path: '/workouts/info',
+    path: '/workouts/:id',
     component: WorkoutsShowPage,
   },
 
@@ -36,9 +36,15 @@ const routes = [
   },
 ];
 
+
 const router = new VueRouter({
   mode: 'history',
+  scrollBehavior() {
+    return { x: 0, y: 0 };
+  },
   routes,
 });
+
+
 
 export default router;
