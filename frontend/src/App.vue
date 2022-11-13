@@ -4,16 +4,20 @@
     <div id="app">
       <router-view />
     </div>
+    <TheFooter />
   </v-app>
 </template>
 
 <script>
 import TheHeader from '@/components/TheHeader';
+import TheFooter from '@/components/TheFooter';
+
 
 export default {
   name: 'App',
   components: {
     TheHeader,
+    TheFooter,
   },
 };
 </script>
