@@ -6,6 +6,8 @@ import WorkoutsPage from '@/pages/WorkoutsPage';
 import WorkoutsShowPage from '@/pages/WorkoutsShowPage';
 import WorkoutPlayerPage from '@/pages/WorkoutPlayerPage';
 import LoginPage from '@/pages/LoginPage';
+import ProfilePage from '@/pages/ProfilePage';
+
 
 Vue.use(VueRouter);
 
@@ -38,6 +40,10 @@ const routes = [
   {
     path: '/log',
     component: LoginPage,
+  },
+  {
+    path: '/profile',
+    component: ProfilePage,
   },
 ];
 
