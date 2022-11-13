@@ -278,6 +278,18 @@ export default {
   max-width: 350px;
 }
 
+@media screen and (max-width: 1120px) {
+  .footer__wrapper {
+    padding: 80px 40px 24px;
+  }
+
+  .footer__navigate {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+
 .footer__contacts {
   max-width: 183px;
 }
@@ -329,5 +341,53 @@ export default {
   border: none;
   border-radius: 100%;
   cursor: pointer;
+}
+
+@media screen and (max-width: 740px) {
+  .footer__wrapper {
+    padding: 80px 40px 24px;
+  }
+
+  .footer__content{
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .footer__navigate {
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .router-link-active svg{
+    max-width: 100px;
+  }
+
+
+  .footer__contacts-info {
+    gap: 2px;
+  }
+
+  .footer__link {
+    white-space: nowrap;
+  }
+
+  .footer__list {
+    gap: 2px;
+    width: 100%;
+  }
+
+
+  .footer__title {
+    margin-bottom: 12px;
+  }
+
+  .footer__text {
+    line-height: 1.4;
+  }
+
+  .footer__mailing {
+    max-width: 200px;
+  }
 }
 </style>
