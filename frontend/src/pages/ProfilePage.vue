@@ -44,36 +44,55 @@
           </button>
         </div>
       </div>
-      <div class="profile__kpi">
-        <div class="profile__kpi-head">
-          <div class="profile__kpi-info">
-            <p class="profile__title">
-              Выбранные KPI
-            </p>
-            <button class="profile__detail">
-              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="15" cy="15" r="15" fill="#F76C1E" fill-opacity="0.16" />
-                <path d="M16.629 10.9887V22.4004H14.0767V10.9887H16.629ZM13.9079 7.99336C13.9079 7.60664 14.0345 7.28672 14.2876 7.03359C14.5478 6.77344 14.9063 6.64336 15.3634 6.64336C15.8134 6.64336 16.1685 6.77344 16.4286 7.03359C16.6888 7.28672 16.8188 7.60664 16.8188 7.99336C16.8188 8.37305 16.6888 8.68945 16.4286 8.94258C16.1685 9.1957 15.8134 9.32227 15.3634 9.32227C14.9063 9.32227 14.5478 9.1957 14.2876 8.94258C14.0345 8.68945 13.9079 8.37305 13.9079 7.99336Z" fill="#F76C1E" />
-              </svg>
-            </button>
+      <div class="profile__control">
+        <div class="profile__kpi">
+          <div class="profile__kpi-head">
+            <div class="profile__kpi-info">
+              <p class="profile__title">
+                Выбранные KPI
+              </p>
+              <button class="profile__detail">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="15" cy="15" r="15" fill="#F76C1E" fill-opacity="0.16" />
+                  <path d="M16.629 10.9887V22.4004H14.0767V10.9887H16.629ZM13.9079 7.99336C13.9079 7.60664 14.0345 7.28672 14.2876 7.03359C14.5478 6.77344 14.9063 6.64336 15.3634 6.64336C15.8134 6.64336 16.1685 6.77344 16.4286 7.03359C16.6888 7.28672 16.8188 7.60664 16.8188 7.99336C16.8188 8.37305 16.6888 8.68945 16.4286 8.94258C16.1685 9.1957 15.8134 9.32227 15.3634 9.32227C14.9063 9.32227 14.5478 9.1957 14.2876 8.94258C14.0345 8.68945 13.9079 8.37305 13.9079 7.99336Z" fill="#F76C1E" />
+                </svg>
+              </button>
+            </div>
+            <div class="profile__kpi-action">
+              <button class="profile__button">
+                Сменить kpi
+              </button>
+            </div>
           </div>
-          <div class="profile__kpi-action">
-            <button class="profile__button">
-              Сменить kpi
-            </button>
-          </div>
+          <ul class="profile__kpi-list">
+            <li v-for="(kpi,index) in user.purposes[IdSelectedPurpose-1].kpi" :key="index" class="profile__kpi-item">
+              <button class="profile__kpi-link" :style="(IdSelectedKPI == index) ? {border: '2px solid'} : {border: '2px solid transparent !important'}" @click="IdSelectedKPI = index">
+                {{kpi.name}}
+              </button>
+            </li>
+          </ul>
         </div>
-        <ul class="profile__kpi-list">
-          <li v-for="(kpi,index) in user.purposes[IdSelectedPurpose-1].kpi" :key="index" class="profile__kpi-item">
-            <button class="profile__kpi-link" :style="(IdSelectedKPI == index) ? {border: '2px solid'} : {border: '2px solid transparent !important'}" @click="IdSelectedKPI = index">
-              {{kpi.name}}
-            </button>
-          </li>
-        </ul>
         <BarChart
+          class="profile__chart"
           :chart-data="{labels: user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].progress.map(item => item.date),
-                        datasets: [ {data: user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].progress.map(item => item.result) }],}"
-          :options="chartOptions"
+                        datasets: [
+                          {
+                            maxBarThickness: 140,
+                            type: 'bar',
+                            label: 'Единицы измерения: '+user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].units,
+                            data: user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].progress.map(item => item.result),
+                            backgroundColor: [(IdSelectedKPI==0)?'#c75dfa4d':(IdSelectedKPI==1)?'#ffca104d':(IdSelectedKPI==2)?'#38d25a4d':(IdSelectedKPI==3)?'#2fe0f84d':(IdSelectedKPI==4)?'#f83c3c4d':'rgba(0, 0, 0, 0.2)']
+                          },
+                          {
+                            tension: 0.4,
+                            type: 'line',
+                            label: 'Единицы измерения: '+user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].units,
+                            data: user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].progress.map(item => item.result),
+                            borderColor: [(IdSelectedKPI==0)?'#c75dfa':(IdSelectedKPI==1)?'#ffca10':(IdSelectedKPI==2)?'#38d25a':(IdSelectedKPI==3)?'#2fe0f8':(IdSelectedKPI==4)?'#f83c3c':'rgba(0, 0, 0, 0.8)'],
+                            backgroundColor: [(IdSelectedKPI==0)?'#c75dfa':(IdSelectedKPI==1)?'#ffca10':(IdSelectedKPI==2)?'#38d25a':(IdSelectedKPI==3)?'#2fe0f8':(IdSelectedKPI==4)?'#f83c3c':'rgba(0, 0, 0, 0.8)']
+                          },
+                        ],
+          }"
         />
       </div>
 
@@ -413,10 +432,6 @@ export default {
           },
         ],
       },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-      },
     };
   },
 };
@@ -458,7 +473,7 @@ export default {
   line-height: 1.1;
 }
 
-.profile__purpose, .profile__kpi, .profile__user, .profile__purposes-list {
+.profile__purpose, .profile__kpi, .profile__user, .profile__purposes-list, .profile__chart{
   margin-bottom: 40px;
   padding: 40px;
   background-color: #fbfbfb;
@@ -520,8 +535,12 @@ export default {
   background-color: #ee6011;
 }
 
-.profile__kpi {
+.profile__control {
   width: calc(100vw - 520px);
+}
+
+.profile__kpi {
+  margin-bottom: 20px;
 }
 
 .profile__kpi-head {
@@ -546,6 +565,7 @@ export default {
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 4px;
+  margin-bottom: 20px;
   list-style: none;
 }
 
@@ -593,6 +613,18 @@ export default {
   gap: 14px;
 }
 
+@media screen and (max-width: 1020px) {
+  .profile__control{
+    width: 100%;
+  }
+
+  .profile__purposes-list {
+    flex-direction: row-reverse;
+    justify-content: revert;
+    overflow-x: scroll;
+  }
+}
+
 .profile__purposes-link {
   display: flex;
   flex-direction: column;
@@ -611,6 +643,5 @@ export default {
   font-size: 22px;
   line-height: 1.2;
 }
-
 
 </style>
