@@ -67,11 +67,14 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
-	l.SetOutput(io.Discard)
+
+	l.SetOutput(io.Discard) //Send all logs to nowhere by default
+
 	l.AddHook(&writeHook{
 		Writer:    []io.Writer{allFile, os.Stdout},
 		LogLevels: logrus.AllLevels,
 	})
+
 	l.SetLevel(logrus.TraceLevel)
 
 	e = logrus.NewEntry(l)

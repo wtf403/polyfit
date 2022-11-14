@@ -46,26 +46,47 @@ func (r repository) Create(ctx context.Context, exercise *exercise.Exercise) err
 
 func (r repository) FindAll(ctx context.Context) (u []exercise.Exercise, err error) {
 	q := `
-	SELECT * FROM exercise
+	SELECT id, title, description, amount, showtimer, equipment, calories, media FROM exercise
 	`
 
-	query, err := r.client.Query(ctx, q)
+	rows, err := r.client.Query(ctx, q)
 	if err != nil {
 		return nil, err
 	}
 
-	exercise := make([]exercise.Exercise, 0)
+	exercises := make([]exercise.Exercise, 0)
 
-	for rows.Next {
-		var ath exercise.Exercise
+	for rows.Next() {
+		var exercise exercise.Exercise
 
-		rows.Scan()
+		err = rows.Scan(&exercise.Id, &exercise.Title, &exercise.Description, &exercise.Amount,
+			&exercise.ShowTimer, &exercise.Equipment, &exercise.Calories, &exercise.Media)
+		if err != nil {
+			return nil, err
+		}
+
+		exercises = append(exercises, exercise)
 	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+
+	return exercises, nil
 }
 
 func (r repository) FindOne(ctx context.Context, id string) (exercise.Exercise, error) {
-	//TODO implement me
-	panic("implement me")
+	q := `
+		SELECT id, title, description, amount, showtimer, equipment, calories, media FROM public.author WHERE id = $1
+	`
+	r.logger.Trace(fmt.Sprintf("SQL Query: %s", formatQuery(q)))
+
+	var exercise exercise.Exercise
+	err := r.client.QueryRow(ctx, q, id).Scan(&exercise.Id, &exercise.Title, &exercise.Description, &exercise.Amount, &exercise.ShowTimer, &exercise.Equipment,
+		&exercise.Calories, &exercise.Media)
+	if err != nil {
+		return exercise.Exercise{}, err
+	}
+	return exercise, nil
 }
 
 func (r repository) Update(ctx context.Context, exercise exercise.Exercise) error {
