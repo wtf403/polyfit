@@ -33,10 +33,10 @@
               Пол: {{user.gender}}
             </p>
             <p class="profile__text">
-              Возраст: {{user.age}}
+              Возраст: {{user.age}} лет (года)
             </p>
             <p class="profile__text">
-              Вес: {{user.weight}}
+              Вес: {{user.weight}} кг
             </p>
           </div>
           <button class="profile__button">
@@ -98,7 +98,7 @@
 
 
       <ul class="profile__purposes-list">
-        <li v-for="(purpose,index) in user.purposes" :key="index" class="profile__purposes-item">
+        <li v-for="(purpose,index) in user.purposes" :key="index" class="profile__purposes-item" :style="{order: -index}">
           <button class="profile__purposes-link" :style="(IdSelectedPurpose == index+1) ? {borderColor: '#F66C1E'} : {borderColor: 'black'}" @click="IdSelectedPurpose = index+1; IdSelectedKPI = 0">
             <p class="profile__purposes-name" :style="(IdSelectedPurpose == index+1) ? {color: '#F66C1E'} : {color: 'black'}">
               {{purpose.name}}
@@ -452,13 +452,13 @@ export default {
 
 .profile__title {
   font-weight: 400;
-  font-size: 36px;
+  font-size: 32px;
   line-height: 1.2;
 }
 
 .profile__text {
   font-weight: 400;
-  font-size: 22px;
+  font-size: 18px;
   line-height: 1.1;
 }
 
@@ -469,7 +469,7 @@ export default {
 
 .profile__welcome-text {
   font-weight: 500;
-  font-size: 36px;
+  font-size: 32px;
   line-height: 1.1;
 }
 
@@ -483,7 +483,9 @@ export default {
 .profile__user {
   display: flex;
   flex-wrap: wrap;
-  gap: 22px;
+  justify-content: flex-start;
+  gap: 36px;
+  width: calc(50% - 40px);
 }
 
 .profile__info {
@@ -507,6 +509,7 @@ export default {
 .profile__purpose {
   display: flex;
   flex-direction: column;
+  width: calc(50% - 40px);
 }
 
 .profile__purpose button {
@@ -614,13 +617,16 @@ export default {
 }
 
 @media screen and (max-width: 1020px) {
+  .profile__user, .profile__purpose {
+    width: 100%;
+  }
+
   .profile__control{
     width: 100%;
   }
 
   .profile__purposes-list {
-    flex-direction: row-reverse;
-    justify-content: revert;
+    flex-direction: row;
     overflow-x: scroll;
   }
 }
