@@ -28,15 +28,20 @@
           <p class="profile__title">
             {{user.name}}
           </p>
-          <p class="profile__text">
-            Пол: {{user.gender}}
-          </p>
-          <p class="profile__text">
-            Возраст: {{user.age}}
-          </p>
-          <p class="profile__text">
-            Вес: {{user.weight}}
-          </p>
+          <div class="profile__about">
+            <p class="profile__text">
+              Пол: {{user.gender}}
+            </p>
+            <p class="profile__text">
+              Возраст: {{user.age}}
+            </p>
+            <p class="profile__text">
+              Вес: {{user.weight}}
+            </p>
+          </div>
+          <button class="profile__button">
+            Изменить параметры
+          </button>
         </div>
       </div>
       <div class="profile__kpi">
@@ -59,8 +64,8 @@
           </div>
         </div>
         <ul class="profile__kpi-list">
-          <li v-for="(kpi,index) in user.purposes[user.purposes.length-1].kpi" :key="index" class="profile__kpi-item">
-            <button class="profile__kpi-link" @click="IdSelectedKPI = index">
+          <li v-for="(kpi,index) in user.purposes[IdSelectedPurpose-1].kpi" :key="index" class="profile__kpi-item">
+            <button class="profile__kpi-link" :style="(IdSelectedKPI == index) ? {border: '2px solid'} : {border: '2px solid transparent !important'}" @click="IdSelectedKPI = index">
               {{kpi.name}}
             </button>
           </li>
@@ -70,22 +75,26 @@
                         datasets: [ {data: user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].progress.map(item => item.result) }],}"
           :options="chartOptions"
         />
-        <ul class="profile__purposes-list">
-          <li v-for="(purpose,index) in user.purposes" :key="index" class="profile__purposes-item">
-            <button class="profile__purposes-link" :style="(IdSelectedPurpose == index+1) ? {borderColor: 'orange'} : {borderColor: 'black'}" @click="IdSelectedPurpose = index+1">
-              <p class="profile__purposes-name">
-                {{purpose.name}}
-              </p>
+      </div>
+
+
+      <ul class="profile__purposes-list">
+        <li v-for="(purpose,index) in user.purposes" :key="index" class="profile__purposes-item">
+          <button class="profile__purposes-link" :style="(IdSelectedPurpose == index+1) ? {borderColor: '#F66C1E'} : {borderColor: 'black'}" @click="IdSelectedPurpose = index+1; IdSelectedKPI = 0">
+            <p class="profile__purposes-name" :style="(IdSelectedPurpose == index+1) ? {color: '#F66C1E'} : {color: 'black'}">
+              {{purpose.name}}
+            </p>
+            <div class="prfile__purposes-date">
               <p class="profile__purposes-start">
                 c {{purpose.start}}
               </p>
               <p class="profile__purposes-finish">
                 по {{purpose.finish}}
               </p>
-            </button>
-          </li>
-        </ul>
-      </div>
+            </div>
+          </button>
+        </li>
+      </ul>
     </div>
   </section>
 </template>
@@ -115,92 +124,92 @@ export default {
             finish: '11.09.22',
             kpi: [
               {
-                name: 'Вис на время',
-                units: 'сек',
+                name: 'Отжимания\nна кулаках',
+                units: 'повторения',
                 progress: [
                   {
                     date: '29.07.2022',
-                    result: 122,
+                    result: 34,
                   },
                   {
                     date: '21.08.2022',
-                    result: 141,
+                    result: 40,
                   },
                   {
                     date: '09.09.2023',
-                    result: 138,
+                    result: 38,
                   },
                 ],
               },
               {
-                name: 'Бег на 100 метров',
-                units: 'сек',
+                name: 'Приседания\nс весом',
+                units: 'повторения',
                 progress: [
                   {
                     date: '29.07.2022',
-                    result: 122,
+                    result: 78,
                   },
                   {
                     date: '21.08.2022',
-                    result: 141,
+                    result: 85,
                   },
                   {
                     date: '09.09.2023',
-                    result: 138,
+                    result: 105,
                   },
                 ],
               },
               {
-                name: 'Бег на 2000 метров',
+                name: 'Удержание преса\nв планке',
                 units: 'сек',
                 progress: [
                   {
                     date: '29.07.2022',
-                    result: 122,
+                    result: 145,
                   },
                   {
                     date: '21.08.2022',
-                    result: 141,
+                    result: 120,
                   },
                   {
                     date: '09.09.2023',
-                    result: 138,
+                    result: 180,
                   },
                 ],
               },
               {
-                name: 'Прыжики в длину с места',
-                units: 'сек',
+                name: 'Классические\nподтягивания',
+                units: 'повторения',
                 progress: [
                   {
                     date: '29.07.2022',
-                    result: 122,
+                    result: 34,
                   },
                   {
                     date: '21.08.2022',
-                    result: 141,
+                    result: 48,
                   },
                   {
                     date: '09.09.2023',
-                    result: 138,
+                    result: 47,
                   },
                 ],
               },
               {
-                name: 'Челночный бег 3x10 метров',
-                units: 'сек',
+                name: 'Жим\nот груди',
+                units: 'повторения',
                 progress: [
                   {
                     date: '29.07.2022',
-                    result: 122,
+                    result: 18,
                   },
                   {
                     date: '21.08.2022',
-                    result: 141,
+                    result: 24,
                   },
                   {
                     date: '09.09.2023',
-                    result: 138,
+                    result: 28,
                   },
                 ],
               },
@@ -213,72 +222,72 @@ export default {
             finish: '31.10.2022',
             kpi: [
               {
-                name: 'Вис на время',
-                units: 'сек',
+                name: 'Метание спортивного\nснаряда весом 700г ',
+                units: 'см',
                 progress: [
                   {
                     date: '27.09.2022',
-                    result: 102,
+                    result: 166,
                   },
                   {
                     date: '30.10.2022',
-                    result: 121,
+                    result: 181,
                   },
                 ],
               },
               {
-                name: 'Бег на 100 метров',
-                units: 'сек',
+                name: 'Классические\nотжимания',
+                units: 'повторения',
                 progress: [
                   {
                     date: '27.09.2022',
-                    result: 102,
+                    result: 34,
                   },
                   {
                     date: '30.10.2022',
-                    result: 121,
+                    result: 48,
                   },
                 ],
               },
               {
-                name: 'Бег на 2000 метров',
+                name: 'Удержание преса\nв планке',
                 units: 'сек',
                 progress: [
                   {
                     date: '27.09.2022',
-                    result: 102,
+                    result: 164,
                   },
                   {
                     date: '30.10.2022',
-                    result: 121,
+                    result: 215,
                   },
                 ],
               },
               {
-                name: 'Прыжики в длину с места',
-                units: 'сек',
+                name: 'Классические\nподтягивания',
+                units: 'повторения',
                 progress: [
                   {
                     date: '27.09.2022',
-                    result: 102,
+                    result: 28,
                   },
                   {
                     date: '30.10.2022',
-                    result: 121,
+                    result: 40,
                   },
                 ],
               },
               {
-                name: 'Челночный бег 3x10 метров',
+                name: 'Классические\nприседания',
                 units: 'сек',
                 progress: [
                   {
                     date: '27.09.2022',
-                    result: 102,
+                    result: 90,
                   },
                   {
                     date: '30.10.2022',
-                    result: 121,
+                    result: 120,
                   },
                 ],
               },
@@ -291,7 +300,7 @@ export default {
             finish: '01.02.2023',
             kpi: [
               {
-                name: 'Вис на время',
+                name: 'Вис\nна время',
                 units: 'сек',
                 progress: [
                   {
@@ -313,7 +322,7 @@ export default {
                 ],
               },
               {
-                name: 'Бег на 100 метров',
+                name: 'Бег на\n100 метров',
                 units: 'сек',
                 progress: [
                   {
@@ -335,7 +344,7 @@ export default {
                 ],
               },
               {
-                name: 'Бег на 2000 метров',
+                name: 'Бег на\n2000 метров',
                 units: 'сек',
                 progress: [
                   {
@@ -357,7 +366,7 @@ export default {
                 ],
               },
               {
-                name: 'Прыжики в длину с места',
+                name: 'Прыжики в\nдлину с места',
                 units: 'сек',
                 progress: [
                   {
@@ -379,7 +388,7 @@ export default {
                 ],
               },
               {
-                name: 'Челночный бег 3x10 метров',
+                name: 'Челночный бег\n3x10 метров',
                 units: 'сек',
                 progress: [
                   {
@@ -404,10 +413,6 @@ export default {
           },
         ],
       },
-      chartData: {
-        labels: [ 'January', 'February', 'March' ],
-        datasets: [ { data: [40, 20, 12] } ],
-      },
       options: {
         responsive: true,
         maintainAspectRatio: false,
@@ -421,10 +426,191 @@ export default {
 
 
 .profile__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   max-width: 1440px;
   margin: 0 auto;
   padding: 24px 40px 60px;
   padding-top: 120px;
 }
+
+.profile__title {
+  font-weight: 400;
+  font-size: 36px;
+  line-height: 1.2;
+}
+
+.profile__text {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.1;
+}
+
+.profile__welcome {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.profile__welcome-text {
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 1.1;
+}
+
+.profile__purpose, .profile__kpi, .profile__user, .profile__purposes-list {
+  margin-bottom: 40px;
+  padding: 40px;
+  background-color: #fbfbfb;
+  border-radius: 16px;
+}
+
+.profile__user {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.profile__info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+
+.profile__image {
+  width: 220px;
+  height: 220px;
+}
+
+.profile__about {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile__purpose {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__purpose button {
+  width: 192px;
+  margin-top: 29px;
+}
+
+.profile__purpose .profile__title {
+  margin: 4px 0 16px;
+}
+
+.profile__button {
+  padding: 13px 16px 14px;
+  color: white;
+  font-weight: 500;
+  font-size: 18px;
+  text-transform: uppercase;
+  background-color: #f76c1e;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+
+.profile__button:hover {
+  background-color: #ee6011;
+}
+
+.profile__kpi {
+  width: calc(100vw - 520px);
+}
+
+.profile__kpi-head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.profile__kpi-info {
+  display: flex;
+  gap: 32px;
+}
+
+.profile__detail {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.profile__kpi-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 4px;
+  list-style: none;
+}
+
+.profile__kpi-link {
+  height: 62px;
+  padding: 9px 11px;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1;
+  white-space: break-spaces;
+  text-transform: uppercase;
+  background: rgba(56, 210, 90, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.profile__kpi-item:nth-child(n+1) button {
+  background-color: #c75dfa4d;
+  border-color: #c75dfa !important;
+}
+
+.profile__kpi-item:nth-child(n+2) button {
+  background-color: #ffca104d;
+  border-color: #ffca10 !important;
+}
+
+.profile__kpi-item:nth-child(n+3) button {
+  background-color: #38d25a4d;
+  border-color: #38d25a !important;
+}
+
+.profile__kpi-item:nth-child(n+4) button {
+  background-color: #2fe0f84d;
+  border-color: #2fe0f8 !important;
+}
+
+.profile__kpi-item:nth-child(n+5) button {
+  background-color: #f83c3c4d;
+  border-color: #f83c3c !important;
+}
+
+.profile__purposes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile__purposes-link {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 320px;
+  padding: 14px;
+  text-align: start;
+  background: none;
+  border: 1px solid #f76c1e;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.profile__purposes-name {
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
 
 </style>
