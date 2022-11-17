@@ -36,9 +36,17 @@ export default {
 
 .radio__list {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 12px;
+}
+
+@media screen and (max-width: 1020px) {
+  .radio__list {
+    row-gap: 12px;
+    column-gap: 4px;
+  }
 }
 
 .radio__label {
@@ -47,6 +55,7 @@ export default {
   font-weight: 500;
   font-size: 14px;
   line-height: 1.1;
+  white-space: nowrap;
   background-color: none;
   border-radius: 100px;
   cursor: pointer;

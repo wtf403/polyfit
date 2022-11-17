@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="animate__animated animate__fadeIn">
     <section class="workouts-settings">
       <WorkoutsSettings @change-sort="ChangeSort" @change-type="ChangeType" @change-range="ChangeTime" @change-difficulty="ChangeDifficulty" />
     </section>
@@ -40,7 +40,7 @@ export default {
         time: 22,
         rec: true,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
-        inventory: 'Гантели, спортивный коврик.',
+        inventory: 'Спортивный коврик.',
 
       },
       {
@@ -66,7 +66,7 @@ export default {
         time: 30,
         rec: true,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
-        inventory: 'Гантели, спортивный коврик.',
+        inventory: 'Спортивный коврик.',
 
       },
       {
@@ -103,7 +103,7 @@ export default {
         time: 29,
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
-        inventory: 'Гантели, спортивный коврик.',
+        inventory: 'Спортивный коврик.',
       },
       {
         id: 6,
@@ -282,6 +282,7 @@ export default {
 }
 
 .workouts-content__list {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;

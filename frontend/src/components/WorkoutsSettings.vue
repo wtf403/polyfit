@@ -20,10 +20,10 @@
           <RadioComponent :radio-content="radio.type" @get-radio="MyType" />
         </div>
         <div class="filters__open">
-          <FiltersButton @open-filters="ShowFilters()" />
+          <FiltersButton @open-filters="showFilters = !showFilters" />
         </div>
       </div>
-      <Transition name="bounce">
+      <Transition name="fade">
         <div v-if="showFilters" class="filters__inputs">
           <div class="filters__dropdowm dropdown">
             <p class="dropdown__category">
@@ -126,9 +126,6 @@ export default {
     };
   },
   methods: {
-    ShowFilters() {
-      this.showFilters = !this.showFilters;
-    },
     MySort(variant) {
       this.$emit('change-sort', variant);
     },
@@ -203,9 +200,10 @@ export default {
 }
 
 .filters__inputs {
+  z-index: 999;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-start;
   row-gap: 12px;
   margin-top: 20px;
@@ -220,21 +218,14 @@ export default {
   text-transform: uppercase;
 }
 
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
+
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.8s;
 }
 
-.bounce-leave-active {
-  animation: bounce-in 0.2s reverse;
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  transform: translateY(-14px);
+  opacity: 0;
 }
 
-@keyframes bounce-in {
-  0% {
-    transform: translateY(-16px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
-}
 </style>

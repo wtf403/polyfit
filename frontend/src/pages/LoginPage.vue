@@ -13,9 +13,9 @@
         <label class="login__remember-label">
           <input type="checkbox" class="login__remember"> Запомнить меня
         </label>
-        <button type="submit" class="login__button">
+        <router-link to="/profile" class="login__button">
           Войти
-        </button>
+        </router-link>
       </form>
       <p>Еще нет аккаунта? <a class="login__link" href="/reg">Зарегестрироваться</a></p>
       <a class="login__link" href="#">Восстановить пароль</a>
