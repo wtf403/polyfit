@@ -103,4 +103,8 @@ export default {
   font-size: 14px;
   line-height: 1.1;
 }
+
+.dropdown__link:hover {
+  color: black;
+}
 </style>

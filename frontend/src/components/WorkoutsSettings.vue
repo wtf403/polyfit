@@ -5,7 +5,9 @@
         Найдите нужную для себя тренировку!
       </h3>
       <div class="workouts-settings__search search">
-        <input v-if="showSearch" v-model="searchInput" type="text" class="search__input" placeholder="Введите название или описание тренировки" @change="MySearch">
+        <Transition name="fade-right">
+          <input v-if="showSearch" v-model="searchInput" type="text" class="search__input" placeholder="Название или описание" @change="MySearch">
+        </Transition>
         <button class="search__button" @click="showSearch=!showSearch">
           <svg v-if="!showSearch" class="search__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M15.0001 14.3333L10.7708 10.104" stroke="#FCFCFD" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
@@ -231,12 +233,17 @@ export default {
 }
 
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active, .fade-leave-active, .fade-right-enter-active, .fade-right-leave-active  {
   transition: all 0.8s;
 }
 
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+.fade-enter, .fade-leave-to {
   transform: translateY(-14px);
+  opacity: 0;
+}
+
+.fade-right-enter, .fade-right-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  transform: translateX(6px);
   opacity: 0;
 }
 

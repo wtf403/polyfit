@@ -71,4 +71,12 @@ export default {
   background-color: black;
   cursor: default;
 }
+
+.radio__input ~ .radio__label:hover{
+  color: #03071b;
+}
+
+.radio__input:checked ~ .radio__label:hover{
+  color: white;
+}
 </style>
