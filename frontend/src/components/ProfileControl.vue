@@ -12,7 +12,7 @@
               <path d="M16.629 10.9887V22.4004H14.0767V10.9887H16.629ZM13.9079 7.99336C13.9079 7.60664 14.0345 7.28672 14.2876 7.03359C14.5478 6.77344 14.9063 6.64336 15.3634 6.64336C15.8134 6.64336 16.1685 6.77344 16.4286 7.03359C16.6888 7.28672 16.8188 7.60664 16.8188 7.99336C16.8188 8.37305 16.6888 8.68945 16.4286 8.94258C16.1685 9.1957 15.8134 9.32227 15.3634 9.32227C14.9063 9.32227 14.5478 9.1957 14.2876 8.94258C14.0345 8.68945 13.9079 8.37305 13.9079 7.99336Z" fill="#F76C1E" />
             </svg>
           </button>
-          <p v-if="infoKPI" class="profile__kpi-desc">
+          <p class="profile__kpi-desc">
             KPI – упражнения для определения ключевых показателей вашей эффективности
           </p>
         </div>
@@ -70,7 +70,6 @@ export default {
   data() {
     return {
       IdSelectedKPI: 0,
-      infoKPI: false,
     };
   },
   computed: {
@@ -100,15 +99,20 @@ export default {
 
 .profile__kpi-desc {
   position: absolute;
-  right: -1;
+  top: -4px;
+  right: -384px;
   display: none;
+  max-width: 380px;
+  height: 48px;
   margin-bottom: 12px;
-  padding: 16px 20px;
-  font-size: 18px;
+
+  /* padding: 10px 14px; */
+  font-size: 14px;
   line-height: 1.2;
   background-color: #ffd2b8;
   border: 1px solid #f76c1e;
   border-radius: 12px;
+  transition: all 0.4s ease;
 }
 
 .profile__kpi-head {
@@ -121,6 +125,8 @@ export default {
 .profile__kpi-info {
   position: relative;
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 32px;
 }
 
@@ -130,8 +136,11 @@ export default {
   cursor: pointer;
 }
 
-.profile__detail:hover > .profile__kpi-desc {
+.profile__detail:hover + .profile__kpi-desc {
   display: flex;
+  align-items: center;
+  padding: 2px 12px;
+  transition: all 0.4s ease;
 }
 
 .profile__kpi-list {
