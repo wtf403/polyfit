@@ -189,6 +189,10 @@ export default {
   cursor: pointer;
 }
 
+.search__button:hover {
+  background: #ff5e00;
+}
+
 .workouts-settings__list {
   display: flex;
   flex-wrap: wrap;

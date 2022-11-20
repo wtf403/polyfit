@@ -1,17 +1,17 @@
 <template>
-  <ProfilePopup ref="kpiPopup">
-    <p class="popus__title">
-      Сделайте выбор KPI
-    </p>
-    <p class="popus__text-info">
-      (KPI – упражнения для определения ключевых показателей вашей эффективности)
-    </p>
-    <p class="popus__text">
-      Мы предлагем вам лишь KPI относительно действующей вашей цели – <br><span style="font-weight: 500;">
-        "{{purpose}}"
-      </span>.
-    </p>
+  <ProfilePopup ref="Popup">
     <template #actions="{ confirm, close }">
+      <p class="popup__title">
+        Сделайте выбор KPI
+      </p>
+      <p class="popup__text-info">
+        (KPI – упражнения для определения ключевых показателей вашей эффективности)
+      </p>
+      <p class="popup__text">
+        Мы предлагем вам лишь KPI относительно действующей вашей цели – <br><span style="font-weight: 500;">
+          "{{purpose}}"
+        </span>.
+      </p>
       <ul class="popup__kpi-list">
         <li v-for="(kpi,index) in (idSelectedPurpose==1)?AllKPI.force:(idSelectedPurpose==2)?AllKPI.stamina:AllKPI.speed" :key="index" :class="(NewSelectedKPI.find(element => element == kpi)==kpi )?'popup__kpi-item popup__kpi-item--select':'popup__kpi-item'" :style="(idSelectedPurpose==1)?{backgroundColor: '#F4F4F4'}:(idSelectedPurpose==2)?{backgroundColor: '#FEE8DB'}:{backgroundColor: '#D9E8FF'}">
           <input :id="'checkbox'+index" v-model="NewSelectedKPI" :value="kpi" type="checkbox" class="popup__kpi-input">
@@ -40,7 +40,7 @@ export default {
   components: {
     ProfilePopup,
   },
-  props: ['purpose', 'idSelectedPurpose'],
+  props: ['purpose', 'idSelectedPurpose', 'content'],
   data() {
     return {
       NewSelectedKPI: [],
@@ -60,7 +60,7 @@ export default {
   methods: {
     async ChangeKPI() {
       this.confirmation = '';
-      const popupResult = await this.$refs.kpiPopup.open();
+      const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
         for (let item in this.NewSelectedKPI) {
           this.NewSelectedKPI[item] = {
@@ -83,13 +83,13 @@ export default {
 
 <style scoped>
 
-.popus__title {
+.popup__title {
   margin-bottom: 12px;
   font-size: 24px;
   line-height: 1.2;
 }
 
-.popus__text-info {
+.popup__text-info {
   margin-bottom: 12px;
   padding: 16px 20px;
   font-size: 18px;
@@ -99,7 +99,7 @@ export default {
   border-radius: 12px;
 }
 
-.popus__text {
+.popup__text {
   margin-bottom: 12px;
   font-size: 18px;
 }

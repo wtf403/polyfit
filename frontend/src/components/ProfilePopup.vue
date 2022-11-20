@@ -97,7 +97,4 @@ export default {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.popup__footer {
-  text-align: right;
-}
 </style>
