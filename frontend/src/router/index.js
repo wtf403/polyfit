@@ -6,7 +6,7 @@ import WorkoutsPage from '@/pages/WorkoutsPage';
 import WorkoutsShowPage from '@/pages/WorkoutsShowPage';
 import WorkoutPlayerPage from '@/pages/WorkoutPlayerPage';
 import LoginPage from '@/pages/LoginPage';
-import RegistrationPage from '@/pages/RegistrationPage'
+import RegistrationPage from '@/pages/RegistrationPage';
 
 Vue.use(VueRouter);
 
