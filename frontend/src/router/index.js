@@ -7,6 +7,7 @@ import WorkoutsShowPage from '@/pages/WorkoutsShowPage';
 import WorkoutPlayerPage from '@/pages/WorkoutPlayerPage';
 import LoginPage from '@/pages/LoginPage';
 import RegistrationPage from '@/pages/RegistrationPage';
+import ProfilePage from '@/pages/ProfilePage';
 
 Vue.use(VueRouter);
 
@@ -36,13 +37,20 @@ const routes = [
     path: '/player',
     component: WorkoutPlayerPage,
   },
+
   {
     path: '/log',
     component: LoginPage,
   },
+
   {
     path: '/reg',
     component: RegistrationPage,
+  },
+  
+  {
+    path: '/profile',
+    component: ProfilePage,
   },
 ];
 
