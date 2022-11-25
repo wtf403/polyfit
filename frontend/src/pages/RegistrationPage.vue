@@ -2,7 +2,7 @@
   <div class="registration">
     <section class="registration__wrapper wrapper">
       <img
-        :src="require('@/assets/white-logo.svg')"
+        :src="require('@/assets/logo.svg')"
         alt="logo"
         class="registration__logo"
         :srcset="require('@/assets/white-logo.svg') + ' 3x'"
