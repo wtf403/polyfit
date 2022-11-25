@@ -8,7 +8,6 @@ import WorkoutPlayerPage from '@/pages/WorkoutPlayerPage';
 import LoginPage from '@/pages/LoginPage';
 import ProfilePage from '@/pages/ProfilePage';
 
-
 Vue.use(VueRouter);
 
 const routes = [
