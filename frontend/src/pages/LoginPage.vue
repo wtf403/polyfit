@@ -12,7 +12,7 @@ const bgVideo = [
 <template>
   <div class="login" :style="{backgroundImage: 'url('+bgVideo[Math.floor(timer/8)%6]+')'}">
     <div class="login__blur">
-      <section class="login__wrapper wrapper">
+      <section class="login__wrapper wrapper animate__animated animate__fadeIn">
         <img
           :src="require('@/assets/logo.svg')"
           alt="logo"
@@ -20,7 +20,7 @@ const bgVideo = [
           :srcset="require('@/assets/logo.svg') + ' 3x'"
         >
         <form class="login__form" @submit="isAutorized">
-          <TheInput id="emailInput" v-model="userEmail" type="text" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
+          <TheInput id="emailInput" v-model="userEmail" type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
           <TheInput v-model="userPassword" type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
           <label class="login__remember-label">
             <input type="checkbox" class="login__remember"> Запомнить меня
@@ -84,6 +84,7 @@ export default {
   width: 100%;
   height: 100%;
   min-height: 100vh;
+  padding: 0 20px;
   backdrop-filter: blur(6px);
 }
 
@@ -117,16 +118,27 @@ export default {
   padding: 40px;
 }
 
+@media screen and (max-width: 660px){
+  .login__form{
+    padding: 2%;
+  }
+
+  .login__logo{
+    width: 110px;
+    margin: 8px 0 18px;
+  }
+
+  .login__blur {
+    padding: 0 10px;
+  }
+}
+
 .login__email, .login__password{
   height: 50px;
   margin-top: 2%;
   border: none;
   border-bottom: 2px solid #000000;
   outline: none;
-}
-
-input ::placeholder{
-  font-size: 64px;
 }
 
 .login__remember {
@@ -167,7 +179,13 @@ input ::placeholder{
 }
 
 .login__link{
-  color: #1070ff;
+  color: #2688eb;
+  font-weight: 500;
   font-size: 15px;
+  line-height: 1.3;
+}
+
+.login__link:hover{
+  text-decoration: underline;
 }
 </style>
