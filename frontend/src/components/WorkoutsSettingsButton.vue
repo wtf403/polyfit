@@ -34,9 +34,13 @@ export default {
   font-weight: 500;
   font-size: 16px;
   line-height: 1;
-  background: #f76c1e;
+  background: #f56514;
   border: none;
   border-radius: 90px;
   cursor: pointer;
+}
+
+.filters__button:hover {
+  background: #ff5e00;
 }
 </style>

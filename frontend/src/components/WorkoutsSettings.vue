@@ -4,12 +4,20 @@
       <h3 class="workouts-settings__title">
         Найдите нужную для себя тренировку!
       </h3>
-      <button class="workouts-settings__search-button">
-        <svg class="workouts-settings__search-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15.0001 14.3333L10.7708 10.104" stroke="#FCFCFD" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-          <path d="M7.00008 11.6667C9.9456 11.6667 12.3334 9.27885 12.3334 6.33333C12.3334 3.38781 9.9456 1 7.00008 1C4.05456 1 1.66675 3.38781 1.66675 6.33333C1.66675 9.27885 4.05456 11.6667 7.00008 11.6667Z" stroke="#FCFCFD" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
+      <div class="workouts-settings__search search">
+        <Transition name="fade-right">
+          <input v-if="showSearch" v-model="searchInput" type="text" class="search__input" placeholder="Название или описание" @change="MySearch">
+        </Transition>
+        <button class="search__button" @click="showSearch=!showSearch">
+          <svg v-if="!showSearch" class="search__icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15.0001 14.3333L10.7708 10.104" stroke="#FCFCFD" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M7.00008 11.6667C9.9456 11.6667 12.3334 9.27885 12.3334 6.33333C12.3334 3.38781 9.9456 1 7.00008 1C4.05456 1 1.66675 3.38781 1.66675 6.33333C1.66675 9.27885 4.05456 11.6667 7.00008 11.6667Z" stroke="#FCFCFD" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <svg v-if="showSearch" width="12" height="12" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.529247 0.528575C0.789596 0.268226 1.21171 0.268226 1.47206 0.528575L5.00065 4.05717L8.52925 0.528575C8.7896 0.268226 9.21171 0.268226 9.47206 0.528575C9.73241 0.788925 9.73241 1.21103 9.47206 1.47138L5.94346 4.99998L9.47206 8.52858C9.73241 8.78893 9.73241 9.21103 9.47206 9.47138C9.21171 9.73173 8.7896 9.73173 8.52925 9.47138L5.00065 5.94279L1.47206 9.47138C1.21171 9.73173 0.789596 9.73173 0.529247 9.47138C0.268897 9.21103 0.268897 8.78893 0.529247 8.52858L4.05784 4.99998L0.529247 1.47138C0.268897 1.21103 0.268897 0.788925 0.529247 0.528575Z" fill="#FCFCFD" />
+          </svg>
+        </button>
+      </div>
     </div>
     <div class="workouts-settings__filters filters">
       <div class="filters__base">
@@ -20,10 +28,10 @@
           <RadioComponent :radio-content="radio.type" @get-radio="MyType" />
         </div>
         <div class="filters__open">
-          <FiltersButton @open-filters="ShowFilters()" />
+          <FiltersButton @open-filters="showFilters = !showFilters" />
         </div>
       </div>
-      <Transition name="bounce">
+      <Transition name="fade">
         <div v-if="showFilters" class="filters__inputs">
           <div class="filters__dropdowm dropdown">
             <p class="dropdown__category">
@@ -80,6 +88,8 @@ export default {
   data() {
     return {
       showFilters: false,
+      showSearch: false,
+      searchInput: '',
       dropdowns: {
         sorter: {
           new: 'По новизне',
@@ -126,9 +136,6 @@ export default {
     };
   },
   methods: {
-    ShowFilters() {
-      this.showFilters = !this.showFilters;
-    },
     MySort(variant) {
       this.$emit('change-sort', variant);
     },
@@ -140,6 +147,9 @@ export default {
     },
     MyDifficulty(difficulty) {
       this.$emit('change-difficulty', difficulty);
+    },
+    MySearch() {
+      this.$emit('change-search', this.searchInput.toString());
     },
   },
 };
@@ -154,9 +164,9 @@ export default {
 }
 
 .workouts-settings__search {
+  position: relative;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   margin-bottom: 32px;
 }
 
@@ -166,7 +176,8 @@ export default {
   line-height: 1.1;
 }
 
-.workouts-settings__search-button {
+.search__button {
+  z-index: 9;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -176,6 +187,10 @@ export default {
   border: none;
   border-radius: 100px;
   cursor: pointer;
+}
+
+.search__button:hover {
+  background: #ff5e00;
 }
 
 .workouts-settings__list {
@@ -203,9 +218,10 @@ export default {
 }
 
 .filters__inputs {
+  z-index: 999;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: flex-start;
   row-gap: 12px;
   margin-top: 20px;
@@ -220,21 +236,38 @@ export default {
   text-transform: uppercase;
 }
 
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
+
+.fade-enter-active, .fade-leave-active, .fade-right-enter-active, .fade-right-leave-active  {
+  transition: all 0.8s;
 }
 
-.bounce-leave-active {
-  animation: bounce-in 0.2s reverse;
+.fade-enter, .fade-leave-to {
+  transform: translateY(-14px);
+  opacity: 0;
 }
 
-@keyframes bounce-in {
-  0% {
-    transform: translateY(-16px);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
+.fade-right-enter, .fade-right-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  transform: translateX(6px);
+  opacity: 0;
 }
+
+.search__input {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  width: 260px;
+  height: 48px;
+  padding: 8px 8px 8px 16px;
+  color: #23262f;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.1;
+  background: white;
+  border: 2px solid #e6e8ec;
+  border-radius: 90px;
+}
+
 </style>

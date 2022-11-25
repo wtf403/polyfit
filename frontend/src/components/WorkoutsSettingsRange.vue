@@ -103,6 +103,10 @@ export default {
   pointer-events: auto;
 }
 
+.range__input::-webkit-slider-thumb:hover {
+  background: #db6a2a;
+}
+
 .range__input {
   position: absolute;
   top: -4px;

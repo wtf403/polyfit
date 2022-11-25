@@ -1,133 +1,37 @@
 <template>
   <section class="profile">
     <div class="profile__wrapper">
-      <div class="profile__welcome">
-        <p class="profile__welcome-text">
-          🌤 Доброе утро, Артем!
-        </p>
-      </div>
-      <div class="profile__purpose">
-        <p class="profile__text">
-          Выбранная цель:
-        </p>
-        <p class="profile__title">
-          {{user.purposes[user.purposes.length-1].name}}
-        </p>
-        <p class="profile__text">
-          С {{user.purposes[user.purposes.length-1].start}} по {{user.purposes[user.purposes.length-1].finish}}
-        </p>
-        <button class="profile__button">
-          Изменить цель
-        </button>
-      </div>
-      <div class="profile__user">
-        <a href="#" class="profile__cover">
-          <img :src="user.image" alt="User Photo" class="profile__image">
-        </a>
-        <div class="profile__info">
-          <p class="profile__title">
-            {{user.name}}
-          </p>
-          <div class="profile__about">
-            <p class="profile__text">
-              Пол: {{user.gender}}
-            </p>
-            <p class="profile__text">
-              Возраст: {{user.age}} лет (года)
-            </p>
-            <p class="profile__text">
-              Вес: {{user.weight}} кг
-            </p>
-          </div>
-          <button class="profile__button">
-            Изменить параметры
-          </button>
-        </div>
-      </div>
-      <div class="profile__control">
-        <div class="profile__kpi">
-          <div class="profile__kpi-head">
-            <div class="profile__kpi-info">
-              <p class="profile__title">
-                Выбранные KPI
-              </p>
-              <button class="profile__detail">
-                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="15" cy="15" r="15" fill="#F76C1E" fill-opacity="0.16" />
-                  <path d="M16.629 10.9887V22.4004H14.0767V10.9887H16.629ZM13.9079 7.99336C13.9079 7.60664 14.0345 7.28672 14.2876 7.03359C14.5478 6.77344 14.9063 6.64336 15.3634 6.64336C15.8134 6.64336 16.1685 6.77344 16.4286 7.03359C16.6888 7.28672 16.8188 7.60664 16.8188 7.99336C16.8188 8.37305 16.6888 8.68945 16.4286 8.94258C16.1685 9.1957 15.8134 9.32227 15.3634 9.32227C14.9063 9.32227 14.5478 9.1957 14.2876 8.94258C14.0345 8.68945 13.9079 8.37305 13.9079 7.99336Z" fill="#F76C1E" />
-                </svg>
-              </button>
-            </div>
-            <div class="profile__kpi-action">
-              <button class="profile__button">
-                Сменить kpi
-              </button>
-            </div>
-          </div>
-          <ul class="profile__kpi-list">
-            <li v-for="(kpi,index) in user.purposes[IdSelectedPurpose-1].kpi" :key="index" class="profile__kpi-item">
-              <button class="profile__kpi-link" :style="(IdSelectedKPI == index) ? {border: '2px solid'} : {border: '2px solid transparent !important'}" @click="IdSelectedKPI = index">
-                {{kpi.name}}
-              </button>
-            </li>
-          </ul>
-        </div>
-        <BarChart
-          class="profile__chart"
-          :chart-data="{labels: user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].progress.map(item => item.date),
-                        datasets: [
-                          {
-                            maxBarThickness: 140,
-                            type: 'bar',
-                            label: 'Единицы измерения: '+user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].units,
-                            data: user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].progress.map(item => item.result),
-                            backgroundColor: [(IdSelectedKPI==0)?'#c75dfa4d':(IdSelectedKPI==1)?'#ffca104d':(IdSelectedKPI==2)?'#38d25a4d':(IdSelectedKPI==3)?'#2fe0f84d':(IdSelectedKPI==4)?'#f83c3c4d':'rgba(0, 0, 0, 0.2)']
-                          },
-                          {
-                            tension: 0.4,
-                            type: 'line',
-                            label: 'Единицы измерения: '+user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].units,
-                            data: user.purposes[IdSelectedPurpose-1].kpi[IdSelectedKPI].progress.map(item => item.result),
-                            borderColor: [(IdSelectedKPI==0)?'#c75dfa':(IdSelectedKPI==1)?'#ffca10':(IdSelectedKPI==2)?'#38d25a':(IdSelectedKPI==3)?'#2fe0f8':(IdSelectedKPI==4)?'#f83c3c':'rgba(0, 0, 0, 0.8)'],
-                            backgroundColor: [(IdSelectedKPI==0)?'#c75dfa':(IdSelectedKPI==1)?'#ffca10':(IdSelectedKPI==2)?'#38d25a':(IdSelectedKPI==3)?'#2fe0f8':(IdSelectedKPI==4)?'#f83c3c':'rgba(0, 0, 0, 0.8)']
-                          },
-                        ],
-          }"
-        />
-      </div>
-
-
-      <ul class="profile__purposes-list">
-        <li v-for="(purpose,index) in user.purposes" :key="index" class="profile__purposes-item" :style="{order: -index}">
-          <button class="profile__purposes-link" :style="(IdSelectedPurpose == index+1) ? {borderColor: '#F66C1E'} : {borderColor: 'black'}" @click="IdSelectedPurpose = index+1; IdSelectedKPI = 0">
-            <p class="profile__purposes-name" :style="(IdSelectedPurpose == index+1) ? {color: '#F66C1E'} : {color: 'black'}">
-              {{purpose.name}}
-            </p>
-            <div class="prfile__purposes-date">
-              <p class="profile__purposes-start">
-                c {{purpose.start}}
-              </p>
-              <p class="profile__purposes-finish">
-                по {{purpose.finish}}
-              </p>
-            </div>
-          </button>
-        </li>
-      </ul>
+      <ProfileWelcome :name="user.name" />
+      <ProfileUser :user="{name:user.name, age:user.age, gender:user.gender, weight: user.weight, image: user.image}" />
+      <ProfilePurpose :purpose="user.purposes[user.purposes.length-1]" />
+      <ProfileControl :purposes="user.purposes" :id-selected-purpose="IdSelectedPurpose" @change-kpi="ChangeKPI" />
+      <ProfilePurposes :purposes="user.purposes" @change-purpose="ChangePurpose" />
     </div>
+    <Transition name="fade">
+      <ProfilePopupKPI ref="modal" :id-selected-purpose="IdSelectedPurpose" :purpose="user.purposes[user.purposes.length-1].name" @update-kpi="UpdateKPI" />
+    </Transition>
   </section>
 </template>
 
 <script>
-import BarChart from '@/components/BarChart.vue';
+import ProfileWelcome from '@/components/ProfileWelcome.vue';
+import ProfilePurpose from '@/components/ProfilePurpose.vue';
+import ProfileUser from '@/components/ProfileUser.vue';
+import ProfilePurposes from '@/components/ProfilePurposes.vue';
+import ProfileControl from '@/components/ProfileControl.vue';
+import ProfilePopupKPI from '@/components/ProfilePopupKPI.vue';
 
 export default {
   components: {
-    BarChart,
+    ProfilePopupKPI,
+    ProfileWelcome,
+    ProfilePurpose,
+    ProfilePurposes,
+    ProfileUser,
+    ProfileControl,
   },
   data() {
     return {
-      IdSelectedKPI: 0,
       IdSelectedPurpose: 3,
       user: {
         name: 'Артем Крылов',
@@ -434,10 +338,22 @@ export default {
       },
     };
   },
+
+  methods: {
+    ChangePurpose(obj) {
+      this.IdSelectedPurpose = obj;
+    },
+    ChangeKPI() {
+      this.$refs.modal.ChangeKPI();
+    },
+    UpdateKPI(obj) {
+      this.user.purposes[this.IdSelectedPurpose - 1].kpi = obj;
+    },
+  },
 };
 </script>
 
-<style  scoped>
+<style>
 
 
 .profile__wrapper {
@@ -459,18 +375,15 @@ export default {
 .profile__text {
   font-weight: 400;
   font-size: 18px;
-  line-height: 1.1;
+  line-height: 1.4;
 }
 
-.profile__welcome {
-  width: 100%;
-  margin-bottom: 20px;
+.fade-enter-active, .fade-leave-active {
+  transition: all 0.4s;
 }
 
-.profile__welcome-text {
-  font-weight: 500;
-  font-size: 32px;
-  line-height: 1.1;
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
 }
 
 .profile__purpose, .profile__kpi, .profile__user, .profile__purposes-list, .profile__chart{
@@ -478,43 +391,6 @@ export default {
   padding: 40px;
   background-color: #fbfbfb;
   border-radius: 16px;
-}
-
-.profile__user {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 36px;
-  width: calc(50% - 40px);
-}
-
-.profile__info {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-
-.profile__image {
-  width: 220px;
-  height: 220px;
-}
-
-.profile__about {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.profile__purpose {
-  display: flex;
-  flex-direction: column;
-  width: calc(50% - 40px);
-}
-
-.profile__purpose button {
-  width: 192px;
-  margin-top: 29px;
 }
 
 .profile__purpose .profile__title {
@@ -531,89 +407,24 @@ export default {
   border: none;
   border-radius: 14px;
   cursor: pointer;
+  transition: all 0.14s ease;
 }
 
+.profile__button:active {
+  transform: scale(0.99);
+}
 
 .profile__button:hover {
   background-color: #ee6011;
 }
 
-.profile__control {
-  width: calc(100vw - 520px);
+.profile__button--cancel {
+  color: #f66c1e;
+  background-color: #f66c1e29;
 }
 
-.profile__kpi {
-  margin-bottom: 20px;
-}
-
-.profile__kpi-head {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 16px;
-}
-
-.profile__kpi-info {
-  display: flex;
-  gap: 32px;
-}
-
-.profile__detail {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.profile__kpi-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  gap: 4px;
-  margin-bottom: 20px;
-  list-style: none;
-}
-
-.profile__kpi-link {
-  height: 62px;
-  padding: 9px 11px;
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 1;
-  white-space: break-spaces;
-  text-transform: uppercase;
-  background: rgba(56, 210, 90, 0.3);
-  border-radius: 12px;
-  cursor: pointer;
-}
-
-.profile__kpi-item:nth-child(n+1) button {
-  background-color: #c75dfa4d;
-  border-color: #c75dfa !important;
-}
-
-.profile__kpi-item:nth-child(n+2) button {
-  background-color: #ffca104d;
-  border-color: #ffca10 !important;
-}
-
-.profile__kpi-item:nth-child(n+3) button {
-  background-color: #38d25a4d;
-  border-color: #38d25a !important;
-}
-
-.profile__kpi-item:nth-child(n+4) button {
-  background-color: #2fe0f84d;
-  border-color: #2fe0f8 !important;
-}
-
-.profile__kpi-item:nth-child(n+5) button {
-  background-color: #f83c3c4d;
-  border-color: #f83c3c !important;
-}
-
-.profile__purposes-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
+.profile__button--cancel:hover {
+  background-color: #f66c1e3d;
 }
 
 @media screen and (max-width: 1020px) {
@@ -629,25 +440,6 @@ export default {
     flex-direction: row;
     overflow-x: scroll;
   }
-}
-
-.profile__purposes-link {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 320px;
-  padding: 14px;
-  text-align: start;
-  background: none;
-  border: 1px solid #f76c1e;
-  border-radius: 16px;
-  cursor: pointer;
-}
-
-.profile__purposes-name {
-  font-weight: 500;
-  font-size: 22px;
-  line-height: 1.2;
 }
 
 </style>
