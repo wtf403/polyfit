@@ -1,38 +1,59 @@
+<script setup>
+const bgVideo = [
+  new URL('@/assets/authBG/bg1.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg2.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg3.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg4.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg5.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg6.webp', import.meta.url).href,
+];
+</script>
+
 <template>
-  <div class="registration">
-    <section class="registration__wrapper wrapper">
-      <img
-        :src="require('@/assets/logo.svg')"
-        alt="logo"
-        class="registration__logo"
-        :srcset="require('@/assets/white-logo.svg') + ' 3x'"
-      >
-      <form class="registration__form" @submit="addUser">
-        <input v-model="userName" type="text" placeholder="Имя" class="registration__name" required>
-        <input v-model="userPhone" type="phone" placeholder="Телефон" class="registration__phone" required>
-        <input v-model="userEmail" type="email" placeholder="Email" class="registration__email" required>
-        <input v-model="userPassword" type="password" placeholder="Пароль" class="registration__password" required>
-        <!-- Capcha -->
-        <label><input type="checkbox"> Я согласен на обработку персональных данных</label>
-        <button type="submit" class="registration__button">
-          Зарегестрироваться
-        </button>
-      </form>
-      <p>Уже есть аккаунт? <a class="registration__link" href="/log">Войти</a></p>
-    </section>
-  </div>
+  <section class="registration" :style="{backgroundImage: 'url('+bgVideo[Math.floor(timer/8)%6]+')'}">
+    <div class="registration__blur">
+      <div class="registration__wrapper wrapper animate__animated animate__fadeIn">
+        <img
+          :src="require('@/assets/logo.svg')"
+          alt="logo"
+          class="registration__logo"
+          :srcset="require('@/assets/logo.svg') + ' 3x'"
+        >
+        <form class="registration__form" @submit="addUser">
+          <TheInput type="text" label="Имя" required @update:model-value="(newValue)=>(userName=newValue)" />
+          <TheInput type="tel" label="Телефон" required @update:model-value="(newValue)=>(userPhone=newValue)" />
+          <TheInput type="email" label="Email" required @update:model-value="(newValue)=>(userEmail=newValue)" />
+          <TheInput type="password" minlength="6" maxlength="36" label="Пароль" required @update:model-value="(newValue)=>(userPassword=newValue)" />
+          <TheCheckbox type="checkbox" label="Я согласен на обработку персональных данных" @update:model-value="(newValue)=>(userCheck=newValue)" />
+          <button type="submit" class="registration__button">
+            Зарегестрироваться
+          </button>
+        </form>
+        <p>Уже есть аккаунт? <a class="registration__link" href="/log">Войти</a></p>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
+import TheInput from '@/components/TheInput.vue';
+import TheCheckbox from '@/components/TheCheckbox.vue';
 
 export default {
+  components: {
+    TheInput,
+    TheCheckbox,
+  },
+  props: ['timer'],
   data() {
     return {
       userName: '',
       userPhone: '',
       userEmail: '',
       userPassword: '',
+      userCheck: '',
       users: [],
+      sitekey: 'ВАШ SITE KEY',
     };
   },
   methods: {
@@ -46,66 +67,115 @@ export default {
 <style>
 
 .registration{
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(6px);
+}
+
+.registration__blur {
+  display: flex;
+  align-items: center;
+  width: 100%;
   height: 100%;
-  padding-top: 9%;
-  padding-bottom: 10%;
-  background: #0d2b54;
+  min-height: 100vh;
+  padding: 0 20px;
+  background-color: #00000030;
+  backdrop-filter: blur(6px);
 }
 
 .registration__wrapper{
   display: flex;
   flex-direction: column;
-  margin-right: 35%;
-  margin-left: 35%;
-  padding-bottom: 3%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+  margin: 80px auto 40px;
+  padding: 20px 20px 40px;
   font-weight: 500;
   font-size: 40px;
   text-align: center;
-  background: #f6f6f6;
-  border: #f6f6f6;
-  border-radius: 10%;
+  background: rgba(255, 255, 255, 0.84);
+  border: #000000;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
 }
 
 .registration__logo{
-  margin: 5% 35% 10% 35%;
+  width: 144px;
+  margin: 24px 0 0;
 }
 
 .registration__form{
   display: flex;
   flex-direction: column;
-  margin-right: 15%;
-  margin-bottom: 7%;
-  margin-left: 15%;
+  width: 100%;
+  padding: 40px;
 }
 
-.registration__name, .registration__phone, .registration__email, .registration__password{
-  height: 50px;
-  margin-top: 2%;
-  border: none;
-  border-bottom: 2px solid #000000;
-  outline: none;
-}
-
-input ::placeholder{
-  font-size: 64px;
-}
 
 .registration__button{
   align-self: center;
-  margin-top: 10%;
-  padding: 4% 13%;
+  gap: 4px;
+  min-width: 124px;
+  margin-top: 12px;
+  padding: 10px 16px;
   color: #ffffff;
-  font-weight: 900;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
   background: #f76c1e;
   border: none;
-  border-radius: 100px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.registration__button:hover {
+  background: #f06a1d;
 }
 
 .registration__wrapper > p{
   margin-bottom: 3%;
+  font-size: 15px;
 }
 
 .registration__link{
-  color: #1070ff;
+  color: #2688eb;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.registration__link:hover{
+  text-decoration: underline;
+}
+
+.registration__check {
+  background: none;
+  cursor: pointer;
+}
+
+.registration__check-label{
+  align-self: flex-start;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 660px){
+  .registration__form{
+    padding: 2%;
+  }
+
+  .registration__logo{
+    width: 110px;
+    margin: 8px 0 18px;
+  }
+
+  .registration__blur {
+    padding: 0 10px;
+  }
 }
 </style>

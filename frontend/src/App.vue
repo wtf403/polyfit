@@ -2,7 +2,7 @@
   <v-app>
     <TheHeader />
     <div id="app">
-      <router-view />
+      <router-view :timer="timer" />
     </div>
     <TheFooter />
   </v-app>
@@ -18,6 +18,18 @@ export default {
   components: {
     TheHeader,
     TheFooter,
+  },
+  data() {
+    return {
+      timer: 0,
+    };
+  },
+  mounted: function() {
+    this.$nextTick(function() {
+      window.setInterval(() => {
+        this.timer = this.timer + 1;
+      }, 1000);
+    });
   },
 };
 </script>

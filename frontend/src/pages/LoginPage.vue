@@ -10,55 +10,51 @@ const bgVideo = [
 </script>
 
 <template>
-  <div class="login" :style="{backgroundImage: 'url('+bgVideo[Math.floor(timer/8)%6]+')'}">
+  <section class="login" :style="{backgroundImage: 'url('+bgVideo[Math.floor(timer/8)%6]+')'}">
     <div class="login__blur">
-      <section class="login__wrapper wrapper animate__animated animate__fadeIn">
+      <div class="login__wrapper wrapper animate__animated animate__fadeIn">
         <img
           :src="require('@/assets/logo.svg')"
           alt="logo"
           class="login__logo"
           :srcset="require('@/assets/logo.svg') + ' 3x'"
         >
-        <form class="login__form" @submit="isAutorized">
-          <TheInput id="emailInput" v-model="userEmail" type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
-          <TheInput v-model="userPassword" type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
-          <label class="login__remember-label">
-            <input type="checkbox" class="login__remember"> Запомнить меня
-          </label>
-          <router-link to="/profile" class="login__button">
+        <form class="login__form" action="/profile" @submit="isAutorized">
+          <TheInput type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
+          <TheInput type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
+          <TheCheckbox type="checkbox" label="Запомнить меня" @update:model-value="(newValue)=>(userSave=newValue)" />
+          <button type="submit" class="login__button">
             Войти
-          </router-link>
+          </button>
+          <!-- <router-link to="/profile" class="login__button">
+            Войти
+          </router-link> -->
         </form>
         <p>Еще нет аккаунта? <a class="login__link" href="/reg">Зарегестрироваться</a></p>
-        <a class="login__link" href="#">Восстановить пароль</a>
-      </section>
+        <a class="login__link" href="/remember">Восстановить пароль</a>
+      </div>
     </div>
-  </div>
+  </section>
 </template>
 
 
 
 <script >
 import TheInput from '@/components/TheInput.vue';
+import TheCheckbox from '@/components/TheCheckbox.vue';
 
 export default {
   components: {
     TheInput,
+    TheCheckbox,
   },
+  props: ['timer'],
   data() {
     return {
-      timer: null,
-      myemail: '',
       userEmail: '',
       userPassword: '',
+      userSave: false,
     };
-  },
-  mounted: function() {
-    this.$nextTick(function() {
-      window.setInterval(() => {
-        this.timer = this.timer + 1;
-      }, 1000);
-    });
   },
   methods: {
     isAutorized() {
@@ -85,6 +81,7 @@ export default {
   height: 100%;
   min-height: 100vh;
   padding: 0 20px;
+  background-color: #00000030;
   backdrop-filter: blur(6px);
 }
 
@@ -133,14 +130,6 @@ export default {
   }
 }
 
-.login__email, .login__password{
-  height: 50px;
-  margin-top: 2%;
-  border: none;
-  border-bottom: 2px solid #000000;
-  outline: none;
-}
-
 .login__remember {
   background: none;
   cursor: pointer;
@@ -167,6 +156,7 @@ export default {
   background: #f76c1e;
   border: none;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .login__button:hover {
