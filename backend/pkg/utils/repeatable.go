@@ -1,12 +1,12 @@
-package repeatable
+package utils
 
 import "time"
 
-func DoWithTries(fn func() error, attemps int, delay time.Duration) (err error) {
-	for attemps > 0 {
+func DoWithTries(fn func() error, attemtps int, delay time.Duration) (err error) {
+	for attemtps > 0 {
 		if err = fn(); err != nil {
 			time.Sleep(delay)
-			attemps--
+			attemtps--
 
 			continue
 		}

@@ -3,13 +3,15 @@ package postgresql
 import (
 	"context"
 	"fmt"
-	"github.com/jackc/pgconn"
-	"github.com/jackc/pgx"
-	"github.com/jackc/pgx/v4/pgxpool"
 	"log"
-	"polyfit/internal/config"
-	"polyfit/pkg/utils"
 	"time"
+
+	"github.com/polyfit-live/polyfit/backend/internal/config"
+	"github.com/polyfit-live/polyfit/backend/pkg/utils"
+
+	"github.com/jackc/pgconn"
+	"github.com/jackc/pgx/v4"
+	"github.com/jackc/pgx/v4/pgxpool"
 )
 
 type Client interface {
@@ -19,9 +21,9 @@ type Client interface {
 	Begin(ctx context.Context) (pgx.Tx, error)
 }
 
-func NewClient(ctx context.Context, maxAttempts int, sc config.StorageConfig, username, password, host, port, database string) (pool *pgxpool.Pool, err error) {
-	dsn := fmt.Sprintf("postresql://%s:%s@%s:%s/%s", sc.Username, sc.Password, sc.Host, sc.Port, sc.Database)
-	err = repeatable.DoWithTries(func() error {
+func NewClient(ctx context.Context, maxAttempts int, sc config.StorageConfig) (pool *pgxpool.Pool, err error) {
+	dsn := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s", sc.Username, sc.Password, sc.Host, sc.Port, sc.Database)
+	err = utils.DoWithTries(func() error {
 		ctx, cancel := context.WithTimeout(ctx, 5*time.Second)
 		defer cancel()
 
@@ -34,7 +36,7 @@ func NewClient(ctx context.Context, maxAttempts int, sc config.StorageConfig, us
 	}, maxAttempts, 5*time.Second)
 
 	if err != nil {
-		log.Fatal("error with tries postgresql")
+		log.Fatal("error do with tries postgresql")
 	}
 
 	return pool, nil

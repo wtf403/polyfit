@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+  postgresql:
+    image: postgres:latest
+    container_name: polyfit-postgresql
+    restart: always
+    ports:
+      - "5436:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      default:
+        aliases:
+            - database
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=polyfit
+
+  migrate:
+    image: migrate/migrate
+    container_name: polyfit-migrations
+    networks:
+      - default
+    volumes:
+      - ./migrations:/migrations
+    command: ["-path", "./migrations", "-database", "postgres://postgres:password@database:5436/polyfit?sslmode=disable", "up"]
+    depends_on:
+      - postgresql
+
+  server:
+    container_name: polyfit-app
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - default
+    depends_on:
+      - postgresql
+      - migrate
+    environment:
+      - DATABASE_DSN=postgres://postgres:password@database:5436/polyfit?sslmode=disable
+    ports:
+      - "8080:8080"
+
+volumes:
+  pg_data:
+
+networks:
+  default:
+    driver: bridge

@@ -1,0 +1,12 @@
+---
+
+is_debug: true
+listen:
+  type: port
+  port: 8080
+storage:
+  host: localhost
+  port: 5436
+  database: polyfit
+  username: postgres 
+  password: password
