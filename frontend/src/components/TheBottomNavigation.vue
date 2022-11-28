@@ -43,7 +43,8 @@ export default {
   display: none;
   width: 100%;
   height: 64px;
-  background: rgba(255, 255, 255, 0.9);
+  background: #f9f9f9ee;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.08);
   backdrop-filter: blur(8px);
 }
 

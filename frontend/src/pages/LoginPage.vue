@@ -23,15 +23,18 @@ const bgVideo = [
           <TheInput type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
           <TheInput type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
           <TheCheckbox type="checkbox" label="Запомнить меня" @update:model-value="(newValue)=>(userSave=newValue)" />
-          <button type="submit" class="login__button">
+          <!-- <button type="submit" class="login__button">
             Войти
-          </button>
-          <!-- <router-link to="/profile" class="login__button">
+          </button> -->
+          <router-link to="/profile" class="login__button">
             Войти
-          </router-link> -->
+          </router-link>
         </form>
-        <p>Еще нет аккаунта? <a class="login__link" href="/reg">Зарегестрироваться</a></p>
-        <a class="login__link" href="/remember">Восстановить пароль</a>
+        <p>
+          Еще нет аккаунта?
+          <router-link class="login__link" to="/reg">Зарегестрироваться</router-link>
+        </p>
+        <router-link class="login__link" to="/remember">Восстановить пароль</router-link>
       </div>
     </div>
   </section>

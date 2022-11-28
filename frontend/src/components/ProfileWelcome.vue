@@ -27,7 +27,7 @@ export default {
 
 .profile__welcome {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 36px;
 }
 
 .profile__welcome-text {

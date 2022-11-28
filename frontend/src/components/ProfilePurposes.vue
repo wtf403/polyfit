@@ -5,7 +5,7 @@
         <p class="profile__purposes-name" :style="(IdSelectedPurpose == index+1) ? {color: '#F66C1E'} : {color: 'black'}">
           {{purpose.name}}
         </p>
-        <div class="prfile__purposes-date">
+        <div class="profile__purposes-date">
           <p class="profile__purposes-start">
             c {{purpose.start}}
           </p>
@@ -67,6 +67,21 @@ export default {
   font-weight: 500;
   font-size: 22px;
   line-height: 1.2;
+}
+
+@media screen and (max-width: 1030px) {
+  .profile__purposes-name {
+    font-size: 18px;
+  }
+
+  .profile__purposes-date{
+    display: flex;
+    gap: 6px;
+  }
+
+  .profile__purposes-date p {
+    font-size: 15px;
+  }
 }
 
 </style>

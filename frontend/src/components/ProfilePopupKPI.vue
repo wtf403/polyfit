@@ -109,6 +109,8 @@ export default {
   flex-wrap: wrap;
   justify-content: space-evenly;
   gap: 12px;
+  max-height: calc(90vh - 380px);
+  overflow: scroll;
 }
 
 .popup__button {
@@ -168,5 +170,33 @@ export default {
 
 .popup__kpi-input:active .popup__kpi-label {
   border: 1px solid black;
+}
+
+@media screen and (max-width: 900px) {
+  .popup__text {
+    font-size: 14px;
+  }
+
+  .popup__title {
+    font-size: 20px;
+  }
+
+  .popup__kpi-label {
+    padding: 5px 5px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .popup__text-info {
+    padding: 10px 16px;
+    font-size: 15px;
+  }
+
+  .popup__kpi-list {
+    gap: 8px;
+    max-height: 240px;
+    overflow: scroll;
+  }
 }
 </style>

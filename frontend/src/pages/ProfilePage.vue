@@ -389,8 +389,9 @@ export default {
 .profile__purpose, .profile__kpi, .profile__user, .profile__purposes-list, .profile__chart{
   margin-bottom: 40px;
   padding: 40px;
-  background-color: #fbfbfb;
-  border-radius: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .profile__purpose .profile__title {
@@ -427,18 +428,31 @@ export default {
   background-color: #f66c1e3d;
 }
 
-@media screen and (max-width: 1020px) {
-  .profile__user, .profile__purpose {
-    width: 100%;
+@media screen and (max-width: 1030px) {
+  .profile__control {
+    width: 100% !important;
   }
 
-  .profile__control{
-    width: 100%;
+  .profile__user, .profile__purpose, .profile__kpi, .profile__chart, .profile__purposes-list {
+    width: 100% !important;
+    padding: 24px !important;
   }
 
   .profile__purposes-list {
-    flex-direction: row;
-    overflow-x: scroll;
+    flex-direction: row !important;
+    overflow-x: scroll !important;
+  }
+
+  .profile__wrapper {
+    padding: 80px 20px 32px !important;
+  }
+
+  .profile__title {
+    font-size: 26px !important;
+  }
+
+  .profile__text {
+    font-size: 16px !important;
   }
 }
 

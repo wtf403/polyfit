@@ -29,7 +29,7 @@ const bgVideo = [
             Зарегестрироваться
           </button>
         </form>
-        <p>Уже есть аккаунт? <a class="registration__link" href="/log">Войти</a></p>
+        <p>Уже есть аккаунт? <router-link class="registration__link" to="/log">Войти</router-link></p>
       </div>
     </div>
   </section>
