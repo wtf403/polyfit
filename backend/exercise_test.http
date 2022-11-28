@@ -1,0 +1,37 @@
+### Get all exercises
+GET http://127.0.0.1:8080/exercise
+Content-Type: application/json
+
+### Get exercise
+GET http://127.0.0.1:8080/exercise/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+### Create exercise
+POST http://127.0.0.1:8080/exercise
+Content-Type: application/json
+
+{
+    "title" : "Example exercise",
+    "hardness": 1.5,
+    "amount" : 1,
+    "show_timer" : false,
+    "calories": 0
+}
+
+### Update exercise 
+PATCH http://127.0.0.1:8080/exercise/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{
+    "title" : "Updated title",
+    "hardness": 0,
+    "amount" : 0,
+    "show_timer" : false,
+    "calories": 777
+}
+
+### Delete exercise
+DELETE  http://127.0.0.1:8080/exercise/00000000-0000-0000-0000-000000000000
+Content-Type: application/json
+
+{}
