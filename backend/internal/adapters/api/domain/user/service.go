@@ -1,4 +1,4 @@
-package exercise
+package user
 
 import (
 	"context"
@@ -17,6 +17,6 @@ func NewService(repository Repository, logger *logging.Logger) *Service {
 	}
 }
 
-func (s *Service) GetAll(ctx context.Context) ([]Exercise, error) {
-	return s.repository.FindAll(ctx)
+func (s *Service) Create(ctx context.Context, dto CreateUserDTO) (u User, err error) {
+	return
 }
