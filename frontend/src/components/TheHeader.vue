@@ -3,12 +3,6 @@
     <div class="header__wrapper wrapper">
       <router-link class="header__link-logo" to="/">
         <img :src="require(`@/assets/logo.svg`)" alt="logo" class="header__logo">
-        <img
-          :src="require(`@/assets/logo.svg`)"
-          alt="logo"
-          class="header__logo--mobile"
-          :srcset="require('@/assets/logo.svg') + ' 1.5x'"
-        >
       </router-link>
       <nav class="header__nav nav">
         <ul class="nav__list">
@@ -24,7 +18,7 @@
         </ul>
       </nav>
       <div class="header__auth auth">
-        <router-link class="auth__reg" to="/reg">Регистрация</router-link>
+        <router-link class="auth__reg" to="/reg" :class="{'auth__reg--active': $route.path == '/reg'}">Регистрация</router-link>
         <span>|</span>
         <router-link class="auth__login" to="/log">Войти</router-link>
         <img :src="require('@/assets/account_icon.png')" alt="#" class="auth__account-icon" :srcset="require('@/assets/account_icon.png') + ' 1.2x'">
@@ -50,8 +44,12 @@ export default {
   backdrop-filter: blur(8px);
 }
 
+.header__link-logo {
+  display: flex;
+}
 
 .header__wrapper {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -68,17 +66,25 @@ export default {
 .nav__link {
   padding-bottom: 2px;
   font-weight: 400;
-  font-size: 84%;
+  font-size: 14px;
   text-transform: uppercase;
   border: none;
 }
 
+.nav__link:hover {
+  color: #f66c1e;
+}
+
 .nav__item--active .nav__link{
+  color: #f66c1e;
+  font-weight: 500;
   border-bottom: 2px solid #f66c1e;
 }
 
-.header__link-logo {
-  width: 18%;
+.header__nav {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
 }
 
 .header__logo--mobile{
@@ -90,7 +96,6 @@ export default {
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  width: 200px;
   column-gap: 15px;
 }
 
@@ -98,8 +103,17 @@ export default {
   padding-top: 2px;
   color: #000000;
   font-weight: 400;
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
+}
+
+.auth__reg:hover {
+  color: #f66c1e;
+}
+
+.auth__reg--active {
+  color: #f66c1e;
+  font-weight: 500;
 }
 
 .auth__login {
@@ -116,33 +130,9 @@ export default {
   display: none;
 }
 
-@media (max-width: 600px){
-  .header__logo{
+@media (max-width: 900px){
+  .header__nav{
     display: none;
-  }
-
-  .header__logo--mobile{
-    display: block;
-  }
-
-  nav{
-    display: none;
-  }
-
-  .auth__login{
-    display: none;
-  }
-
-  .auth__reg{
-    display: none;
-  }
-
-  .auth > span{
-    display: none;
-  }
-
-  .auth__account-icon{
-    display: block;
   }
 }
 </style>

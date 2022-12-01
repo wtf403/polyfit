@@ -1,3 +1,4 @@
+
 <template>
   <div class="animate__animated animate__fadeIn">
     <section class="workouts-settings">
@@ -5,7 +6,7 @@
     </section>
     <section class="workouts-content">
       <div class="workouts-content__wrapper">
-        <ul class="workouts-content__list">
+        <ul ref="parent" class="workouts-content__list">
           <li v-for="(workout, index) in sortWorkouts" :key="index" class="workouts-content__item">
             <WorkoutsItem :workout="workout" />
           </li>

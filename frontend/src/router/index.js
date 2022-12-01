@@ -8,6 +8,9 @@ import WorkoutPlayerPage from '@/pages/WorkoutPlayerPage';
 import LoginPage from '@/pages/LoginPage';
 import RegistrationPage from '@/pages/RegistrationPage';
 import ProfilePage from '@/pages/ProfilePage';
+import The404 from '@/pages/The404';
+import VueScrollTo from 'vue-scrollto';
+
 
 Vue.use(VueRouter);
 
@@ -47,22 +50,32 @@ const routes = [
     path: '/reg',
     component: RegistrationPage,
   },
-  
+
   {
     path: '/profile',
     component: ProfilePage,
+  },
+
+  {
+    path: '*',
+    component: The404,
   },
 ];
 
 
 const router = new VueRouter({
   mode: 'history',
-  scrollBehavior() {
-    return { x: 0, y: 0 };
+  base: process.env.BASE_URL,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      VueScrollTo.scrollTo('#app', 500, { offset: savedPosition.y });
+      return savedPosition;
+    } else {
+      VueScrollTo.scrollTo('#app');
+    }
   },
   routes,
 });
-
 
 
 export default router;
