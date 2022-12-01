@@ -44,6 +44,9 @@ export default {
   backdrop-filter: blur(8px);
 }
 
+.header__link-logo {
+  display: flex;
+}
 
 .header__wrapper {
   position: relative;
