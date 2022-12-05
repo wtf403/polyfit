@@ -7,9 +7,8 @@
             Выбранные KPI
           </p>
           <button class="profile__detail">
-            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="15" cy="15" r="15" fill="#F76C1E" fill-opacity="0.16" />
-              <path d="M16.629 10.9887V22.4004H14.0767V10.9887H16.629ZM13.9079 7.99336C13.9079 7.60664 14.0345 7.28672 14.2876 7.03359C14.5478 6.77344 14.9063 6.64336 15.3634 6.64336C15.8134 6.64336 16.1685 6.77344 16.4286 7.03359C16.6888 7.28672 16.8188 7.60664 16.8188 7.99336C16.8188 8.37305 16.6888 8.68945 16.4286 8.94258C16.1685 9.1957 15.8134 9.32227 15.3634 9.32227C14.9063 9.32227 14.5478 9.1957 14.2876 8.94258C14.0345 8.68945 13.9079 8.37305 13.9079 7.99336Z" fill="#F76C1E" />
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2C20.6274 2 26 7.37258 26 14C26 20.6274 20.6274 26 14 26C7.37258 26 2 20.6274 2 14C2 7.37258 7.37258 2 14 2ZM14 4C8.47715 4 4 8.47715 4 14C4 19.5228 8.47715 24 14 24C19.5228 24 24 19.5228 24 14C24 8.47715 19.5228 4 14 4ZM14 17.6C14.7732 17.6 15.4 18.2268 15.4 19C15.4 19.7732 14.7732 20.4 14 20.4C13.2268 20.4 12.6 19.7732 12.6 19C12.6 18.2268 13.2268 17.6 14 17.6ZM14.0736 8C14.3112 8 14.4604 8.03713 14.5907 8.10685C14.7211 8.17658 14.8234 8.27889 14.8931 8.40926C14.9629 8.53963 15 8.68878 15 8.92638V15.0736C15 15.3112 14.9629 15.4604 14.8931 15.5907C14.8234 15.7211 14.7211 15.8234 14.5907 15.8931C14.4604 15.9629 14.3112 16 14.0736 16H13.9264C13.6888 16 13.5396 15.9629 13.4093 15.8931C13.2789 15.8234 13.1766 15.7211 13.1069 15.5907C13.0371 15.4604 13 15.3112 13 15.0736V8.92638C13 8.68878 13.0371 8.53963 13.1069 8.40926C13.1766 8.27889 13.2789 8.17658 13.4093 8.10685C13.5396 8.03713 13.6888 8 13.9264 8H14.0736Z" fill="#f76c1e" />
             </svg>
           </button>
           <p class="profile__kpi-desc">
@@ -99,7 +98,7 @@ export default {
 
 .profile__kpi-desc {
   position: absolute;
-  top: -4px;
+  top: -5px;
   right: -384px;
   display: none;
   max-width: 380px;
@@ -127,10 +126,11 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 32px;
+  gap: 12px;
 }
 
 .profile__detail {
+  height: 28px;
   background: none;
   border: none;
   cursor: pointer;
@@ -217,5 +217,36 @@ export default {
 
 .profile__kpi-item:nth-child(n+5) .profile__kpi-link:hover{
   background-color: #f83c3c80;
+}
+
+@media screen and (max-width: 1050px){
+  .profile__kpi-desc {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: none;
+    width: auto;
+    height: 80px;
+    max-height: 120px;
+    margin-bottom: 12px;
+    padding: 10px 14px;
+    font-size: 14px;
+    line-height: 1.2;
+    background-color: #ffd2b8;
+    border: 1px solid #f76c1e;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+  }
+
+  .profile__kpi-head {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .profile__kpi-link {
+    height: auto;
+    padding: 8px 8px;
+    font-size: 15px;
+  }
 }
 </style>

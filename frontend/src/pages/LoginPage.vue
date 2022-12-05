@@ -1,35 +1,62 @@
+<script setup>
+const bgVideo = [
+  new URL('@/assets/authBG/bg1.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg2.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg3.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg4.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg5.webp', import.meta.url).href,
+  new URL('@/assets/authBG/bg6.webp', import.meta.url).href,
+];
+</script>
+
 <template>
-  <div class="login">
-    <section class="login__wrapper wrapper">
-      <img
-        :src="require('@/assets/white-logo.svg')"
-        alt="logo"
-        class="login__logo"
-        :srcset="require('@/assets/white-logo.svg') + ' 3x'"
-      >
-      <form class="login__form" @submit="isAutorized">
-        <input v-model="userEmail" type="email" placeholder="Email" class="login__email">
-        <input v-model="userPassword" type="password" placeholder="Пароль" class="login__password">
-        <label class="login__remember-label">
-          <input type="checkbox" class="login__remember"> Запомнить меня
-        </label>
-        <router-link to="/profile" class="login__button">
-          Войти
-        </router-link>
-      </form>
-      <p>Еще нет аккаунта? <a class="login__link" href="/reg">Зарегестрироваться</a></p>
-      <a class="login__link" href="#">Восстановить пароль</a>
-    </section>
-  </div>
+  <section class="login" :style="{backgroundImage: 'url('+bgVideo[Math.floor(timer/8)%6]+')'}">
+    <div class="login__blur">
+      <div class="login__wrapper wrapper animate__animated animate__fadeIn">
+        <img
+          :src="require('@/assets/logo.svg')"
+          alt="logo"
+          class="login__logo"
+          :srcset="require('@/assets/logo.svg') + ' 3x'"
+        >
+        <form class="login__form" action="/profile" @submit="isAutorized">
+          <TheInput type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
+          <TheInput type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
+          <TheCheckbox type="checkbox" label="Запомнить меня" @update:model-value="(newValue)=>(userSave=newValue)" />
+          <!-- <button type="submit" class="login__button">
+            Войти
+          </button> -->
+          <router-link to="/profile" class="login__button">
+            Войти
+          </router-link>
+        </form>
+        <p>
+          Еще нет аккаунта?
+          <router-link class="login__link" to="/reg">Зарегестрироваться</router-link>
+        </p>
+        <router-link class="login__link" to="/remember">Восстановить пароль</router-link>
+      </div>
+    </div>
+  </section>
 </template>
 
-<script>
+
+
+<script >
+import TheInput from '@/components/TheInput.vue';
+import TheCheckbox from '@/components/TheCheckbox.vue';
 
 export default {
+  components: {
+    TheInput,
+    TheCheckbox,
+  },
+  props: ['timer'],
   data() {
     return {
       userEmail: '',
       userPassword: '',
+      userSave: false,
     };
   },
   methods: {
@@ -38,76 +65,120 @@ export default {
     },
   },
 };
+
 </script>
 
 <style>
 
 .login{
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(6px);
+}
+
+.login__blur {
+  display: flex;
+  align-items: center;
+  width: 100%;
   height: 100%;
-  padding-top: 9%;
-  padding-bottom: 10%;
-  background: #0d2b54;
+  min-height: 100vh;
+  padding: 0 20px;
+  background-color: #00000030;
+  backdrop-filter: blur(6px);
 }
 
 .login__wrapper{
   display: flex;
   flex-direction: column;
-  margin-right: 35%;
-  margin-left: 35%;
-  padding-bottom: 3%;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 520px;
+  margin: 80px auto 40px;
+  padding: 20px 20px 40px;
   font-weight: 500;
   font-size: 40px;
   text-align: center;
-  background: #f6f6f6;
-  border: #f6f6f6;
-  border-radius: 10%;
+  background: rgba(255, 255, 255, 0.84);
+  border: #000000;
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
 }
 
 .login__logo{
-  margin: 5% 38% 10% 38%;
+  width: 144px;
+  margin: 24px 0 0;
 }
 
 .login__form{
   display: flex;
   flex-direction: column;
-  margin-right: 15%;
-  margin-bottom: 7%;
-  margin-left: 15%;
+  width: 100%;
+  padding: 40px 40px 24px;
 }
 
-.login__email, .login__password{
-  height: 50px;
-  margin-top: 2%;
-  border: none;
-  border-bottom: 2px solid #000000;
-  outline: none;
+@media screen and (max-width: 660px){
+  .login__form{
+    padding: 2%;
+  }
+
+  .login__logo{
+    width: 110px;
+    margin: 8px 0 18px;
+  }
+
+  .login__blur {
+    padding: 0 10px;
+  }
 }
 
-input ::placeholder{
-  font-size: 64px;
+.login__remember {
+  background: none;
+  cursor: pointer;
 }
 
 .login__remember-label{
   align-self: flex-start;
-  margin-top: 5%;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.4;
+  cursor: pointer;
 }
 
 .login__button{
   align-self: center;
-  margin-top: 10%;
-  padding: 4% 13%;
+  gap: 4px;
+  min-width: 124px;
+  margin-top: 12px;
+  padding: 10px 16px;
   color: #ffffff;
-  font-weight: 900;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
   background: #f76c1e;
   border: none;
-  border-radius: 100px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.login__button:hover {
+  background: #f06a1d;
 }
 
 .login__wrapper > p{
   margin-bottom: 3%;
+  font-size: 15px;
 }
 
 .login__link{
-  color: #1070ff;
+  color: #2688eb;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.login__link:hover{
+  text-decoration: underline;
 }
 </style>
