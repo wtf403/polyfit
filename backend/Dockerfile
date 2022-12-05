@@ -11,8 +11,8 @@ RUN go mod download
 
 # RUN swag init
 
-RUN go build -o polyfit cmd/main/app.go
+RUN go build -o polyfit /app/polyfit/cmd/main/app.go
 
-EXPOSE 8080
+EXPOSE 8087
 
 CMD ["./polyfit"]

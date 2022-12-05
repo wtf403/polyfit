@@ -15,8 +15,8 @@ import (
 )
 
 const (
-	exercisesURL = "/exercise"
-	exerciseURL  = "/exercise/:uuid"
+	exercisesURL = "/api/exercise"
+	exerciseURL  = "/api/exercise/:uuid"
 )
 
 type handler struct {
