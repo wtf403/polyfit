@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"github.com/polyfit-live/polyfit/backend/internal/apperror"
-	"github.com/polyfit-live/polyfit/backend/internal/config"
 	"github.com/polyfit-live/polyfit/backend/internal/handlers"
 	"github.com/polyfit-live/polyfit/backend/pkg/logging"
 
@@ -15,8 +14,8 @@ import (
 )
 
 const (
-	workoutsURL = "/workout"
-	workoutURL  = "/workout/:uuid"
+	workoutsURL = "/api/workout"
+	workoutURL  = "/api/workout/:uuid"
 )
 
 type handler struct {
@@ -53,8 +52,7 @@ func (h *handler) Create(w http.ResponseWriter, r *http.Request) error {
 		w.WriteHeader(400)
 		return err
 	}
-	cfg := config.GetConfig()
-	id = fmt.Sprintf("Location: http://%s:%s/workout/%s", cfg.Listen.BindIP, cfg.Listen.Port, id)
+	id = fmt.Sprintf("Location: http://polyfit.live/api/workout/%s", id)
 	bytes, err := json.Marshal(id)
 	if err != nil {
 		w.WriteHeader(404)

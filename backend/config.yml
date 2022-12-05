@@ -3,10 +3,10 @@
 is_debug: true
 listen:
   type: port
-  port: 8080
+  port: 8087
 storage:
   host: localhost
-  port: 5436
+  port: 5432
   database: polyfit
-  username: postgres 
+  username: postgres
   password: password

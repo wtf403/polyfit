@@ -6,7 +6,7 @@ services:
     container_name: polyfit-postgresql
     restart: always
     ports:
-      - "5436:5432"
+      - "5432:5432"
     volumes:
       - pg_data:/var/lib/postgresql/data
     networks:
@@ -25,7 +25,7 @@ services:
       - default
     volumes:
       - ./migrations:/migrations
-    command: ["-path", "./migrations", "-database", "postgres://postgres:password@database:5436/polyfit?sslmode=disable", "up"]
+    command: ["-path", "./migrations", "-database", "postgres://postgres:password@database:5432/polyfit?sslmode=disable", "up"]
     depends_on:
       - postgresql
 
@@ -41,9 +41,9 @@ services:
       - postgresql
       - migrate
     environment:
-      - DATABASE_DSN=postgres://postgres:password@database:5436/polyfit?sslmode=disable
+      - DATABASE_DSN=postgres://postgres:password@database:5432/polyfit?sslmode=disable
     ports:
-      - "8080:8080"
+      - "8087:8087"
 
 volumes:
   pg_data:

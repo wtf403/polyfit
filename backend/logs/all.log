@@ -2503,3 +2503,5 @@ time="2022-11-28T17:15:21+03:00" level=trace msg="UPDATE workout SET title = $1 
 time="2022-11-28T17:15:21+03:00" level=debug msg="[title = $1  description = $2  calories = $3 ]" func="github.com/polyfit-live/polyfit/backend/internal/workout/db.(*repository).Update()" file="postgresql.go:204"
 time="2022-11-28T17:15:30+03:00" level=info msg="Delete exercise ID: %s00000000-0000-0000-0000-000000000000" func="github.com/polyfit-live/polyfit/backend/internal/workout.(*handler).Delete()" file="handler.go:130"
 time="2022-11-28T17:15:30+03:00" level=trace msg="SQL Query:  DELETE FROM workout WHERE id = $1; " func="github.com/polyfit-live/polyfit/backend/internal/workout/db.(*repository).Delete()" file="postgresql.go:224"
+time="2022-12-01T00:37:05+03:00" level=info msg="create router" func="main.main()" file="app.go:26"
+time="2022-12-01T00:37:05+03:00" level=info msg="read application configuration" func="github.com/polyfit-live/polyfit/backend/internal/config.GetConfig.func1()" file="config.go:35"
