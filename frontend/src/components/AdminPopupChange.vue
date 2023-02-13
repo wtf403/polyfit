@@ -4,24 +4,24 @@
       <div class="popup__content">
         <form action="#" class="popup__form">
           <TheInput v-model="workoutContent.name" type="text" label="Название" @update:model-value="(newValue)=>(workoutContent.name=newValue)" />
-          <TheTextarea v-model="workoutContent.desc" type="text" label="Описание" @update:model-value="(newValue)=>(workoutContent.name=newValue)" />
+          <TheTextarea v-model="workoutContent.desc" type="text" label="Описание" @update:model-value="(newValue)=>(workoutContent.desc=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Тип
             </p>
-            <TheRadio v-model="workoutContent.type" :radio-content="radio.type" />
+            <TheRadio v-model="workoutContent.type" :radio-content="radio.type" :radio-selected="workoutContent.type" @change:model-value="(newValue)=>(workoutContent.type=newValue)" />
           </div>
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Сложность
             </p>
-            <TheRadio v-model="workoutContent.difficulty" :radio-content="radio.difficulty" />
+            <TheRadio v-model="workoutContent.difficulty" :radio-content="radio.difficulty" :radio-selected="workoutContent.difficulty" />
           </div>
           <div class="popup__form-row">
-            <TheInput v-model="workoutContent.time" type="number" label="Длительность" @update:model-value="(newValue)=>(workoutContent.name=newValue)" />
-            <TheInput v-model="workoutContent.cal" type="number" label="Калории" @update:model-value="(newValue)=>(workoutContent.name=newValue)" />
+            <TheInput v-model="workoutContent.time" type="number" label="Длительность" @update:model-value="(newValue)=>(workoutContent.time=newValue)" />
+            <TheInput v-model="workoutContent.cal" type="number" label="Калории" @update:model-value="(newValue)=>(workoutContent.cal=newValue)" />
           </div>
-          <TheInput v-model="workoutContent.inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(workoutContent.name=newValue)" />
+          <TheInput v-model="workoutContent.inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(workoutContent.inventory=newValue)" />
           <div class="popup__actions">
             <button class="profile__button" @click="confirm">
               Сохранить
@@ -61,9 +61,9 @@ export default {
           'сложно': 'Сложно',
         },
         type: {
-          power: 'Силовая',
-          speed: 'Скоростная',
-          stamina: 'Выносливая',
+          'Силовая': 'Силовая',
+          'Скоростная': 'Скоростная',
+          'Выносливость': 'Выносливая',
         },
       },
     };
@@ -79,7 +79,6 @@ export default {
         type: this.workout.type,
         inventory: this.workout.inventory,
       };
-
       return workout;
     },
     isConfirmationCorrect() {

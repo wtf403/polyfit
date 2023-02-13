@@ -3,8 +3,8 @@
   <div class="radio__wrapper">
     <ul class="radio__list">
       <li v-for="(item, index) in radioContent" :key="index" class="radio__item">
-        <label class="radio__label" :class="(radioSelected == index)?'radio__label--active':''">
-          <input :id="index" v-model="radioSelected" :value="index" class="radio__base" type="radio" name="radio">
+        <label :for="index" class="radio__label" :class="(radioActive == index)?'radio__label--active':''">
+          <input :id="index" v-model="radioActive" :value="index" class="radio__base" type="radio" name="radio">
           {{item}}
         </label>
       </li>
@@ -15,16 +15,18 @@
 <script>
 export default {
   name: 'RadioComponent',
-  props: ['radioContent'],
+  props: ['radioContent', 'radioSelected'],
   data() {
     return {
-      radioSelected: '',
-      radioActive: false,
+      radioActive: '',
     };
+  },
+  created() {
+    this.radioActive = this.radioSelected;
   },
   methods: {
     RadioEmit() {
-      this.$emit('get-radio', this.radioSelected);
+      this.$emit('get-radio', this.radioActive);
     },
   },
 };
