@@ -6,10 +6,10 @@
           Тренировки
         </h2>
         <div class="admin__head-workouts">
-          <button class="admin__add">
+          <button class="admin__add" @click="CreateWorkout()">
             Создать тренировку
           </button>
-          <input v-model="search" type="text" class="admin__search" placeholder="Поиск тренировки">
+          <input v-model="search" type="search" class="admin__search" placeholder="Поиск тренировки">
         </div>
         <ul class="admin__workouts">
           <li v-for="(workout, index) in sortWorkouts" :key="index" class="admin__workout">
@@ -18,7 +18,7 @@
               <button class="admin__change" @click="ChangeWorkout(workout)">
                 Изменить
               </button>
-              <button class="admin__delete">
+              <button class="admin__delete" @click="DeleteWorkout(workout)">
                 Удалить
               </button>
             </div>
@@ -27,7 +27,13 @@
       </div>
     </div>
     <Transition name="fade">
-      <AdminPopupChange ref="adminmodal" :workout="selectWorkout" />
+      <AdminPopupChange ref="adminmodal1" :workout="selectWorkout" />
+    </Transition>
+    <Transition name="fade">
+      <AdminPopupDelete ref="adminmodal2" :workout="selectWorkout" />
+    </Transition>
+    <Transition name="fade">
+      <AdminPopupCreate ref="adminmodal3" />r
     </Transition>
   </section>
 </template>
@@ -35,11 +41,15 @@
 <script>
 import WorkoutsItem from '@/components/WorkoutsItem';
 import AdminPopupChange from '@/components/AdminPopupChange';
+import AdminPopupDelete from '@/components/AdminPopupDelete.vue';
+import AdminPopupCreate from '@/components/AdminPopupCreate.vue';
 
 export default {
   components: {
     WorkoutsItem,
     AdminPopupChange,
+    AdminPopupDelete,
+    AdminPopupCreate,
   },
   data() {
     return {
@@ -258,7 +268,14 @@ export default {
     },
     ChangeWorkout(obj) {
       this.selectWorkout = obj;
-      this.$refs.adminmodal.ChangeWorkout();
+      this.$refs.adminmodal1.ChangeWorkout();
+    },
+    DeleteWorkout(obj) {
+      this.selectWorkout = obj;
+      this.$refs.adminmodal2.DeleteWorkout();
+    },
+    CreateWorkout() {
+      this.$refs.adminmodal3.CreateWorkout();
     },
   },
 };

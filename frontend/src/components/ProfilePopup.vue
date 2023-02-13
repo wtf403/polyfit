@@ -45,6 +45,7 @@ export default {
     },
 
     open() {
+      document.getElementsByTagName('html')[0].style.overflow = 'hidden';
       let resolve;
       let reject;
       const popupPromise = new Promise((ok, fail) => {
@@ -61,17 +62,20 @@ export default {
     confirm() {
       this.$options.popupController.resolve(true);
       this.isOpen = false;
+      document.getElementsByTagName('html')[0].style.overflow = 'scroll';
     },
 
     close() {
       this.$options.popupController.resolve(false);
       this.isOpen = false;
+      document.getElementsByTagName('html')[0].style.overflow = 'scroll';
     },
   },
 };
 </script>
 
 <style>
+
 .popup {
   position: fixed;
   top: auto;
@@ -114,6 +118,7 @@ export default {
   border: none;
   cursor: pointer;
 }
+
 
 @media screen and (max-width: 900px)
  {

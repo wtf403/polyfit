@@ -3,35 +3,35 @@
     <template #actions="{ confirm, close }">
       <div class="popup__content">
         <form action="#" class="popup__form">
-          <TheInput v-model="workoutContent.name" type="text" label="Название" @update:model-value="(newValue)=>(workoutContent.name=newValue)" />
-          <TheTextarea v-model="workoutContent.desc" type="text" label="Описание" @update:model-value="(newValue)=>(workoutContent.desc=newValue)" />
+          <TheInput v-model="name" type="text" label="Название" @update:model-value="(newValue)=>(name=newValue)" />
+          <TheTextarea v-model="desc" type="text" label="Описание" @update:model-value="(newValue)=>(desc=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Обложка
             </p>
             <TheInputFile label="Обновите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
             <div class="popup__form-row">
-              <img :src="file?file:workoutContent.image" alt="Big cover" class="popup__cover--big">
-              <img :src="file?file:workoutContent.image" alt="Small cover" class="popup__cover--small">
+              <img v-if="file" :src="file" alt="Big cover" class="popup__cover--big">
+              <img v-if="file" :src="file" alt="Small cover" class="popup__cover--small">
             </div>
           </div>
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Тип
             </p>
-            <TheRadio v-model="workoutContent.type" :radio-content="radio.type" :radio-selected="workoutContent.type" @change:model-value="(newValue)=>(workoutContent.type=newValue)" />
+            <TheRadio v-model="type" :radio-content="radio.type" :radio-selected="type" @change:model-value="(newValue)=>(type=newValue)" />
           </div>
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Сложность
             </p>
-            <TheRadio v-model="workoutContent.difficulty" :radio-content="radio.difficulty" :radio-selected="workoutContent.difficulty" />
+            <TheRadio v-model="difficulty" :radio-content="radio.difficulty" :radio-selected="difficulty" />
           </div>
           <div class="popup__form-row">
-            <TheInput v-model="workoutContent.time" type="number" label="Длительность" @update:model-value="(newValue)=>(workoutContent.time=newValue)" />
-            <TheInput v-model="workoutContent.cal" type="number" label="Калории" @update:model-value="(newValue)=>(workoutContent.cal=newValue)" />
+            <TheInput v-model="time" type="number" label="Длительность" @update:model-value="(newValue)=>(time=newValue)" />
+            <TheInput v-model="cal" type="number" label="Калории" @update:model-value="(newValue)=>(cal=newValue)" />
           </div>
-          <TheInput v-model="workoutContent.inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(workoutContent.inventory=newValue)" />
+          <TheInput v-model="inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(inventory=newValue)" />
           <div class="popup__actions">
             <button class="profile__button" @click="confirm">
               Сохранить
@@ -62,11 +62,17 @@ export default {
     TheRadio,
     TheInputFile,
   },
-  props: ['workout'],
   data() {
     return {
       confirmation: '',
+      name: '',
+      desc: '',
       file: '',
+      difficulty: '',
+      time: '',
+      cal: '',
+      type: '',
+      inventory: '',
       radio: {
         difficulty: {
           'легко': 'Легко',
@@ -82,25 +88,12 @@ export default {
     };
   },
   computed: {
-    workoutContent() {
-      let workout = {
-        name: this.workout.name,
-        desc: this.workout.desc,
-        difficulty: this.workout.difficulty,
-        time: this.workout.time,
-        cal: this.workout.cal,
-        type: this.workout.type,
-        inventory: this.workout.inventory,
-        image: this.workout.image,
-      };
-      return workout;
-    },
     isConfirmationCorrect() {
       return this.confirmation === this.$options.CONFIRMATION_TEXT;
     },
   },
   methods: {
-    async ChangeWorkout() {
+    async CreateWorkout() {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
