@@ -40,10 +40,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .workouts-card {
   display: block;
   width: 320px;
+  opacity: 0.95;
+  transform: scale(0.99);
+  transition: all 100ms ease;
+  &:hover {
+    opacity: 1;
+    transform: scale(1);
+
+  }
 }
 
 
