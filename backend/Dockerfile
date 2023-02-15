@@ -1,17 +1,22 @@
-FROM golang:1.19-alpine3.16
+FROM golang:1.20-alpine
+ENV APP_NAME="polyfit"
+ENV APP_DIR="/opt/polyfit"
 
-RUN mkdir -p /app/polyfit
+COPY . $APP_DIR
 
-COPY . /app/polyfit
-
-WORKDIR /app/polyfit
-
+WORKDIR $APP_DIR
+ADD . $APP_DIR
 RUN go mod download
-# RUN go install github.com/swaggo/swag/cmd/swag@latest
+RUN go build -o $APP_NAME cmd/main/app.go
 
-# RUN swag init
+# install psql
+RUN apk update
+RUN apk add postgresql-client
 
-RUN go build -o polyfit /app/polyfit/cmd/main/app.go
+# make wait-for-postgres.sh executable
+RUN chmod +x wait-for-postgres.sh
+
+VOLUME ./logs/all.log /opt/polyfit/logs/all.log 
 
 EXPOSE 8087
 

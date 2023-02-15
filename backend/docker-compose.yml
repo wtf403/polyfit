@@ -6,48 +6,50 @@ services:
     container_name: polyfit-postgresql
     restart: always
     ports:
-      - "5432:5432"
+      - "${DB_PORT}:5432"
     volumes:
-      - pg_data:/var/lib/postgresql/data
-    networks:
-      default:
-        aliases:
-            - database
+      - ./.database/postgres/data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=polyfit
+      POSTGRES_HOST: ${DB_HOST}
+      POSTGRES_PORT: ${DB_PORT}
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env
 
-  migrate:
-    image: migrate/migrate
-    container_name: polyfit-migrations
-    networks:
-      - default
-    volumes:
-      - ./migrations:/migrations
-    command: ["-path", "./migrations", "-database", "postgres://postgres:password@database:5432/polyfit?sslmode=disable", "up"]
-    depends_on:
-      - postgresql
+  # migrate:
+  #   image: migrate/migrate
+  #   container_name: polyfit-migrations
+  #   networks:
+  #     - default
+  #   volumes:
+  #     - ./migrations:/migrations
+  #   command:
+  #     [
+  #       "-path",
+  #       "./migrations",
+  #       "-database",
+  #       "postgres://${DB_USERNAME}:${DB_PASSWORD}@postgresql/${DB_DATABASE}?sslmode=disable",
+  #       "up",
+  #     ]
+  #   depends_on:
+  #     - postgresql
 
   server:
     container_name: polyfit-app
-    restart: on-failure
+    restart: "no"
     build:
       context: .
       dockerfile: Dockerfile
+    # command: ./wait-for-postgres.sh ./${APP_NAME}
     networks:
       - default
     depends_on:
       - postgresql
-      - migrate
-    environment:
-      - DATABASE_DSN=postgres://postgres:password@database:5432/polyfit?sslmode=disable
     ports:
-      - "8087:8087"
-
-volumes:
-  pg_data:
-
-networks:
-  default:
-    driver: bridge
+      - "${APP_PORT}:${APP_PORT}"
+    volumes:
+      - ./logs/all.log:/opt/polyfit/logs/all.log
+    env_file:
+      - .env

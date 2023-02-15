@@ -1,6 +1,6 @@
 module github.com/polyfit-live/polyfit/backend
 
-go 1.18
+go 1.20
 
 require (
 	github.com/georgysavva/scany v1.2.1

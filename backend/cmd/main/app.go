@@ -43,10 +43,10 @@ func main() {
 	exerciseHandler := exercise.NewHandler(exerciseRepository, logger)
 	exerciseHandler.Register(router)
 
-	start(router, cfg)
+	start(router, *cfg)
 }
 
-func start(router *httprouter.Router, cfg *config.Config) {
+func start(router *httprouter.Router, cfg config.Config) {
 	logger := logging.GetLogger()
 	logger.Info("start application")
 
