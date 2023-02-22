@@ -5,22 +5,29 @@
         <h2 class="admin__title">
           Тренировки
         </h2>
-        <div class="admin__head-workouts">
-          <button class="admin__add" @click="CreateWorkout()">
-            Создать тренировку
-          </button>
-          <input v-model="searchWorkout" type="search" class="admin__search" placeholder="Поиск тренировки">
+        <div class="admin__head">
+          <div class="admin__head-actions">
+            <button class="admin__button admin__button--add" @click="CreateWorkout()">
+              Создать тренировку
+            </button>
+            <button class="admin__button admin__button--show" @click="showListWorkouts = !showListWorkouts">
+              {{showListWorkouts?'Отобразить слайдером':'Плиточное отображение'}}
+            </button>
+          </div>
+          <TheInput v-model="searchWorkout" placeholder="Поиск тренировки" type="search" @update:model-value="(newValue)=>(searchWorkout=newValue)" />
         </div>
-        <ul class="admin__workouts">
+        <ul class="admin__list" :class="showListWorkouts?'admin__list--full':''">
           <li v-for="(workout, index) in sortWorkouts" :key="index" class="admin__workout">
             <WorkoutsItem :workout="workout" />
             <div class="admin__actions">
-              <button class="admin__change" @click="ChangeWorkout(workout)">
-                Изменить
-              </button>
-              <button class="admin__delete" @click="DeleteWorkout(workout)">
-                Удалить
-              </button>
+              <div class="admin__subactions">
+                <button class="admin__button admin__button--change" @click="ChangeWorkout(workout)">
+                  Изменить
+                </button>
+                <button class="admin__button admin__button--delete" @click="DeleteWorkout(workout)">
+                  Удалить
+                </button>
+              </div>
             </div>
           </li>
         </ul>
@@ -29,60 +36,81 @@
         <h2 class="admin__title">
           Упражнения
         </h2>
-        <div class="admin__head-workouts">
-          <button class="admin__add" @click="CreateWorkout()">
-            Создать упражнение
-          </button>
-          <input v-model="searchExercise" type="search" class="admin__search" placeholder="Поиск упражнения">
+        <div class="admin__head">
+          <div class="admin__head-actions">
+            <button class="admin__button admin__button--add" @click="CreateExercise()">
+              Создать упражнение
+            </button>
+            <button class="admin__button admin__button--show" @click="showListExercises = !showListExercises">
+              {{showListExercises?'Отобразить слайдером':'Плиточное отображение'}}
+            </button>
+          </div>
+          <TheInput v-model="searchExercise" placeholder="Поиск упражнения" type="search" @update:model-value="(newValue)=>(searchExercise=newValue)" />
         </div>
-        <ul class="admin__workouts">
+        <ul class="admin__list" :class="showListExercises?'admin__list--full':''">
           <li v-for="(exercise, index) in sortExercise" :key="index" class="admin__workout">
             <TheExercise :exercise="exercise" />
             <div class="admin__actions">
-              <button class="admin__change" @click="ChangeWorkout(exercise)">
-                Изменить
-              </button>
-              <button class="admin__delete" @click="DeleteWorkout(exercise)">
-                Удалить
-              </button>
+              <div class="admin__subactions">
+                <button class="admin__button admin__button--change" @click="ChangeExercise(exercise)">
+                  Изменить
+                </button>
+                <button class="admin__button admin__button--delete" @click="DeleteWorkout(exercise)">
+                  Удалить
+                </button>
+              </div>
             </div>
           </li>
         </ul>
       </div>
     </div>
     <Transition name="fade">
-      <AdminPopupChange ref="adminmodal1" :workout="selectWorkout" />
+      <AdminPopupChangeExercise ref="adminChangeExercise" :exercise="selectExercise" />
     </Transition>
     <Transition name="fade">
-      <AdminPopupDelete ref="adminmodal2" :workout="selectWorkout" />
+      <AdminPopupChangeWorkout ref="adminChangeWorkout" :workout="selectWorkout" />
     </Transition>
     <Transition name="fade">
-      <AdminPopupCreate ref="adminmodal3" />r
+      <AdminPopupDeleteWorkout ref="adminDeleteWorkout" :workout="selectWorkout" />
+    </Transition>
+    <Transition name="fade">
+      <AdminPopupCreateWorkout ref="adminCreateWorkout" />
+    </Transition>
+    <Transition name="fade">
+      <AdminPopupCreateExercise ref="adminCreateExercise" />
     </Transition>
   </section>
 </template>
 
 <script>
 import WorkoutsItem from '@/components/WorkoutsItem';
-import AdminPopupChange from '@/components/AdminPopupChange';
-import AdminPopupDelete from '@/components/AdminPopupDelete.vue';
-import AdminPopupCreate from '@/components/AdminPopupCreate.vue';
+import TheInput from '@/components/TheInput';
+import AdminPopupChangeWorkout from '@/components/AdminPopupChangeWorkout';
+import AdminPopupDeleteWorkout from '@/components/AdminPopupDeleteWorkout.vue';
+import AdminPopupCreateWorkout from '@/components/AdminPopupCreateWorkout.vue';
 import TheExercise from '@/components/TheExercise.vue';
+import AdminPopupCreateExercise from '@/components/AdminPopupCreateExercise.vue';
+import AdminPopupChangeExercise from '@/components/AdminPopupChangeExercise.vue';
 
 export default {
   components: {
     WorkoutsItem,
-    AdminPopupChange,
-    AdminPopupDelete,
-    AdminPopupCreate,
+    AdminPopupChangeWorkout,
+    AdminPopupDeleteWorkout,
+    AdminPopupCreateWorkout,
     TheExercise,
+    TheInput,
+    AdminPopupCreateExercise,
+    AdminPopupChangeExercise,
   },
   data() {
     return {
-      searchWorkout: '',
+      showListExercises: false,
+      showListWorkouts: false,
       selectWorkout: {},
-      searchExercise: '',
+      searchWorkout: '',
       selectExercise: {},
+      searchExercise: '',
       workouts: [{
         image: require('@/assets/WorkoutImage-0.png'),
         name: 'Работа над резервной копией',
@@ -93,7 +121,7 @@ export default {
         rec: true,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Спортивный коврик.',
-
+        gender: 'Мужской',
       },
       {
         id: 1,
@@ -106,6 +134,7 @@ export default {
         rec: true,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
 
       },
       {
@@ -119,6 +148,7 @@ export default {
         rec: true,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Спортивный коврик.',
+        gender: 'Мужской',
 
       },
       {
@@ -132,6 +162,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 4,
@@ -144,6 +175,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 5,
@@ -156,6 +188,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 6,
@@ -168,6 +201,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 7,
@@ -180,6 +214,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 8,
@@ -192,6 +227,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 9,
@@ -204,6 +240,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 10,
@@ -216,6 +253,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 11,
@@ -228,6 +266,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 12,
@@ -240,6 +279,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 13,
@@ -252,6 +292,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 14,
@@ -264,6 +305,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       },
       {
         id: 15,
@@ -276,6 +318,7 @@ export default {
         rec: false,
         desc: 'Данная тренировка расчитана на улучшение выносливости тела к умеренным физическим нагрузкам. Время, выделенное на выполнение упражнений соответсвует уровню сложности данной тренировки.',
         inventory: 'Гантели, спортивный коврик.',
+        gender: 'Мужской',
       }],
       exercises: [
         {
@@ -384,14 +427,21 @@ export default {
     },
     ChangeWorkout(obj) {
       this.selectWorkout = obj;
-      this.$refs.adminmodal1.ChangeWorkout();
+      this.$refs.adminChangeWorkout.ChangeWorkout();
     },
     DeleteWorkout(obj) {
       this.selectWorkout = obj;
-      this.$refs.adminmodal2.DeleteWorkout();
+      this.$refs.adminDeleteWorkout.DeleteWorkout();
     },
     CreateWorkout() {
-      this.$refs.adminmodal3.CreateWorkout();
+      this.$refs.adminCreateWorkout.CreateWorkout();
+    },
+    CreateExercise() {
+      this.$refs.adminCreateExercise.CreateExercise();
+    },
+    ChangeExercise(obj) {
+      this.selectExercise = obj;
+      this.$refs.adminChangeExercise.ChangeExercise();
     },
   },
 };
@@ -404,20 +454,30 @@ export default {
   padding: 64px 40px 60px;
 }
 
+.admin__block {
+  margin-bottom: 40px;
+}
+
 .admin__title {
   font-size: 24px;
   margin-bottom: 12px;
 }
 
-.admin__workouts {
+.admin__list {
   position: relative;
   display: flex;
   gap: 20px;
   list-style: none;
   max-height: 400px;
   overflow: scroll;
-  padding-bottom: 16px;
-  margin-top: 24px;
+  // padding-bottom: 16px;
+  margin-bottom: 24px;
+  &--full {
+    flex-wrap: wrap;
+    overflow: auto;
+    height: 100%;
+    max-height: none;
+  }
 }
 
 .admin__workout {
@@ -426,99 +486,101 @@ export default {
 
 .admin__actions {
   position: absolute;
-  border: 1px solid black;
-  border-radius: 8px;
   top: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.20);
-  backdrop-filter: blur(3px);
+  &:hover {
+    & .admin__subactions {
+    transition: all 200ms ease;
+      opacity: 1;
+    }
+  }
+}
+
+.admin__subactions {
   opacity: 0;
-  &:hover {
-    opacity: 1;
-    transition: all 100ms ease-out;
-  }
-}
-
-.admin__change {
-  cursor: pointer;
-  padding: 6px 12px;
-  gap: 2px;
-  border: 0;
-  text-decoration: none;
-  background-color: #2C7CDECC;
-  border: 1px solid #2688EB;
-  backdrop-filter: blur(2px);
-  border-radius: 8px;
-  font-size: 15px;
-  line-height: 1.3;
-  color:white;
-  &:hover {
-    background-color: #1E6FDB;
-  }
-}
-
-.admin__delete {
-  cursor: pointer;
-  padding: 6px 12px;
-  gap: 2px;
-  border: 0;
-  text-decoration: none;
-  border-radius: 8px;
-  background-color: #D83E3CCC;
-  border: 1px solid #E64646;
-  backdrop-filter: blur(2px);
-  font-size: 15px;
-  line-height: 1.3;
-  color:white;
-  &:hover {
-    background-color: #C93633;
-  }
-}
-
-.admin__head-workouts {
   display: flex;
-  justify-content: space-between;
-}
-
-.admin__add {
-  cursor: pointer;
-  width: 180px;
-  height: 36px;
-  padding: 12px 6px;
-  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  font-size: 15px;
-  color: white;
-  background-color: #3CA03E;
-  border: 1px solid #4BB34B;
-  &:hover {
-    background-color: #2F8D32;
+  gap: 8px;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.40);
+  backdrop-filter: blur(16px);
+  z-index: 4;
+}
+.admin__button{
+  cursor: pointer;
+  height: fit-content;
+  padding: 6px 12px;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.42;
+  color:white;
+  box-shadow: 0 1px 0 rgba(27,31,36,0.1),inset 0 1px 0 rgba(255,255,255,0.03);
+
+  &:focus {
+      box-shadow: none;
+      outline: 1px solid #0000;
+  }
+
+  &--change {
+    background-color: #218bff;
+    border-color: rgba(27,31,36,0.15);
+    &:hover {
+      background-color: #0969da;
+      border-color: rgba(27,31,36,0.25);
+    }
+  }
+
+  &--delete {
+    background-color: #da2e2b;
+    border-color:rgba(36, 27, 27, 0.15);
+    width: 100%;
+    &:hover {
+      background-color: #bc1714;
+      border-color:rgba(36, 27, 27, 0.25);
+    }
+  }
+
+  &--add {
+    background-color: #2da44e;
+    border-color:rgba(28, 36, 27, 0.15);
+    &:hover {
+      background-color: #2c974b;
+      border-color:rgba(28, 36, 27, 0.25);
+    }
+  }
+
+  &--show {
+    color: #24292f;
+    background-color: #f6f8fa;
+    border-color:rgba(28, 36, 27, 0.15);
+    &:hover {
+      background-color: #f3f4f6;
+      border-color:rgba(28, 36, 27, 0.25);
+    }
   }
 }
 
-.admin__search {
-
+.admin__head {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  width: 260px;
-  height: 36px;
-  padding: 8px 8px 8px 16px;
-  color: #23262f;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.1;
-  background: white;
-  border: 2px solid #e6e8ec;
-  border-radius: 90px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
-
+.admin__head-actions {
+  display: flex;
+  gap: 12px;
+}
 </style>

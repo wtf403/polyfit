@@ -44,7 +44,8 @@ export default {
 
 .radio__list {
   display: flex;
-  gap: 6px;
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .radio__label {
@@ -53,7 +54,6 @@ export default {
   color: black;
   font-weight: 400;
   font-size: 16px;
-  font-size: 14px;
   cursor: pointer;
 }
 
@@ -63,7 +63,7 @@ export default {
   flex-shrink: 0;
   width: 1em;
   height: 1em;
-  margin-right: 0.5em;
+  margin-right: 0.4em;
   background-color: #f5f5f5ed;
   background-repeat: no-repeat;
   background-position: center center;

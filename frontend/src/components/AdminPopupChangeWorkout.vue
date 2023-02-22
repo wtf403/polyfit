@@ -11,8 +11,8 @@
             </p>
             <TheInputFile label="Обновите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
             <div class="popup__form-row">
-              <img :src="file?file:workoutContent.image" alt="Big cover" class="popup__cover--big">
-              <img :src="file?file:workoutContent.image" alt="Small cover" class="popup__cover--small">
+              <img :src="file?file:workoutContent.image" alt="Big cover" class="popup__cover popup__cover--big">
+              <img :src="file?file:workoutContent.image" alt="Small cover" class="popup__cover popup__cover--small">
             </div>
           </div>
           <div class="popup__form-column">
@@ -30,6 +30,7 @@
           <div class="popup__form-row">
             <TheInput v-model="workoutContent.time" type="number" label="Длительность" @update:model-value="(newValue)=>(workoutContent.time=newValue)" />
             <TheInput v-model="workoutContent.cal" type="number" label="Калории" @update:model-value="(newValue)=>(workoutContent.cal=newValue)" />
+            <TheDropdown v-model="workoutContent.gender" :default-value="workout.gender" label="Пол" :model-value="radio.gender" @update:model-value="(newValue)=>(workoutContent.gender=newValue)" />
           </div>
           <TheInput v-model="workoutContent.inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(workoutContent.inventory=newValue)" />
           <div class="popup__actions">
@@ -51,16 +52,18 @@ import ProfilePopup from '@/components/ProfilePopup.vue';
 import TheInput from '@/components/TheInput.vue';
 import TheInputFile from '@/components/TheInputFile.vue';
 import TheTextarea from '@/components/TheTextarea.vue';
+import TheDropdown from './TheDropdown.vue';
 import TheRadio from './TheRadio.vue';
 
 export default {
-  name: 'AdminPopupChange',
+  name: 'AdminPopupChangeWorkout',
   components: {
     ProfilePopup,
     TheInput,
     TheTextarea,
     TheRadio,
     TheInputFile,
+    TheDropdown,
   },
   props: ['workout'],
   data() {
@@ -78,6 +81,11 @@ export default {
           'Скоростная': 'Скоростная',
           'Выносливость': 'Выносливая',
         },
+        gender: {
+          'муж': 'Мужской',
+          'жен': 'Женский',
+          'общая': 'Общий',
+        },
       },
     };
   },
@@ -92,6 +100,7 @@ export default {
         type: this.workout.type,
         inventory: this.workout.inventory,
         image: this.workout.image,
+        gender: this.workout.gender,
       };
       return workout;
     },
@@ -192,25 +201,24 @@ export default {
 
 .popup__actions{
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 12px;
 }
 
 
 .popup__cover{
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 2px 0 12px;
   &--big {
-    width: 316px;
+    max-width: 316px;
+    width: 100%;
     height: 198px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 4px;
   }
   &--small {
     width: 60px;
     height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 4px;
   }
 
 }

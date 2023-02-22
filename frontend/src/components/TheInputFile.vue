@@ -1,6 +1,6 @@
 <template>
   <div class="input__wrapper">
-    <label class="input__label">
+    <label class="input__label" dropzone="true">
       {{label}}
       <input
         v-bind="$attrs"

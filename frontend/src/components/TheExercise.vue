@@ -15,13 +15,8 @@
 <script>
 
 export default {
-  name: 'WorkoutsItemComponent',
+  name: 'ExersicesItemComponent',
   props: ['exercise'],
-  data() {
-    return {
-      // exercise: this.$route.query;
-    };
-  },
 };
 </script>
 
@@ -39,7 +34,7 @@ export default {
 
 .exercises__info {
   position: absolute;
-  padding: 20px;
+  padding: 12px 20px;
   background-color: #00000080;
   backdrop-filter: blur(4px);
   border-radius: 0 0 8px 8px;
@@ -55,24 +50,25 @@ export default {
 
 .exercises__name {
   display: -webkit-box;
-  max-height: 48px;
+  max-height: 40px;
   overflow: hidden;
   font-weight: 400;
   font-size: 18px;
   color: white;
-  line-height: 1;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .exercises__count {
   position: absolute;
+  font-weight: 800;
   padding: 8px 12px;
   color: #f66c1e;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 12px;
   line-height: 1;
-  background-color: #00000080;
+  background-color: #000000AA;
   border-radius: 8px;
   bottom: 216px;
   right: 8px;

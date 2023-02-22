@@ -3,6 +3,7 @@
     <label class="input__label">
       {{label}}
       <input
+        :disabled="disable"
         class="input__base"
         v-bind="$attrs"
         @input="$emit('update:model-value', $event.target.value)"
@@ -20,6 +21,10 @@ defineProps({
   modelValue: {
     type: String,
     default: '',
+  },
+  disable: {
+    type: Boolean,
+    default: false,
   },
 });
 </script>

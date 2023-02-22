@@ -3,35 +3,23 @@
     <template #actions="{ confirm, close }">
       <div class="popup__content">
         <form action="#" class="popup__form">
-          <TheInput v-model="name" type="text" label="Название" @update:model-value="(newValue)=>(name=newValue)" />
-          <TheTextarea v-model="desc" type="text" label="Описание" @update:model-value="(newValue)=>(desc=newValue)" />
+          <TheInput v-model="exerciseContent.name" type="text" label="Наименование" @update:model-value="(newValue)=>(exerciseContent.name=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Обложка
             </p>
             <TheInputFile label="Обновите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
             <div class="popup__form-row">
-              <img v-if="file" :src="file" alt="Big cover" class="popup__cover--big">
-              <img v-if="file" :src="file" alt="Small cover" class="popup__cover--small">
+              <img :src="file?file:exerciseContent.image" alt="Big cover" class="popup__cover popup__cover--big">
+              <img :src="file?file:exerciseContent.image" alt="Small cover" class="popup__cover popup__cover--small">
             </div>
           </div>
-          <div class="popup__form-column">
-            <p class="popup__radio-label">
-              Тип
-            </p>
-            <TheRadio v-model="type" :radio-content="radio.type" :radio-selected="type" @change:model-value="(newValue)=>(type=newValue)" />
-          </div>
-          <div class="popup__form-column">
-            <p class="popup__radio-label">
-              Сложность
-            </p>
-            <TheRadio v-model="difficulty" :radio-content="radio.difficulty" :radio-selected="difficulty" />
-          </div>
+          <TheDropdown v-model="exerciseContent.type" label="Тип" :model-value="radio.type" @update:model-value="(newValue)=>(exerciseContent.type=newValue)" />
           <div class="popup__form-row">
-            <TheInput v-model="time" type="number" label="Длительность" @update:model-value="(newValue)=>(time=newValue)" />
-            <TheInput v-model="cal" type="number" label="Калории" @update:model-value="(newValue)=>(cal=newValue)" />
+            <TheInput v-model="exerciseContent.time" type="number" label="Длительность (сек.)" @update:model-value="(newValue)=>(exerciseContent.time=newValue)" />
+            <TheInput v-model="exerciseContent.count" :disable="(exerciseContent.type==='На время')" type="text" label="Количество повторений" @update:model-value="(newValue)=>(exerciseContent.count=newValue)" />
+            <TheInput v-model="exerciseContent.cal" type="number" label="Каллории" @update:model-value="(newValue)=>(exerciseContent.cal=newValue)" />
           </div>
-          <TheInput v-model="inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(inventory=newValue)" />
           <div class="popup__actions">
             <button class="profile__button" @click="confirm">
               Сохранить
@@ -50,50 +38,48 @@
 import ProfilePopup from '@/components/ProfilePopup.vue';
 import TheInput from '@/components/TheInput.vue';
 import TheInputFile from '@/components/TheInputFile.vue';
-import TheTextarea from '@/components/TheTextarea.vue';
-import TheRadio from './TheRadio.vue';
+import TheDropdown from '@/components/TheDropdown.vue';
 
 export default {
-  name: 'AdminPopupChange',
+  name: 'AdminPopupChangeExercise',
   components: {
     ProfilePopup,
     TheInput,
-    TheTextarea,
-    TheRadio,
     TheInputFile,
+    TheDropdown,
   },
+  props: ['exercise'],
   data() {
     return {
       confirmation: '',
-      name: '',
-      desc: '',
       file: '',
-      difficulty: '',
-      time: '',
-      cal: '',
-      type: '',
-      inventory: '',
       radio: {
-        difficulty: {
-          'легко': 'Легко',
-          'средне': 'Средне',
-          'сложно': 'Сложно',
-        },
         type: {
-          'Силовая': 'Силовая',
-          'Скоростная': 'Скоростная',
-          'Выносливость': 'Выносливая',
+          'На время': 'На время',
+          'Повторения': 'Повторения',
         },
+
       },
     };
   },
   computed: {
+    exerciseContent() {
+      let exercise = {
+        name: this.exercise.exerciseName,
+        time: '',
+        cal: '',
+        count: this.exercise.exerciseCount,
+        type: '',
+        image: this.exercise.exerciseImage,
+      };
+      return exercise;
+    },
     isConfirmationCorrect() {
       return this.confirmation === this.$options.CONFIRMATION_TEXT;
     },
   },
   methods: {
-    async CreateWorkout() {
+    async ChangeExercise() {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
@@ -125,12 +111,10 @@ export default {
   border-radius: 12px;
 }
 
-
 .popup__text {
   margin-bottom: 12px;
   font-size: 18px;
 }
-
 
 .popup__form {
   display: flex;
@@ -139,7 +123,6 @@ export default {
   max-height: calc(90vh - 80px);
   gap: 6px;
 }
-
 
 .popup__button {
   margin-top: 12px;
@@ -189,23 +172,18 @@ export default {
   margin-top: 12px;
 }
 
-
 .popup__cover{
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 4px 0 12px;
   &--big {
-    width: 316px;
+    width: 198px;
     height: 198px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 4px;
   }
   &--small {
     width: 60px;
     height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 4px;
   }
-
 }
 
 @media screen and (max-width: 900px) {
