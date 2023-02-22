@@ -1,12 +1,13 @@
 <template>
   <div class="input__wrapper">
-    <label class="input__label">
+    <label class="input__label" dropzone="true">
       {{label}}
       <input
-        :disabled="disable"
-        class="input__base"
         v-bind="$attrs"
-        @input="$emit('update:model-value', $event.target.value)"
+        v-model="file"
+        class="input__base"
+        accept="image/*"
+        @input="$emit('update:model-value', $event)"
       >
     </label>
   </div>
@@ -22,35 +23,52 @@ defineProps({
     type: String,
     default: '',
   },
-  disable: {
-    type: Boolean,
-    default: false,
-  },
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .input__wrapper {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
+
 }
 
 .input__label {
+  cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  margin-top: 4px;
+  margin-bottom: 12px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 44px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  background: #f5f5f5ed;
+  border: 1px dotted rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
   gap: 8px;
   color: #6f645d;
   font-weight: 400;
   font-size: 14px;
+  &:hover {
+    border: 1px dotted rgba(0, 0, 0, 0.24);
+    background: #f5f5f5ff;
+    color: #403b38;
+
+  }
 }
 
 .input__base {
+  display: none;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 44px;
-  padding: 12px;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.4;

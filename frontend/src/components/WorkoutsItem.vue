@@ -40,13 +40,21 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .workouts-card {
   display: block;
   width: 320px;
+  opacity: 0.95;
+  transition: all 200ms ease;
+  border-radius: 8px;
+  &:hover {
+    opacity: 1;
+    & .workouts-card__image {
+      transform: scale(1.025);
+      transition: transform 400ms ease;
+    }
+  }
 }
-
-
 .workouts-card__cover {
   width: 100%;
   height: 200px;
@@ -125,14 +133,6 @@ export default {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.1;
-}
-
-.workouts-card:hover .workouts-card__name{
-  text-decoration: underline;
-}
-
-.workouts-card:hover .workouts-card__image {
-  transform: scale(1.05);
 }
 
 </style>

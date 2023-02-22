@@ -26,7 +26,7 @@ const bgVideo = [
           <!-- <button type="submit" class="login__button">
             Войти
           </button> -->
-          <router-link to="/profile" class="login__button">
+          <router-link :to="(userEmail=='admin'&userPassword=='admin')?'/admin':'/profile'" class="login__button">
             Войти
           </router-link>
         </form>

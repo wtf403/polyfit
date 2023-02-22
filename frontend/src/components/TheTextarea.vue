@@ -2,12 +2,11 @@
   <div class="input__wrapper">
     <label class="input__label">
       {{label}}
-      <input
-        :disabled="disable"
+      <textarea
         class="input__base"
         v-bind="$attrs"
-        @input="$emit('update:model-value', $event.target.value)"
-      >
+        @change="$emit('update:model-value', $event.target.value)"
+      />
     </label>
   </div>
 </template>
@@ -21,10 +20,6 @@ defineProps({
   modelValue: {
     type: String,
     default: '',
-  },
-  disable: {
-    type: Boolean,
-    default: false,
   },
 });
 </script>
@@ -50,6 +45,7 @@ defineProps({
 .input__base {
   width: 100%;
   height: 44px;
+  min-height: 100px;
   padding: 12px;
   font-weight: 400;
   font-size: 16px;
@@ -57,6 +53,7 @@ defineProps({
   background: #f5f5f5ed;
   border: 0.5px solid rgba(0, 0, 0, 0.12);
   border-radius: 8px;
+  resize: vertical;
   caret-color: #eb6826;
 }
 

@@ -9,6 +9,7 @@ import LoginPage from '@/pages/LoginPage';
 import RegistrationPage from '@/pages/RegistrationPage';
 import ProfilePage from '@/pages/ProfilePage';
 import The404 from '@/pages/The404';
+import AdminPage from '@/pages/AdminPage';
 import VueScrollTo from 'vue-scrollto';
 
 
@@ -49,6 +50,11 @@ const routes = [
   {
     path: '/reg',
     component: RegistrationPage,
+  },
+
+  {
+    path: '/admin',
+    component: AdminPage,
   },
 
   {
