@@ -40,8 +40,8 @@ export default {
   position: fixed;
   z-index: 5;
   width: 100%;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
+  background: rgba(252, 252, 252, 0.75);
+  backdrop-filter: blur(20px);
 }
 
 .header__link-logo {
