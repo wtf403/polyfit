@@ -204,7 +204,7 @@
       </div>
       <div class="footer__copyright copyright">
         <p class="copyright__text">
-          Copyright © 2022 Московский политехнический университет. Все права сохранены.
+          Copyright © 2023 Московский политехнический университет. Все права сохранены.
         </p>
       </div>
     </div>
