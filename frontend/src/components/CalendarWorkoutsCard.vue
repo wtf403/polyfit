@@ -1,5 +1,5 @@
 <template>
-  <div class="mini-workouts-card">
+  <router-link :to="{ path: '/workouts/'+workout.id, query: {item: workout}}" class="mini-workouts-card">
     <img :src="workout.image" alt="Cover workout item" class="mini-workouts-card__image" :class="workout.type=='Скоростная'?'mini-workouts-card__image--speed':workout.type=='Силовая'?'mini-workouts-card__image--force':'mini-workouts-card__image--stamina'">
     <div class="mini-workouts-card__info">
       <p class="mini-workouts-card__type" :class="workout.type=='Скоростная'?'mini-workouts-card__type--speed':workout.type=='Силовая'?'mini-workouts-card__type--force':'mini-workouts-card__type--stamina'">
@@ -10,12 +10,11 @@
           {{workout.name}}
         </h4>
       </div>
-
       <p class="mini-workouts-card__features">
         ⏱️&nbsp;{{workout.time}}&nbsp;мин. 💪&nbsp;{{workout.difficulty}}
       </p>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <script>
@@ -30,12 +29,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$primary: #f66c1e;
+$speed: #1070FF;
 .mini-workouts-card {
-  max-width: 190px;
+  max-width: 194px;
   display: flex;
   gap: 4px;
-  padding: 2px 4px;
+  padding: 2px 3px;
   align-items: center;
+  opacity: 0.95;
+  transition: all 0.1s ease;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .mini-workouts-card__image {
@@ -60,10 +66,10 @@ export default {
   background-color: black;
   color: white;
   &--speed {
-    background-color: blue;
+    background-color: $speed;
   }
   &--stamina {
-    background-color: orange;
+    background-color: $primary;
   }
 }
 
@@ -75,11 +81,6 @@ export default {
   align-items: center;
   line-height: 1.2;
   overflow: hidden;
-  // text-overflow: ellipsis;
-  // display: -webkit-box;
-  // -webkit-line-clamp: 2; /* number of lines to show */
-  //         line-clamp: 2;
-  // -webkit-box-orient: vertical;
   -webkit-animation: scroll-animation 6s ease-in-out infinite;
   -moz-animation: scroll-animation 6s ease-in-out infinite;
   animation: scroll-animation 6s ease-in-out infinite;
@@ -96,7 +97,7 @@ export default {
 
 .mini-workouts-card__features {
   color: rgba(0, 0, 0, 0.8);
-  font-size: 10.5px;
+  font-size: 11px;
 }
 
 .mini-workouts-card__text {

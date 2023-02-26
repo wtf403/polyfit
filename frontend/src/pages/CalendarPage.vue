@@ -1,7 +1,14 @@
 <template>
   <section class="calendar">
     <div class="calendar__wrapper">
-      <TheDropdown :model-value="month" />
+      <div class="calendar__head">
+        <button class="calendar__button calendar__button--edit" @click="editMode = !editMode">
+          Изменить
+        </button>
+        <p class="calendar__mode">
+          {{!editMode?'Режим просмотра':'Режим редактирования'}}
+        </p>
+      </div>
       <div class="calendar__content">
         <ul class="calendar__weekdays weekdays">
           <li v-for="(weekday, index) in weekdays" :key="index" class="weekdays__item">
@@ -14,15 +21,25 @@
               <p class="calendar__number-day">
                 {{index%100}}
               </p>
-              <button v-if="workout.active" class="calendar__button calendar__button--add">
+              <button v-if="workout.active&&editMode" class="calendar__button calendar__button--add">
                 <svg viewBox="0 0 25 24" fill="none" width="24" height="24" xlmns="http://www.w3.org/2000/svg" class="sc-bdvvtL sc-iCfMLu iWfNDX">
                   <g><path d="M12.5 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M5.5 12H19.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></g>
                 </svg>
               </button>
             </div>
             <ul class="calendar__workouts-content">
-              <li v-for="(object, i) in workout.workouts" :key="i" class="workouts-object">
+              <li v-for="(object, i) in workout.workouts" :key="i" class="calendar__workouts-object">
                 <CalendarWorkoutsCard :workout="object" />
+                <div v-if="editMode" class="calendar__actions">
+                  <div class="calendar__subactions">
+                    <button class="calendar__button calendar__button--edit" @click="ChangeExercise(exercise)">
+                      Подробнее
+                    </button>
+                    <button class="calendar__button calendar__button--delete" @click="DeleteWorkout(exercise)">
+                      Удалить
+                    </button>
+                  </div>
+                </div>
               </li>
             </ul>
           </li>
@@ -33,16 +50,15 @@
 </template>
 
 <script>
-import TheDropdown from '@/components/TheDropdown.vue';
 import CalendarWorkoutsCard from '@/components/CalendarWorkoutsCard';
 // import MyDialog from '@/components/MyDialog';
 export default {
   components: {
-    TheDropdown,
     CalendarWorkoutsCard,
   },
   data() {
     return {
+      editMode: false,
       todayMonth: new Date().getMonth(),
       todayWeekday: new Date().getDay(),
       todayDay: new Date().getDate(),
@@ -195,14 +211,28 @@ export default {
 <style lang="scss" scoped>
 
 $border: rgba(166, 168, 179, 0.12);
+$primary: #f66c1e;
+$speed: #1070FF;
+
+.calendar {
+  background-color: #e4e6f550;
+}
 .calendar__wrapper {
   max-width: 1440px;
   margin: 0 auto;
   padding: 64px 40px 60px;
 }
 
+.calendar__head {
+  display: flex;
+  padding: 4px 0 8px;
+  gap: 8px;
+  align-items: center;
+}
 .calendar__content {
-  overflow: scroll;
+  overflow-x: scroll;
+  background-color: white;
+  border-radius: 12px 12px 4px 4px;
 }
 
 .calendar__weekdays {
@@ -231,7 +261,6 @@ $border: rgba(166, 168, 179, 0.12);
 .calendar__workouts-list {
   display: grid;
   grid-template-columns: repeat(7, 194px);
-  gap: 1px solid black;
 }
 
 .calendar__workouts-item {
@@ -239,7 +268,7 @@ $border: rgba(166, 168, 179, 0.12);
   border-top: none;
   border-right: none;
   height: 182px;
-  &:nth-child(7n) {
+  &:nth-child(7n), &:last-child {
     border-right: 1px solid $border;
   }
   &--disable {
@@ -253,26 +282,49 @@ $border: rgba(166, 168, 179, 0.12);
 }
 
 .calendar__button {
-  position: absolute;
-  right: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 24px;
-  height: 24px;
-  padding: 2px;
-  color: rgb(0, 0, 0);
-  background-color: white;
-  border: 1px solid black;
-  color: black;
-  border-radius: 6px;
+  right: 2px;
+  top: 2px;
   cursor: pointer;
-  &:hover {
-    filter: brightness(1.1);
-    border: 1px solid rgba(0, 0, 0, 0);
-    background-color: rgb(32, 129, 226);
+  height: fit-content;
+  width: fit-content;
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 6px;
+  color:white;
+  font-size: 14px;
+  padding: 6px 12px;
+  box-shadow: 0 1px 0 rgba(27,31,36,0.1),inset 0 1px 0 rgba(255,255,255,0.03);
+  &--add {
+    padding: 2px;
+    position: absolute;
+    background-color: #2da44e;
+    border-color:rgba(28, 36, 27, 0.15);
+    &:hover {
+      background-color: #2c974b;
+      border-color:rgba(28, 36, 27, 0.25);
+    }
     & svg {
-      transform: scale(1.05);
+      height: 20px;
+      width: 20px;
+    }
+  }
+
+  &--edit {
+    background-color: #218bff;
+    border-color: rgba(27,31,36,0.15);
+    &:hover {
+      background-color: #0969da;
+      border-color: rgba(27,31,36,0.25);
+    }
+  }
+
+  &--delete {
+    background-color: #da2e2b;
+    border-color:rgba(36, 27, 27, 0.15);
+    &:hover {
+      background-color: #bc1714;
+      border-color:rgba(36, 27, 27, 0.25);
     }
   }
 }
@@ -301,6 +353,47 @@ $border: rgba(166, 168, 179, 0.12);
     background-color: rgba(0, 0, 0, 0.05);
     opacity: 1;
   }
+}
+
+.calendar__mode {
+  font-size: 14px;
+  color: black;
+}
+
+.calendar__workouts-object {
+  position: relative;
+}
+
+.calendar__actions {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  &:hover {
+    & .calendar__subactions {
+      transition: all 250ms linear;
+      opacity: 1;
+    }
+  }
+}
+
+.calendar__subactions {
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  gap: 4px;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.40);
+  backdrop-filter: blur(16px);
+  z-index: 4;
 }
 </style>
 
