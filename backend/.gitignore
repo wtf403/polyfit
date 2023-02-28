@@ -1,5 +1,8 @@
 # Credentials
-.env
+.env*
+!.env.example
+docker-compose.override.yml
+db/.pg_data
 
 # Binaries for programs and plugins
 *.exe

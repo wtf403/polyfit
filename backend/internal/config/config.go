@@ -19,14 +19,15 @@ type Config struct {
 }
 
 type StorageConfig struct {
-	Host     string `yaml:"host"`
-	Port     string `yaml:"port"`
-	Database string `yaml:"database"`
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
+	Host     string `env:"DB_HOST"`
+	Port     string `env:"DB_PORT"`
+	Database string `env:"DB_DATABASE"`
+	Username string `env:"DB_USERNAME"`
+	Password string `env:"DB_PASSWORD"`
 }
 
 var instance *Config
+var err error
 var once sync.Once
 
 func GetConfig() *Config {
@@ -34,11 +35,19 @@ func GetConfig() *Config {
 		logger := logging.GetLogger()
 		logger.Info("read application configuration")
 		instance = &Config{}
-		if err := cleanenv.ReadConfig("config.yml", instance); err != nil {
+
+		if err = cleanenv.ReadConfig("config.yml", instance); err != nil {
+			help, _ := cleanenv.GetDescription(instance, nil)
+			logger.Info(help)
+			logger.Fatal(err)
+		}
+
+		if err = cleanenv.ReadEnv(instance); err != nil {
 			help, _ := cleanenv.GetDescription(instance, nil)
 			logger.Info(help)
 			logger.Fatal(err)
 		}
 	})
+
 	return instance
 }

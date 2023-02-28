@@ -1,7 +1,7 @@
 is_debug: true
 listen:
   type: port
-  port: 8087
+  port: 8080
 storage:
   host: localhost
   port: 5432

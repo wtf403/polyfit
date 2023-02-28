@@ -1,23 +1,25 @@
 FROM golang:1.20-alpine
-ENV APP_NAME="polyfit"
-ENV APP_DIR="/opt/polyfit"
 
-COPY . $APP_DIR
+EXPOSE 8087
 
-WORKDIR $APP_DIR
-ADD . $APP_DIR
-RUN go mod download
-RUN go build -o $APP_NAME cmd/main/app.go
+# .env -> docker-compose -> Dockerfile forwarding
+ARG APP_DIR
+ARG APP_NAME
+ENV APP_DIR ${APP_DIR}
+ENV APP_NAME ${APP_NAME}
+
+COPY . ${APP_DIR}
+WORKDIR ${APP_DIR}
+VOLUME ${APP_DIR}
 
 # install psql
 RUN apk update
 RUN apk add postgresql-client
+RUN apk add curl
 
-# make wait-for-postgres.sh executable
-RUN chmod +x wait-for-postgres.sh
+# fetch github.com/cosmtrek/air
+RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
 
-VOLUME ./logs/all.log /opt/polyfit/logs/all.log 
+# fill db with fake data
+CMD air --build.cmd "go build -o ${APP_NAME} cmd/app/main.go" --build.bin "./${APP_NAME}"
 
-EXPOSE 8087
-
-CMD ["./polyfit"]
