@@ -2,12 +2,12 @@
   <section class="calendar">
     <div class="calendar__wrapper">
       <div class="calendar__head">
-        <button class="calendar__button calendar__button--edit" @click="editMode = !editMode">
-          Изменить
-        </button>
-        <p class="calendar__mode">
+        <p class="calendar__mode" :class="editMode?'calendar__mode--edit':'calendar__mode--simple'">
           {{!editMode?'Режим просмотра':'Режим редактирования'}}
         </p>
+        <button class="calendar__button calendar__change-mode" :class="!editMode?'calendar__button--edit':'calendar__button--save'" @click="editMode = !editMode">
+          {{!editMode?'Изменить':'Сохранить'}}
+        </button>
       </div>
       <div class="calendar__content">
         <ul class="calendar__weekdays weekdays">
@@ -16,26 +16,26 @@
           </li>
         </ul>
         <ul class="calendar__workouts-list">
-          <li v-for="(workout, index) in getCalendar" :key="index" class="calendar__workouts-item" :class="workout.active?'':'calendar__workouts-item--disable'">
+          <li v-for="(day, index) in getCalendar" :key="index" class="calendar__workouts-item" :class="day.active?'':'calendar__workouts-item--disable'">
             <div class="calendar__workouts-head">
               <p class="calendar__number-day">
                 {{index%100}}
               </p>
-              <button v-if="workout.active&&editMode" class="calendar__button calendar__button--add">
+              <button v-if="day.active&&editMode" class="calendar__button calendar__button--add" @click="addWorkout(day)">
                 <svg viewBox="0 0 25 24" fill="none" width="24" height="24" xlmns="http://www.w3.org/2000/svg" class="sc-bdvvtL sc-iCfMLu iWfNDX">
                   <g><path d="M12.5 5V19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /><path d="M5.5 12H19.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" /></g>
                 </svg>
               </button>
             </div>
             <ul class="calendar__workouts-content">
-              <li v-for="(object, i) in workout.workouts" :key="i" class="calendar__workouts-object">
+              <li v-for="(object, i) in day.workouts" :key="i" class="calendar__workouts-object">
                 <CalendarWorkoutsCard :workout="object" />
                 <div v-if="editMode" class="calendar__actions">
                   <div class="calendar__subactions">
-                    <button class="calendar__button calendar__button--edit" @click="ChangeExercise(exercise)">
+                    <router-link :to="{ path: '/workouts/'+object.id, query: {item: object}}" class="calendar__button calendar__button--edit">
                       Подробнее
-                    </button>
-                    <button class="calendar__button calendar__button--delete" @click="DeleteWorkout(exercise)">
+                    </router-link>
+                    <button class="calendar__button calendar__button--delete">
                       Удалить
                     </button>
                   </div>
@@ -46,19 +46,25 @@
         </ul>
       </div>
     </div>
+    <Transition name="fade">
+      <CalendarPopupAddWorkout ref="calendarAddWorkout" :day="selectDay" />
+    </Transition>
   </section>
 </template>
 
 <script>
-import CalendarWorkoutsCard from '@/components/CalendarWorkoutsCard';
-// import MyDialog from '@/components/MyDialog';
+import CalendarPopupAddWorkout from '@/components/CalendarPopupAddWorkout.vue';
+import CalendarWorkoutsCard from '@/components/CalendarWorkoutsCard.vue';
+
 export default {
   components: {
     CalendarWorkoutsCard,
+    CalendarPopupAddWorkout,
   },
   data() {
     return {
       editMode: false,
+      selectDay: {},
       todayMonth: new Date().getMonth(),
       todayWeekday: new Date().getDay(),
       todayDay: new Date().getDate(),
@@ -167,6 +173,9 @@ export default {
   },
 
   computed: {
+    allWorkouts() {
+      return this.$store.getters.allWorkouts;
+    },
     getCalendar() {
       let date = new Date();
       let month = date.getMonth();
@@ -178,6 +187,7 @@ export default {
         daysObj[(month * 10).toString() + (i).toString()] = {
           active: true,
           weekday: dayOfWeek !== 0 ? this.weekdays[dayOfWeek - 1] : 'воскресение',
+          date: new Date(year, month, i),
           workouts: this.calendar[i] ? this.calendar[i] : [ ],
         };
       }
@@ -197,12 +207,9 @@ export default {
   },
 
   methods: {
-    showDialog() {
-      this.dialogVisible = true;
-    },
-
-    hideDialog() {
-      this.dialogVisible = false;
+    addWorkout(obj) {
+      this.selectDay = obj;
+      this.$refs.calendarAddWorkout.addWorkout();
     },
   },
 };
@@ -241,6 +248,9 @@ $speed: #1070FF;
   list-style: none;
 }
 
+.popup {
+  overflow: hidden;
+}
 .weekdays__item {
   display: flex;
   justify-content: center;
@@ -283,8 +293,6 @@ $speed: #1070FF;
 
 .calendar__button {
   display: flex;
-  right: 2px;
-  top: 2px;
   cursor: pointer;
   height: fit-content;
   width: fit-content;
@@ -295,15 +303,19 @@ $speed: #1070FF;
   font-size: 14px;
   padding: 6px 12px;
   box-shadow: 0 1px 0 rgba(27,31,36,0.1),inset 0 1px 0 rgba(255,255,255,0.03);
-  &--add {
-    padding: 2px;
-    position: absolute;
+  &--add, &--save {
     background-color: #2da44e;
     border-color:rgba(28, 36, 27, 0.15);
     &:hover {
       background-color: #2c974b;
       border-color:rgba(28, 36, 27, 0.25);
     }
+  }
+  &--add {
+    padding: 2px;
+    position: absolute;
+    right: 2px;
+    top: 2px;
     & svg {
       height: 20px;
       width: 20px;
@@ -338,7 +350,6 @@ $speed: #1070FF;
 }
 
 .calendar__number-day {
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -356,8 +367,24 @@ $speed: #1070FF;
 }
 
 .calendar__mode {
+  min-width: 160px;
   font-size: 14px;
   color: black;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 20px;
+  text-align: center;
+  &--edit {
+    background-color: #ece7fe;
+    color: #8972f3;
+    border: 1px solid #8972f3;
+  }
+  &--simple {
+    background-color: #e0fbf6;
+    color: #58c2a9;
+    border: 1px solid #58c2a9;
+  }
 }
 
 .calendar__workouts-object {
@@ -394,6 +421,13 @@ $speed: #1070FF;
   background-color: rgba(255, 255, 255, 0.40);
   backdrop-filter: blur(16px);
   z-index: 4;
+}
+
+.calendar__change-mode {
+  min-width: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 </style>
 
