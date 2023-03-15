@@ -8,7 +8,7 @@
         </svg>
       </button>
       <slot />
-      <div class="popup__footer">
+      <div class="popup__screen">
         <slot name="actions" :close="close" :confirm="confirm">
           <button @click="close">
             Отмена
@@ -118,7 +118,6 @@ export default {
   border: none;
   cursor: pointer;
 }
-
 
 @media screen and (max-width: 900px)
  {

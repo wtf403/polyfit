@@ -34,14 +34,17 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+
+$primary: #f66c1e;
 
 .header {
   position: fixed;
   z-index: 5;
   width: 100%;
   background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .header__link-logo {
@@ -65,20 +68,21 @@ export default {
 
 .nav__link {
   padding-bottom: 2px;
-  font-weight: 400;
   font-size: 14px;
   text-transform: uppercase;
   border: none;
-}
-
-.nav__link:hover {
-  color: #f66c1e;
+  font-weight: 500;
+  transition: all 0.1s ease-in-out;
+  opacity: 0.9;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .nav__item--active .nav__link{
-  color: #f66c1e;
-  font-weight: 500;
-  border-bottom: 2px solid #f66c1e;
+  color: $primary;
+  border-radius: 2px;
+  opacity: 1;
 }
 
 .header__nav {
@@ -102,28 +106,33 @@ export default {
 .auth__reg {
   padding-top: 2px;
   color: #000000;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 14px;
   text-transform: uppercase;
-}
-
-.auth__reg:hover {
-  color: #f66c1e;
-}
-
-.auth__reg--active {
-  color: #f66c1e;
-  font-weight: 500;
+  transition: all 0.1s ease-in-out;
+  opacity: 0.9;
+  &:hover {
+    opacity: 1;
+  }
+  &--active {
+    color: $primary;
+    font-weight: 500;
+  }
 }
 
 .auth__login {
-  padding: 8px 14px 6px;
+  padding: 8px 14px 7px;
   color: #ffffff;
   font-weight: 500;
   font-size: 14px;
   text-transform: uppercase;
-  background-color: #f66c1e;
-  border-radius: 8px;
+  background-color: $primary;
+  border-radius: 10px;
+  transition: all 0.1s ease-in-out;
+  opacity: 0.95;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .auth__account-icon{

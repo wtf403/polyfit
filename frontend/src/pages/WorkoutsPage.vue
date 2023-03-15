@@ -230,13 +230,16 @@ export default {
     };
   },
   computed: {
+    allWorkouts() {
+      return this.$store.getters.allWorkouts;
+    },
     sortWorkouts() {
       let variant = this.varSort;
       let type = this.varType;
       let time = this.varTime;
       let text = this.varSearch;
       let difficulty = this.varDifficulty;
-      let list = this.sortByType(this.workouts, type);
+      let list = this.sortByType(this.$store.getters.allWorkouts, type);
       list = this.sortByTime(list, time);
       list = this.sortByDifficulty(list, difficulty);
       list = this.sortBySearch(list, text);

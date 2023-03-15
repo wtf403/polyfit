@@ -42,16 +42,23 @@ export default {
 
 <style lang="scss" scoped>
 .workouts-card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 320px;
   opacity: 0.95;
-  transition: all 200ms ease;
+  transition: all 0.1s ease 0s;
   border-radius: 8px;
+  // max-height: 302px;
+  height: 100%;
+  padding-bottom: 6px;
   &:hover {
     opacity: 1;
+    box-shadow: rgb(0 0 0 / 15%) 0px 6px 25px;
+
     & .workouts-card__image {
-      transform: scale(1.025);
-      transition: transform 400ms ease;
+      transform: scale(1.12);
+      transition-duration: 0.4s;
+      transition: transform 0.4s ease 0s;
     }
   }
 }
