@@ -14,4 +14,4 @@ type Workout struct {
 	Media       *string              `json:"media" example:"http://polyfit.live/api/media/00000000"`
 	Gender      *int                 `json:"gender" example:"00000000-0000-0000-0000-000000000000"`
 	Exercises   *[]exercise.Exercise `json:"exercises"`
-} // @name Workout
+} //	@name	Workout

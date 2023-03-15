@@ -11,4 +11,4 @@ type Exercise struct {
 	Calories  *int     `json:"calories" example:"168"`
 	Equipment *string  `json:"equipment" example:"00000000-0000-0000-0000-000000000000"`
 	Gender    *string  `json:"gender" example:"00000000-0000-0000-0000-000000000000"`
-} // @name Exercise
+} //	@name	Exercise

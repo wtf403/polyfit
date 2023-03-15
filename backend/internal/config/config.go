@@ -11,22 +11,23 @@ import (
 type Config struct {
 	IsDebug *bool `yaml:"is_debug" env-required:"true"`
 	Listen  struct {
-		Type   string `yaml:"type" env-default:"port"`
-		BindIP string `yaml:"bind_ip" env-default:"127.0.0.1"`
-		Port   string `yaml:"port" env-default:"8087"`
+		Type   string `yaml:"type"`
+		BindIP string `yaml:"bind_ip"`
+		Port   string `yaml:"port"`
 	} `yaml:"listen"`
 	Storage StorageConfig `yaml:"storage"`
 }
 
 type StorageConfig struct {
-	Host     string `json:"host"`
-	Port     string `json:"port"`
-	Database string `json:"database"`
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Host     string `env:"DB_HOST"`
+	Port     string `env:"DB_PORT"`
+	Database string `env:"DB_DATABASE"`
+	Username string `env:"DB_USERNAME"`
+	Password string `env:"DB_PASSWORD"`
 }
 
 var instance *Config
+var err error
 var once sync.Once
 
 func GetConfig() *Config {
@@ -34,11 +35,19 @@ func GetConfig() *Config {
 		logger := logging.GetLogger()
 		logger.Info("read application configuration")
 		instance = &Config{}
-		if err := cleanenv.ReadConfig("config.yml", instance); err != nil {
+
+		if err = cleanenv.ReadConfig("config.yml", instance); err != nil {
+			help, _ := cleanenv.GetDescription(instance, nil)
+			logger.Info(help)
+			logger.Fatal(err)
+		}
+
+		if err = cleanenv.ReadEnv(instance); err != nil {
 			help, _ := cleanenv.GetDescription(instance, nil)
 			logger.Info(help)
 			logger.Fatal(err)
 		}
 	})
+
 	return instance
 }

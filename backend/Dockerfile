@@ -1,18 +1,25 @@
-FROM golang:1.19-alpine3.16
-
-RUN mkdir -p /app/polyfit
-
-COPY . /app/polyfit
-
-WORKDIR /app/polyfit
-
-RUN go mod download
-# RUN go install github.com/swaggo/swag/cmd/swag@latest
-
-# RUN swag init
-
-RUN go build -o polyfit /app/polyfit/cmd/main/app.go
+FROM golang:1.20-alpine
 
 EXPOSE 8087
 
-CMD ["./polyfit"]
+# .env -> docker-compose -> Dockerfile forwarding
+ARG APP_DIR
+ARG APP_NAME
+ENV APP_DIR ${APP_DIR}
+ENV APP_NAME ${APP_NAME}
+
+COPY . ${APP_DIR}
+WORKDIR ${APP_DIR}
+VOLUME ${APP_DIR}
+
+# install psql
+RUN apk update
+RUN apk add postgresql-client
+RUN apk add curl
+
+# fetch github.com/cosmtrek/air
+RUN curl -sSfL https://raw.githubusercontent.com/cosmtrek/air/master/install.sh | sh -s -- -b $(go env GOPATH)/bin
+
+# fill db with fake data
+CMD air --build.cmd "go build -o ${APP_NAME} cmd/app/main.go" --build.bin "./${APP_NAME}"
+
