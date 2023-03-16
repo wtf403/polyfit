@@ -8,11 +8,12 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/polyfit-live/polyfit/backend/internal/apperror"
-	"github.com/polyfit-live/polyfit/backend/internal/handlers"
 	"github.com/polyfit-live/polyfit/backend/pkg/logging"
 
 	"github.com/julienschmidt/httprouter"
 )
+
+var _ Handler = &handler{}
 
 const (
 	workoutsURL = "/api/workout"
@@ -20,15 +21,19 @@ const (
 )
 
 type handler struct {
-	logger     *logging.Logger
-	repository Repository
+	storage Storage
+	logger  *logging.Logger
 }
 
-func NewHandler(repository Repository, logger *logging.Logger) handlers.Handler {
+func NewHandler(storage Storage, logger *logging.Logger) Handler {
 	return &handler{
-		repository: repository,
-		logger:     logger,
+		storage: storage,
+		logger:  logger,
 	}
+}
+
+type Handler interface {
+	Register(router chi.Router)
 }
 
 func (h *handler) Register(router chi.Router) {
@@ -56,7 +61,7 @@ func (h *handler) Create(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 	h.logger.Debug(ex)
-	id, err := h.repository.Create(r.Context(), ex)
+	id, err := h.storage.Create(r.Context(), ex)
 	if err != nil {
 		w.WriteHeader(400)
 		return err
@@ -86,7 +91,7 @@ func (h *handler) FindOne(w http.ResponseWriter, r *http.Request) error {
 	id := httprouter.ParamsFromContext(r.Context()).ByName("uuid")
 	h.logger.Info("Find exercise by ID, %s", id)
 
-	ex, err := h.repository.FindOne(context.TODO(), id)
+	ex, err := h.storage.FindOne(context.TODO(), id)
 	if err != nil {
 		h.logger.Error(err)
 		w.WriteHeader(400)
@@ -112,7 +117,7 @@ func (h *handler) FindOne(w http.ResponseWriter, r *http.Request) error {
 // @Resource	/workouts
 // @Router		/workouts [get]
 func (h *handler) FindAll(w http.ResponseWriter, r *http.Request) error {
-	all, err := h.repository.FindAll(context.TODO())
+	all, err := h.storage.FindAll(context.TODO())
 	if err != nil {
 		w.WriteHeader(400)
 		return err
@@ -149,7 +154,7 @@ func (h *handler) Update(w http.ResponseWriter, r *http.Request) error {
 		return err
 	}
 	h.logger.Debug(ex)
-	err := h.repository.Update(r.Context(), id, ex)
+	err := h.storage.Update(r.Context(), id, ex)
 	if err != nil {
 		w.WriteHeader(400)
 		return err
@@ -172,7 +177,7 @@ func (h *handler) Delete(w http.ResponseWriter, r *http.Request) error {
 	id := httprouter.ParamsFromContext(r.Context()).ByName("uuid")
 	h.logger.Info("Delete exercise ID: %s", id)
 
-	err := h.repository.Delete(context.TODO(), id)
+	err := h.storage.Delete(context.TODO(), id)
 	if err != nil {
 		w.WriteHeader(404)
 		return err
