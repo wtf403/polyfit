@@ -51,6 +51,7 @@ export default {
   // max-height: 302px;
   height: 100%;
   padding-bottom: 6px;
+
   &:hover {
     opacity: 1;
     box-shadow: rgb(0 0 0 / 15%) 0px 6px 25px;
@@ -64,7 +65,7 @@ export default {
 }
 .workouts-card__cover {
   width: 100%;
-  height: 200px;
+  height: 180px;
   overflow: hidden;
   border-radius: 8px;
   object-fit: cover;
@@ -72,7 +73,7 @@ export default {
 
 .workouts-card__image {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
   transition: all 250ms ease-in-out;
 }
@@ -95,16 +96,15 @@ export default {
   text-transform: uppercase;
   background: black;
   border-radius: 4px;
-}
 
-.workouts-card__type--speed {
-  background: #1070ff;
-}
+  &--speed {
+    background: #1070ff;
+  }
 
-.workouts-card__type--stamina {
-  background: #f66c1e;
+  &--stamina {
+    background: #f66c1e;
+  }
 }
-
 .workouts-card__recomandate {
   display: flex;
   justify-content: center;
@@ -129,8 +129,7 @@ export default {
 
 .workouts-card__name {
   font-weight: 400;
-  font-size: 19.2px;
-  font-variant: small-caps;
+  font-size: 18px;
   line-height: 1.2;
   text-transform: uppercase;
 }

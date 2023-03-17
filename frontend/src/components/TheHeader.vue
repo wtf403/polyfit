@@ -19,8 +19,10 @@
       </nav>
       <div class="header__auth auth">
         <router-link class="auth__reg" to="/reg" :class="{'auth__reg--active': $route.path == '/reg'}">Регистрация</router-link>
-        <span>|</span>
-        <router-link class="auth__login" to="/log">Войти</router-link>
+        <span class="auth__block">
+          |
+        </span>
+        <router-link class="auth__login" to="/log">{{'Войти'}}</router-link>
         <img :src="require('@/assets/account_icon.png')" alt="#" class="auth__account-icon" :srcset="require('@/assets/account_icon.png') + ' 1.2x'">
       </div>
     </div>
@@ -28,8 +30,8 @@
 </template>
 
 <script>
-export default {
 
+export default {
 
 };
 </script>
@@ -135,12 +137,22 @@ $primary: #f66c1e;
   }
 }
 
+@media (max-width: 600px){
+
+}
+
 .auth__account-icon{
   display: none;
 }
 
 @media (max-width: 900px){
   .header__nav{
+    display: none;
+  }
+}
+
+@media (max-width: 600px){
+  .auth__reg, .auth__block {
     display: none;
   }
 }

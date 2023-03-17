@@ -1,145 +1,109 @@
 <template>
-  <div class="adv-card">
-    <div class="adv-card__wrapper">
-      <div class="adv-card__img-wrap">
-        <img :src="require(`@/assets/plan.svg`)" alt="#" class="adv-card__img">
+  <ul class="advantages-card">
+    <li v-for="(card, index) in advantages" :key="index" class="advantages-card__wrapper">
+      <div class="advantages-card__frame">
+        <img :src="card.image" alt="#" class="advantages-card__image">
       </div>
-      <div class="adv-card__text-block">
-        <h3 class="adv-card__title">
-          Планируйте
+      <div class="advantages-card__info">
+        <h3 class="advantages-card__title">
+          {{card.name}}
         </h3>
-        <p class="adv-card__description">
-          Составьте собственное расписание тренировок
+        <p class="advantages-card__description">
+          {{card.description}}
         </p>
       </div>
-    </div>
-    <div class="adv-card__wrapper">
-      <div class="adv-card__img-wrap">
-        <img :src="require(`@/assets/training.svg`)" alt="#" class="adv-card__img">
-      </div>
-      <div class="adv-card__text-block">
-        <h3 class="adv-card__title">
-          Тренируйтесь
-        </h3>
-        <p class="adv-card__description">
-          Выполняйте упрожнения правильно по инструкциям
-        </p>
-      </div>
-    </div>
-    <div class="adv-card__wrapper">
-      <div class="adv-card__img-wrap">
-        <img :src="require(`@/assets/control.svg`)" alt="#" class="adv-card__img">
-      </div>
-
-      <div class="adv-card__text-block">
-        <h3 class="adv-card__title">
-          Контролируйте
-        </h3>
-        <p class="adv-card__description">
-          Выполняйте упражнения правильно по инструкциям
-        </p>
-      </div>
-    </div>
-    <div class="adv-card__wrapper">
-      <div class="adv-card__img-wrap">
-        <img :src="require(`@/assets/evaluate.svg`)" alt="#" class="adv-card__img">
-      </div>
-
-      <div class="adv-card__text-block">
-        <h3 class="adv-card__title">
-          Оценивайте
-        </h3>
-        <p class="adv-card__description">
-          Анализурейте собственный прогресс тренировок
-        </p>
-      </div>
-    </div>
-    <div class="adv-card__wrapper">
-      <div class="adv-card__img-wrap">
-        <img :src="require(`@/assets/relax.svg`)" alt="#" class="adv-card__img">
-      </div>
-
-      <div class="adv-card__text-block">
-        <h3 class="adv-card__title">
-          Отдыхайте
-        </h3>
-        <p class="adv-card__description">
-          Между занятиями важно помнить о&nbsp;сне и&nbsp;отдыхе
-        </p>
-      </div>
-    </div>
-    <div class="adv-card__wrapper">
-      <div class="adv-card__img-wrap">
-        <img :src="require(`@/assets/run.svg`)" alt="#" class="adv-card__img">
-      </div>
-
-      <div class="adv-card__text-block">
-        <h3 class="adv-card__title">
-          Бегайте
-        </h3>
-        <p class="adv-card__description">
-          Чаще бегайте на улице, в зале или на беговой дорожке
-        </p>
-      </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
 export default {
-
+  data() {
+    return {
+      advantages: [
+        {
+          name: 'Планируйте',
+          description: 'Составьте собственное расписание тренировок',
+          image: require(`@/assets/plan.svg`),
+        },
+        {
+          name: 'Тренируйтесь',
+          description: 'Выполняйте упрожнения правильно по\xa0инструкциям',
+          image: require(`@/assets/training.svg`),
+        },
+        {
+          name: 'Контролируйте',
+          description: 'Выполняйте упражнения правильно по\xa0инструкциям',
+          image: require(`@/assets/control.svg`),
+        },
+        {
+          name: 'Оценивайте',
+          description: 'Анализурейте собственный прогресс тренировок',
+          image: require(`@/assets/evaluate.svg`),
+        },
+        {
+          name: 'Отдыхайте',
+          description: 'Между занятиями важно помнить о\xa0сне и\xa0отдыхе',
+          image: require(`@/assets/relax.svg`),
+        },
+        {
+          name: 'Бегайте',
+          description: 'Чаще бегайте на улице, в зале или на беговой дорожке',
+          image: require(`@/assets/run.svg`),
+        },
+      ],
+    };
+  },
 };
 </script>
 
 <style scoped>
 
-.adv-card {
+.advantages-card {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  row-gap: 30px;
-  max-width: 1440px;
-  column-gap: 80px;
+  row-gap: 24px;
+  width: fit-content;
+  max-width: 640px;
+  column-gap: 24px;
 }
 
-.adv-card__wrapper{
+.advantages-card__wrapper{
   display: flex;
-  flex-direction: row;
   align-items: center;
-  max-width: 277px;
 }
 
-.adv-card__img {
-  width: 64px;
-}
-
-.adv-card__title {
-  margin-bottom: 10px;
+.advantages-card__title {
+  margin-bottom: 8px;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 22px;
   line-height: 1.1;
 }
 
-.adv-card__description {
-  font-size: 12px;
-  line-height: 1.4;
+.advantages-card__description {
+  font-size: 12.8px;
+  line-height: 1.2;
   text-align: start;
 }
 
-.adv-card__text-block {
+.advantages-card__info {
   display: flex;
   flex-direction: column;
+  max-width: 200px;
   padding-left: 15px;
 }
 
-.adv-card__img-wrap {
+.advantages-card__frame {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  width: 176px;
-  height: 90px;
-  background: #fff1ea;
+  align-items: center;
+  width: 84px;
+  height: 84px;
+  padding: 6px;
+  background: #ffe9dda9;
   border-radius: 50%;
+  backdrop-filter: blur(4px);
 }
 </style>
