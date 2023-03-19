@@ -49,11 +49,6 @@ export default {
     font-family: 'Roboto', sans-serif;
   }
 
-  .wrapper {
-    max-width: 1440px;
-    margin: 0 auto;
-  }
-
   li {
     list-style: none;
   }

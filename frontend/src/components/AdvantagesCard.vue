@@ -95,15 +95,38 @@ export default {
   padding-left: 15px;
 }
 
+.advantages-card__image {
+  width: 60px;
+  height: 60px;
+}
+
 .advantages-card__frame {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 84px;
-  height: 84px;
-  padding: 6px;
+  padding: 14px;
   background: #ffe9dda9;
   border-radius: 50%;
   backdrop-filter: blur(4px);
+}
+
+@media screen and (max-width: 600px) {
+  .advantages-card__title {
+    margin-bottom: 4px;
+    font-size: 18px;
+  }
+
+  .advantages-card__description {
+    font-size: 11.2px;
+  }
+
+  .advantages-card__frame {
+    padding: 12px;
+  }
+
+  .advantages-card__image {
+    width: 48px;
+    height: 48px;
+  }
 }
 </style>

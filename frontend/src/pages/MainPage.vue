@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="hero">
-      <div class="hero__wrapper wrapper">
+      <div class="hero__wrapper">
         <div class="hero__info">
           <h1 class="hero__title">
             Фитнес&nbsp;&mdash; это просто вместе с&nbsp;Polyfit
@@ -14,9 +14,9 @@
     </section>
 
     <section class="advantages">
-      <div class="advantages__wrapper wrapper">
+      <div class="advantages__wrapper">
         <h1 class="advantages__title">
-          Преимущества <br> онлайн тренировок
+          Преимущества онлайн тренировок
         </h1>
         <div class="advantages__content">
           <img :src="require(`@/assets/manFeatures.webp`)" alt="advantages-man" class="advantages__image advantages__image--man">
@@ -27,32 +27,37 @@
     </section>
 
     <section class="types">
-      <div class="types__wrapper wrapper">
+      <div class="types__wrapper">
         <h1 class="types__title">
-          Виды тренировок и упражений
+          Виды тренировок и&nbsp;упражений
         </h1>
         <TypesCard />
       </div>
     </section>
 
     <section class="functions">
-      <div class="functions__wrapper wrapper">
-        <img :src="require(`@/assets/functions image.png`)" alt="#" class="functions__image">
-        <img :src="require(`@/assets/functions image (ipad pro).png`)" alt="#" class="functions__image--ipad-pro">
+      <div class="functions__wrapper">
+        <svg width="786px" height="570px" viewBox="0 0 786 570" class="slight-shadow" style="vertical-align: bottom;">
+          <defs>
+            <mask id="my-svg-mask2">
+              <path d="M786 129.865C786 70.7275 743 18.9019 743 0H4.00002C1.79088 0 0 1.79086 0 4V565.997C0 568.207 1.79263 569.999 4.00291 569.997L739.003 569.463C741.211 569.461 742.991 567.661 743.087 565.456C745.23 516.547 786 488.079 786 429.595C786 369.533 743 332.284 743 279.73C743 227.176 786 203.787 786 129.865Z" fill="white" />
+            </mask>
+          </defs>
+          <image class="functions__cover" xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="require(`@/assets/functionsCover.webp`)" width="786" mask="url(#my-svg-mask2)" />
+        </svg>
         <div class="functions__content">
           <h1 class="functions__title">
             Достоинства PolyFit
           </h1>
-          <img :src="require(`@/assets/functions image (mobile).png`)" alt="#" class="functions__image--mobile">
           <FunctionsList />
         </div>
       </div>
     </section>
 
     <section class="start">
-      <div class="start__wrapper wrapper">
+      <div class="start__wrapper">
         <h1 class="start__title advantages__title">
-          Начни свою <br> первую тренировку
+          Начни свою первую тренировку
         </h1>
         <router-link class="start__button" to="/workouts">Тренировки</router-link>
       </div>
@@ -79,7 +84,6 @@ export default {
 @mixin wrapper {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 0 20px;
 }
 
 @mixin title {
@@ -87,12 +91,20 @@ export default {
   margin-bottom: 40px;
   font-weight: 500;
   font-size: 36px;
+  margin: 28px 0 34px;
   line-height: 1.1;
   text-align: center;
+  @media screen and (max-width: 1024px) {
+    font-size: 32px;
+  }
+  @media screen and (max-width: 600px) {
+    font-size: 28px;
+  }
 }
 
 .hero {
   padding-top: 52px;
+  margin-bottom: 60px;
 }
 
 .hero__info {
@@ -126,6 +138,21 @@ export default {
   max-width: 520px;
 }
 
+
+.advantages {
+  margin-bottom: 60px;
+}
+
+.advantages__wrapper {
+  position: relative;
+  @include wrapper;
+  padding: 0 20px;
+}
+.advantages__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .advantages__title {
   @include title;
 }
@@ -139,9 +166,13 @@ export default {
 .advantages__list {
   background-color: #ffffffbb;
   backdrop-filter: blur(14px);
-  padding: 28px 0;
+  padding: 0 0 28px;
   border-radius: 12px;
 
+}
+
+.types {
+  margin-bottom: 60px;
 }
 
 .types__title {
@@ -150,28 +181,21 @@ export default {
 .functions__wrapper {
   @include wrapper;
   display: flex;
-  flex-direction: row;
-  margin-top: 120px;
 }
 
 .functions__title {
   @include title;
-  width: 100%;
-  margin: 0;
-  margin-bottom: 50px;
-  text-align: left;
 }
 
 .functions__image {
   max-width: 50%;
-}
-
-.functions__image--ipad-pro, .functions__image--mobile {
-  display: none;
+  object-fit: cover;
 }
 
 
 .start__wrapper {
+  @include wrapper;
+  padding: 0 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -181,13 +205,6 @@ export default {
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: 100%;
-}
-
-
-.advantages__content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .start__button {
@@ -227,7 +244,8 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin-top: 120px;
+    margin-top: 60px;
+    padding: 0 20px;
   }
 
   .functions__image{
@@ -240,8 +258,7 @@ export default {
   }
 
   .advantages__wrapper{
-    margin-right: 5%;
-    margin-left: 5%;
+    padding: 0 20px;
   }
 
   .advantages__img--man, .advantages__img--woman {
@@ -260,6 +277,14 @@ export default {
 
   .hero__info {
     padding: calc(100vh - 52px - 292px) 20px 60px 30px;
+  }
+
+
+  .function__wrapper {
+    flex-direction: column;
+  }
+  .functions__title {
+    text-align: center;
   }
 }
 
