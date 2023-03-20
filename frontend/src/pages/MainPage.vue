@@ -37,18 +37,12 @@
 
     <section class="functions">
       <div class="functions__wrapper">
-        <svg width="786px" height="570px" viewBox="0 0 786 570" class="slight-shadow" style="vertical-align: bottom;">
-          <defs>
-            <mask id="my-svg-mask2">
-              <path d="M786 129.865C786 70.7275 743 18.9019 743 0H4.00002C1.79088 0 0 1.79086 0 4V565.997C0 568.207 1.79263 569.999 4.00291 569.997L739.003 569.463C741.211 569.461 742.991 567.661 743.087 565.456C745.23 516.547 786 488.079 786 429.595C786 369.533 743 332.284 743 279.73C743 227.176 786 203.787 786 129.865Z" fill="white" />
-            </mask>
-          </defs>
-          <image class="functions__cover" xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="require(`@/assets/functionsCover.webp`)" width="786" mask="url(#my-svg-mask2)" />
-        </svg>
+        <img class="functions__cover" :src="require(`@/assets/functionsCover.webp`)">
         <div class="functions__content">
           <h1 class="functions__title">
             Достоинства PolyFit
           </h1>
+          <img class="functions__cover functions__cover--block" :src="require(`@/assets/functionsCover.webp`)">
           <FunctionsList />
         </div>
       </div>
@@ -56,10 +50,13 @@
 
     <section class="start">
       <div class="start__wrapper">
-        <h1 class="start__title advantages__title">
-          Начни свою первую тренировку
-        </h1>
-        <router-link class="start__button" to="/workouts">Тренировки</router-link>
+        <div class="start__content">
+          <h1 class="start__title">
+            Начни свою первую тренировку
+          </h1>
+          <router-link class="start__button" to="/workouts">Тренировки</router-link>
+        </div>
+        <img class="start__image" :src="require(`@/assets/startWorkout.webp`)">
       </div>
     </section>
   </div>
@@ -166,7 +163,7 @@ export default {
 .advantages__list {
   background-color: #ffffffbb;
   backdrop-filter: blur(14px);
-  padding: 0 0 28px;
+  padding: 28px 0;
   border-radius: 12px;
 
 }
@@ -180,93 +177,93 @@ export default {
 }
 .functions__wrapper {
   @include wrapper;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center
 }
 
 .functions__title {
   @include title;
+  margin: 0 28px 40px;
+
 }
 
-.functions__image {
-  max-width: 50%;
+.functions__cover{
+  max-width: 100%;
   object-fit: cover;
+  height: 100%;
+  &--block {
+    display: none;
+  }
 }
-
 
 .start__wrapper {
   @include wrapper;
-  padding: 0 20px;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-bottom: 36%;
-  background-image: url('../assets/startWorkout.webp');
-  background-repeat: no-repeat;
-  background-position: bottom;
-  background-size: 100%;
-}
-
-.start__button {
-  padding: 13px 16px 11px;
-  color: white;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.1;
-  text-transform: uppercase;
-  background: #f76c1e;
-  background-color: none;
-  border: none;
-  border-radius: 14px;
-  border-radius: 10px;
-  cursor: pointer;
+  margin-top: 36px;
 }
 
 .start__title {
-  margin-top: 50px;
-  margin-bottom: 15px;
+  @include title;
+  margin-bottom: 28px;
 }
 
-// @media (max-width: 1024px) {
-  .advantages__image {
-    position: absolute;
-    z-index: -1;
+.start__image {
+  width: 100%;
+  min-height: 440px;
+  max-height: 640px;
+  object-fit: cover;
+  object-position: left;
+}
 
-    &--man {
-      left: 0;
-    }
+.start__content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-    &--woman {
-      right:0
-    }
-  // }
-  .functions__wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 60px;
-    padding: 0 20px;
+.start__button {
+  padding: 12px 24px;
+  border-radius: 9px;
+  border: none;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.2s;
+  background: #f76c1e;
+  color: white;
+  font-size: 14px;
+  text-transform: uppercase;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 7px 5px 56px -14px #f76c1e;
   }
 
-  .functions__image{
-    display: none;
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 7px 5px 56px -10px #f76c1e;
+  }
+}
+
+
+
+.advantages__image {
+  position: absolute;
+  z-index: -1;
+
+  &--man {
+    left: 10px;
   }
 
-  .functions__image--ipad-pro{
-    display: block;
-    max-width: 50%;
-  }
-
-  .advantages__wrapper{
-    padding: 0 20px;
-  }
-
-  .advantages__img--man, .advantages__img--woman {
-    display: none;
-  }
-
-  .start__wrapper{
-    padding-bottom: 38%;
+  &--woman {
+    right: 10px;
   }
 }
 
@@ -307,14 +304,15 @@ export default {
     max-width: 320px;
   }
 
-  .functions__image--ipad-pro, .functions__image{
-    display: none;
-  }
-
-  .functions__image--mobile{
+  .functions__wrapper {
     display: block;
-    width: 100%;
-    margin-bottom: 5%;
+  }
+  .functions__cover{
+    display: none;
+    &--block {
+      display: block;
+      margin-bottom: 20px;
+    }
   }
 }
 </style>

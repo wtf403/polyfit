@@ -36,7 +36,7 @@ export default {
       flex-wrap: wrap;
       justify-content: center;
       row-gap: 12px;
-      margin-left: 40px;
+      margin: 0 40px;
     }
 
     .function__item {
