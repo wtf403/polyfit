@@ -22,8 +22,7 @@
         <span class="auth__block">
           |
         </span>
-        <router-link class="auth__login" to="/log">{{'Войти'}}</router-link>
-        <img :src="require('@/assets/account_icon.png')" alt="#" class="auth__account-icon" :srcset="require('@/assets/account_icon.png') + ' 1.2x'">
+        <router-link class="auth__login" :class="{'auth__login--active': $route.path == '/log'}" to="/log">{{'Войти'}}</router-link>
       </div>
     </div>
   </div>
@@ -70,19 +69,20 @@ $primary: #f66c1e;
 
 .nav__link {
   padding-bottom: 2px;
+  color: #6e6d7a;
   font-size: 14px;
   text-transform: uppercase;
   border: none;
   font-weight: 500;
-  transition: all 0.1s ease-in-out;
-  opacity: 0.9;
+  -webkit-transition: color 200ms ease;
+  transition: color 200ms ease;
   &:hover {
-    opacity: 1;
+    color: black;
   }
 }
 
 .nav__item--active .nav__link{
-  color: $primary;
+  color: black;
   border-radius: 2px;
   opacity: 1;
 }
@@ -91,10 +91,6 @@ $primary: #f66c1e;
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
-}
-
-.header__logo--mobile{
-  display: none;
 }
 
 .auth {
@@ -107,24 +103,25 @@ $primary: #f66c1e;
 
 .auth__reg {
   padding-top: 2px;
-  color: #000000;
+  color: #6e6d7a;
   font-weight: 500;
   font-size: 14px;
   text-transform: uppercase;
-  transition: all 0.1s ease-in-out;
+  transition: color 200ms ease-in-out;
   opacity: 0.9;
   &:hover {
+    color: black;
     opacity: 1;
   }
   &--active {
-    color: $primary;
+    color: black;
     font-weight: 500;
   }
 }
 
 .auth__login {
-  padding: 8px 14px 7px;
-  color: #ffffff;
+  padding: 6px 14px 5px;
+  color: white;
   font-weight: 500;
   font-size: 14px;
   text-transform: uppercase;
@@ -132,17 +129,20 @@ $primary: #f66c1e;
   border-radius: 10px;
   transition: all 0.1s ease-in-out;
   opacity: 0.95;
+  border: 2.4px solid transparent;
   &:hover {
+    opacity: 1;
+  }
+  &--active {
+    color: $primary;
+    border: 2.4px solid $primary;
+    background-color: transparent;
     opacity: 1;
   }
 }
 
 @media (max-width: 600px){
 
-}
-
-.auth__account-icon{
-  display: none;
 }
 
 @media (max-width: 900px){
