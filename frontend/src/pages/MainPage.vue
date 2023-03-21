@@ -172,6 +172,10 @@ export default {
   margin-bottom: 60px;
 }
 
+.types__wrapper {
+  @include wrapper;
+}
+
 .types__title {
   @include title;
 }

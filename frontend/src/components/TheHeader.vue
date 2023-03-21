@@ -141,10 +141,6 @@ $primary: #f66c1e;
   }
 }
 
-@media (max-width: 600px){
-
-}
-
 @media (max-width: 900px){
   .header__nav{
     display: none;

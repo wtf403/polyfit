@@ -68,8 +68,7 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 20px;
-    column-gap: 20px;
+    gap: 20px;
   }
 
   .types-card__wrapper {
@@ -178,6 +177,7 @@ export default {
     position: absolute;
     z-index: -1;
     height: 100%;
+    width: 100%;
   }
 
   @media (max-width: 1024px){

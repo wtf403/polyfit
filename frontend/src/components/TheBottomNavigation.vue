@@ -56,19 +56,19 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100%;
+  width: 100%;
 }
 
 .nav__list {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  gap: 60px;
 }
 
 .bottom-navigate__nav {
   width: 100%;
-  padding: 0 40px;
+  padding: 0 28px;
 }
 
 .nav__link {
