@@ -1,9 +1,9 @@
 <template>
   <div class="workout__wrapper">
-    <img :src="workout.image" alt="Image for workout" class="workout__cover">
+    <img :src="workout.media" alt="Image for workout" class="workout__cover">
     <div clas="workout__info">
       <h2 class="workout__name">
-        {{workout.name}}
+        {{workout.title}}
       </h2>
       <ul class="workout__features-list">
         <li class="workout__features-item workout__features-item--type">
@@ -22,7 +22,7 @@
             🔥
           </p>
           <p class="workout__features-content">
-            {{workout.cal}}
+            {{workout.calories}}
           </p>
           <p class="workout__features-title">
             Ккал
@@ -33,7 +33,7 @@
             💪
           </p>
           <p class="workout__features-content">
-            {{workout.difficulty}}
+            <!-- {{workout.difficulty}} -->
           </p>
           <p class="workout__features-title">
             уровень
@@ -44,7 +44,7 @@
             ⏱️
           </p>
           <p class="workout__features-content">
-            ~{{workout.time}}
+            <!-- ~{{workout.time}} -->
           </p>
           <p class="workout__features-title">
             минут
@@ -56,7 +56,7 @@
           Описание
         </h3>
         <p class="workout__text">
-          {{workout.desc}}
+          {{workout.description}}
         </p>
       </div>
       <div class="workout__block">
@@ -79,7 +79,12 @@
 <script>
 export default {
   name: 'WorkoutInfoComponent',
-  props: ['workout'],
+  props: {
+    workout: {
+      type: Object,
+      default: null,
+    },
+  },
 };
 </script>
 

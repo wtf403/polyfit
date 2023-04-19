@@ -2,14 +2,20 @@
   <ProfilePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <div class="popup__content">
-        <form action="#" class="popup__form">
+        <form action="#" class="popup__form" @submit.prevent>
           <TheInput v-model="name" type="text" label="Название" @update:model-value="(newValue)=>(name=newValue)" />
           <TheTextarea v-model="desc" type="text" label="Описание" @update:model-value="(newValue)=>(desc=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Обложка
             </p>
-            <TheInputFile label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
+            <div class="popup__form-row popup__form-row--full">
+              <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(file=newValue)" />
+              <TheInputFile v-if="!showURL" class="popup__input-file" label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
+              <button class="popup__url-button" @click="()=>showURL = !showURL">
+                URL
+              </button>
+            </div>
             <div class="popup__form-row">
               <img v-if="file" :src="file" alt="Big cover" class="popup__cover--big">
               <img v-if="file" :src="file" alt="Small cover" class="popup__cover--small">
@@ -19,13 +25,13 @@
             <p class="popup__radio-label">
               Тип
             </p>
-            <TheRadio v-model="type" :radio-content="radio.type" :radio-selected="type" @change:model-value="(newValue)=>(type=newValue)" />
+            <TheRadio v-model="type" :radio-content="radio.type" :radio-selected="type" @update:model-value="(newValue)=>(type=newValue)" />
           </div>
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Сложность
             </p>
-            <TheRadio v-model="difficulty" :radio-content="radio.difficulty" :radio-selected="difficulty" />
+            <TheRadio v-model="difficulty" :radio-content="radio.difficulty" :radio-selected="difficulty" @update:model-value="(newValue)=>(difficulty=newValue)" />
           </div>
           <div class="popup__form-row">
             <TheInput v-model="time" type="number" label="Длительность" @update:model-value="(newValue)=>(time=newValue)" />
@@ -33,6 +39,14 @@
             <TheDropdown v-model="gender" label="Пол" :model-value="radio.gender" @update:model-value="(newValue)=>(gender=newValue)" />
           </div>
           <TheInput v-model="inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(inventory=newValue)" />
+          <div class="popup__form-row">
+            <TheInput v-model="search" label="Поиск среди упражнений" @update:model-value="(newValue)=>(search=newValue)" />
+            <ul class="popup__list-exercises">
+              <li v-for="(item,index) in allExercises" :key="index" class="popup__item-exercises">
+                <TheExercise class="popup__object-exercises" :exercise="item" :check="true" type="mini" />
+              </li>
+            </ul>
+          </div>
           <div class="popup__actions">
             <button class="profile__button" @click="confirm">
               Сохранить
@@ -54,6 +68,10 @@ import TheInputFile from '@/components/TheInputFile.vue';
 import TheTextarea from '@/components/TheTextarea.vue';
 import TheDropdown from '@/components/TheDropdown.vue';
 import TheRadio from './TheRadio.vue';
+import TheExercise from '@/components/TheExercise.vue';
+
+import { mapActions } from 'vuex';
+
 
 export default {
   name: 'AdminPopupCreateWorkout',
@@ -64,9 +82,17 @@ export default {
     TheRadio,
     TheInputFile,
     TheDropdown,
+    TheExercise,
+  },
+  props: {
+    allExercises: {
+      type: Array,
+      default: null,
+    },
   },
   data() {
     return {
+      showURL: false,
       confirmation: '',
       name: '',
       desc: '',
@@ -77,6 +103,8 @@ export default {
       type: '',
       inventory: '',
       gender: '',
+      search: '',
+      selectedExercises: [],
       radio: {
         difficulty: {
           'легко': 'Легко',
@@ -102,11 +130,21 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addWorkouts']),
     async CreateWorkout() {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
-        console.log(1);
+        let obj = {
+          title: this.name,
+          description: this.desc,
+          calories: Number(this.cal),
+          // type: this.type,
+          // gender: this.gender,
+          media: this.file,
+        };
+        console.log(obj);
+        this.addWorkouts(obj);
       }
     },
     newFile(e) {
@@ -198,6 +236,12 @@ export default {
   margin-top: 12px;
 }
 
+.popup__list-exercises {
+  display: flex;
+  gap: 10px;
+  overflow-x: scroll;
+}
+
 
 .popup__cover{
   &--big {
@@ -214,7 +258,32 @@ export default {
     border-radius: 8px;
     margin-top: 4px;
   }
+}
 
+.popup__input-file {
+  width: calc(100% - 48px);
+}
+
+.popup__url-button {
+  cursor: pointer;
+  height: 44px;
+  width: 44px;
+  margin-top: 4px;
+  color: #24292f;
+  background-color: #f6f8fa;
+  border-color: rgba(28, 36, 27, 0.15);
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.42;
+  text-align: center;
+  box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.popup__form-row--full {
+  justify-content: space-between;
+  gap: 4px;
 }
 
 @media screen and (max-width: 900px) {

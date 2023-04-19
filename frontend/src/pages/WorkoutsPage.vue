@@ -236,18 +236,21 @@ export default {
     sortWorkouts() {
       let variant = this.varSort;
       let type = this.varType;
-      let time = this.varTime;
+      // let time = this.varTime;
       let text = this.varSearch;
-      let difficulty = this.varDifficulty;
-      let list = this.sortByType(this.$store.getters.allWorkouts, type);
-      list = this.sortByTime(list, time);
-      list = this.sortByDifficulty(list, difficulty);
+      // let difficulty = this.varDifficulty;
+      let list = this.sortByType(this.allWorkouts, type);
+      // list = this.sortByTime(list, time);
+      // list = this.sortByDifficulty(list, difficulty);
       list = this.sortBySearch(list, text);
       if (variant === 'По новизне') { return list; }
       return list.slice().sort(function(a, b) {
-        { return ((variant === 'По длительности') ? (a.time > b.time) : (a.cal > b.cal)) ? 1 : -1; }
+        { return ((variant === 'По длительности') ? (a.calories > b.calories) : (a.calories > b.calories)) ? 1 : -1; }
       });
     },
+  },
+  async mounted() {
+    this.$store.dispatch('fetchWorkouts');
   },
   methods: {
     sortByType(list, type) {
@@ -268,7 +271,7 @@ export default {
     sortBySearch(list, text) {
       // return list.filter(function(item) { return item.difficulty === 'сложно'; });
       return list.filter(function(item) {
-        return (item.name.toLowerCase().includes(text.toLowerCase()) & item.desc.toLowerCase().includes(text.toLowerCase()));
+        return (item.title.toLowerCase().includes(text.toLowerCase()) & item.description.toLowerCase().includes(text.toLowerCase()));
       });
     },
     ChangeSort(variant) {

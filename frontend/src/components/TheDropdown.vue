@@ -33,8 +33,8 @@ export default {
       default: '',
     },
     modelValue: {
-      type: String,
-      default: '',
+      type: Object,
+      default: null,
     },
     defaultValue: {
       type: String,

@@ -3,9 +3,8 @@ import axios from 'axios';
 export default {
   actions: {
     async fetchWorkouts({ commit }) {
-      // const res = await fetch('https://cors-anywhere.herokuapp.com/https://polyfit.live/api/workout');
-      // const workouts = await res.json();
-      const workouts = [{
+      const res = await fetch('https://polyfit.live/api/workout');
+      let workouts = [{
         id: 0,
         image: require('@/assets/WorkoutImage-0.png'),
         name: 'Работа над резервной копией',
@@ -1366,14 +1365,15 @@ export default {
           },
         ],
       }];
+      workouts = await res.json();
       commit('updateWorkouts', workouts);
     },
     async addWorkouts({ commit }, workout) {
       try {
-        const response = await axios.post('https://cors-anywhere.herokuapp.com/https://polyfit.live/api/workout', workout);
+        const response = await axios.post('https://polyfit.live/api/workout', workout);
         commit('newWorkout', response.data);
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
   },
@@ -1384,7 +1384,7 @@ export default {
     newWorkout: (state, workout) => state.workouts.push(workout),
   },
   state: {
-    workouts: [{
+    workoutse: [{
       id: 0,
       image: require('@/assets/WorkoutImage-0.png'),
       name: 'Работа над резервной копией',
@@ -2745,6 +2745,7 @@ export default {
         },
       ],
     }],
+    workouts: [],
   },
   getters: {
     allWorkouts(state) {

@@ -48,7 +48,7 @@
           <TheInput v-model="searchExercise" placeholder="Поиск упражнения" type="search" @update:model-value="(newValue)=>(searchExercise=newValue)" />
         </div>
         <ul class="admin__list" :class="showListExercises?'admin__list--full':''">
-          <li v-for="(exercise, index) in sortExercise" :key="index" class="admin__workout">
+          <li v-for="(exercise, index) in sortExercise" :key="index" class="admin__exercises">
             <TheExercise :exercise="exercise" />
             <div class="admin__actions">
               <div class="admin__subactions">
@@ -74,7 +74,7 @@
       <AdminPopupDeleteWorkout ref="adminDeleteWorkout" :workout="selectWorkout" />
     </Transition>
     <Transition name="fade">
-      <AdminPopupCreateWorkout ref="adminCreateWorkout" />
+      <AdminPopupCreateWorkout ref="adminCreateWorkout" :all-exercises="allExercises" />
     </Transition>
     <Transition name="fade">
       <AdminPopupCreateExercise ref="adminCreateExercise" />
@@ -111,83 +111,14 @@ export default {
       searchWorkout: '',
       selectExercise: {},
       searchExercise: '',
-      exercises: [
-        {
-          exerciseName: 'Подъем на носки',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/001.webp',
-          exerciseCount: '16 повторений',
-        },
-        {
-          exerciseName: 'Приседания',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/002.webp',
-          exerciseCount: '20 повторений',
-        },
-        {
-          exerciseName: 'Пружинка в приседе нонстоп',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/004x002.webp',
-          exerciseCount: '16 повторений',
-        },
-        {
-          exerciseName: 'Высокая планка',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/150.webp',
-          exerciseCount: '16 повторений',
-        },
-        {
-          exerciseName: 'Колени в пол в планке на локтях',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/157.webp',
-          exerciseCount: '12 повторений',
-        },
-        {
-          exerciseName: 'Руки-локти в планке',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/158.webp',
-          exerciseCount: '12 повторений',
-        },
-        {
-          exerciseName: 'Жим от плеч двумя руками',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/196.webp',
-          exerciseCount: '16 повторений',
-        },
-        {
-          exerciseName: 'Пружинка в гиперэкстензии',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/226x225.webp',
-          exerciseCount: '16 повторений',
-        },
-        {
-          exerciseName: 'Разведение гантелей лежа на 2 счета',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/250.webp',
-          exerciseCount: '40 секунд',
-        },
-        {
-          exerciseName: 'Жим узкий- французский поочередно на 2 счета',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/262.webp',
-          exerciseCount: '1 минута 20 секунд',
-        },
-        {
-          exerciseName: 'Опускание согнутых ног по одной',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/276.webp',
-          exerciseCount: '18 повторений',
-        },
-        {
-          exerciseName: 'Пружинка скручивания руки за головой',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/278x277.webp',
-          exerciseCount: '16 повторений',
-        },
-        {
-          exerciseName: 'Ситапы',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/285.webp',
-          exerciseCount: '20 повторений',
-        },
-        {
-          exerciseName: 'Крисс-кросс сидя колено-локоть',
-          exerciseImage: 'https://static.w.f-365.ru/imported/webp/8/292.webp',
-          exerciseCount: '24 повторений',
-        },
-      ],
     };
   },
   computed: {
     allWorkouts() {
       return this.$store.getters.allWorkouts;
+    },
+    allExercises() {
+      return this.$store.getters.allExercises;
     },
     sortWorkouts() {
       let text = this.searchWorkout;
@@ -197,23 +128,24 @@ export default {
     },
     sortExercise() {
       let text = this.searchExercise;
-      let list = this.exercises;
+      let list = this.allExercises;
       list = this.sortBySearchExercise(list, text);
       return list;
     },
   },
   async mounted() {
     this.$store.dispatch('fetchWorkouts');
+    this.$store.dispatch('fetchExercises');
   },
   methods: {
     sortBySearch(list, text) {
       return list.filter(function(item) {
-        return (item.name.toLowerCase().includes(text.toLowerCase()) || item.desc.toLowerCase().includes(text.toLowerCase()));
+        return (item.title.toLowerCase().includes(text.toLowerCase()) || item.description.toLowerCase().includes(text.toLowerCase()));
       });
     },
     sortBySearchExercise(list, text) {
       return list.filter(function(item) {
-        return (item.exerciseName.toLowerCase().includes(text.toLowerCase()) || item.exerciseCount.toLowerCase().includes(text.toLowerCase()));
+        return (item.title.toLowerCase().includes(text.toLowerCase()));
       });
     },
     ChangeWorkout(obj) {
@@ -373,5 +305,11 @@ export default {
 .admin__head-actions {
   display: flex;
   gap: 12px;
+}
+
+.admin__exercises {
+  position: relative;
+  width: 250px;
+  height: 250px;
 }
 </style>

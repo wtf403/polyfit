@@ -2,14 +2,19 @@
   <ProfilePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <div class="popup__content">
-        <form action="#" class="popup__form">
-          <TheInput v-model="name" type="text" label="Наименование" @update:model-value="(newValue)=>(name=newValue)" />
+        <form action="#" class="popup__form" @submit.prevent>
+          <TheInput v-model="title" type="text" label="Наименование" @update:model-value="(newValue)=>(title=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Обложка
             </p>
-            <TheInputFile label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
-            <div class="popup__form-row">
+            <div class="popup__form-row popup__form-row--full">
+              <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(file=newValue)" />
+              <TheInputFile v-if="!showURL" class="popup__input-file" label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
+              <button class="popup__url-button" @click="()=>showURL = !showURL">
+                URL
+              </button>
+            </div>            <div class="popup__form-row">
               <img v-if="file" :src="file" alt="Big cover" class="popup__cover--big">
               <img v-if="file" :src="file" alt="Small cover" class="popup__cover--small">
             </div>
@@ -17,7 +22,7 @@
           <TheDropdown v-model="type" label="Тип" :model-value="radio.type" @update:model-value="(newValue)=>(type=newValue)" />
           <div class="popup__form-row">
             <TheInput v-model="time" type="number" label="Длительность (сек.)" @update:model-value="(newValue)=>(time=newValue)" />
-            <TheInput v-model="count" type="number" label="Количество повторений" @update:model-value="(newValue)=>(count=newValue)" />
+            <TheInput v-model="amount" type="number" label="Количество повторений" @update:model-value="(newValue)=>(amount=newValue)" />
             <TheInput v-model="cal" type="number" label="Каллории" @update:model-value="(newValue)=>(cal=newValue)" />
           </div>
           <div class="popup__actions">
@@ -39,6 +44,8 @@ import ProfilePopup from '@/components/ProfilePopup.vue';
 import TheInput from '@/components/TheInput.vue';
 import TheInputFile from '@/components/TheInputFile.vue';
 import TheDropdown from '@/components/TheDropdown.vue';
+import { mapActions } from 'vuex';
+
 
 export default {
   name: 'AdminPopupCreateExercise',
@@ -50,10 +57,11 @@ export default {
   },
   data() {
     return {
+      showURL: false,
       confirmation: '',
-      name: '',
+      title: '',
       file: '',
-      count: '',
+      amount: '',
       time: '',
       cal: '',
       type: '',
@@ -76,11 +84,21 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['addExercise']),
     async CreateExercise() {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
-        console.log(1);
+        let obj = {
+          title: this.title,
+          amount: Number(this.amount),
+          media: this.file,
+          hardness: 1,
+          show_timer: false,
+          calories: Number(this.cal),
+        };
+        console.log(obj);
+        this.addExercise(obj);
       }
     },
     newFile(e) {
@@ -189,6 +207,32 @@ export default {
     margin-top: 4px;
   }
 
+}
+
+.popup__input-file {
+  width: calc(100% - 48px);
+}
+
+.popup__url-button {
+  cursor: pointer;
+  height: 44px;
+  width: 44px;
+  margin-top: 4px;
+  color: #24292f;
+  background-color: #f6f8fa;
+  border-color: rgba(28, 36, 27, 0.15);
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.42;
+  text-align: center;
+  box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.popup__form-row--full {
+  justify-content: space-between;
+  gap: 4px;
 }
 
 @media screen and (max-width: 900px) {

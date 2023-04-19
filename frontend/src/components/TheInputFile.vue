@@ -4,7 +4,6 @@
       {{label}}
       <input
         v-bind="$attrs"
-        v-model="file"
         class="input__base"
         accept="image/*"
         @input="$emit('update:model-value', $event)"

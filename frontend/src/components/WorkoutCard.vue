@@ -12,10 +12,10 @@
       </p>
       <div>
         <p class="card__time">
-          {{workout.time}} минут •
+          <!-- {{workout.time}} минут • -->
         </p>
         <p class="card__level">
-          {{workout.defficulty}}
+          <!-- {{workout.difficulty}} -->
         </p>
       </div>
     </div>
@@ -27,6 +27,7 @@ export default {
   props: {
     workout: {
       type: Object,
+      default: null,
     },
   },
 };

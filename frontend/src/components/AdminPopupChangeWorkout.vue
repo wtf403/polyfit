@@ -2,34 +2,40 @@
   <ProfilePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <div class="popup__content">
-        <form action="#" class="popup__form">
-          <TheInput v-model="workoutContent.name" type="text" label="Название" @update:model-value="(newValue)=>(workoutContent.name=newValue)" />
-          <TheTextarea v-model="workoutContent.desc" type="text" label="Описание" @update:model-value="(newValue)=>(workoutContent.desc=newValue)" />
+        <form action="#" class="popup__form" @submit.prevent>
+          <TheInput v-model="workoutContent.title" type="text" label="Название" @update:model-value="(newValue)=>(workoutContent.title=newValue)" />
+          <TheTextarea v-model="workoutContent.description" type="text" label="Описание" @update:model-value="(newValue)=>(workoutContent.description=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Обложка
             </p>
-            <TheInputFile label="Обновите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
+            <div class="popup__form-row popup__form-row--full">
+              <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(workoutContent.media=newValue)" />
+              <TheInputFile v-if="!showURL" class="popup__input-file" label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
+              <button class="popup__url-button" @click="()=>showURL = !showURL">
+                URL
+              </button>
+            </div>
             <div class="popup__form-row">
-              <img :src="file?file:workoutContent.image" alt="Big cover" class="popup__cover popup__cover--big">
-              <img :src="file?file:workoutContent.image" alt="Small cover" class="popup__cover popup__cover--small">
+              <img :src="file?file:workoutContent.media" alt="Big cover" class="popup__cover popup__cover--big">
+              <img :src="file?file:workoutContent.media" alt="Small cover" class="popup__cover popup__cover--small">
             </div>
           </div>
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Тип
             </p>
-            <TheRadio v-model="workoutContent.type" :radio-content="radio.type" :radio-selected="workoutContent.type" @change:model-value="(newValue)=>(workoutContent.type=newValue)" />
+            <TheRadio v-model="workoutContent.type" :radio-content="radio.type" :radio-selected="workoutContent.type" @update:model-value="(newValue)=>(workoutContent.type=newValue)" />
           </div>
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Сложность
             </p>
-            <TheRadio v-model="workoutContent.difficulty" :radio-content="radio.difficulty" :radio-selected="workoutContent.difficulty" />
+            <TheRadio v-model="workoutContent.difficulty" :radio-content="radio.difficulty" :radio-selected="workoutContent.difficulty" @update:model-value="(newValue)=>(workoutContent.difficulty=newValue)" />
           </div>
           <div class="popup__form-row">
             <TheInput v-model="workoutContent.time" type="number" label="Длительность" @update:model-value="(newValue)=>(workoutContent.time=newValue)" />
-            <TheInput v-model="workoutContent.cal" type="number" label="Калории" @update:model-value="(newValue)=>(workoutContent.cal=newValue)" />
+            <TheInput v-model="workoutContent.calories" type="number" label="Калории" @update:model-value="(newValue)=>(workoutContent.calories=newValue)" />
             <TheDropdown v-model="workoutContent.gender" :default-value="workout.gender" label="Пол" :model-value="radio.gender" @update:model-value="(newValue)=>(workoutContent.gender=newValue)" />
           </div>
           <TheInput v-model="workoutContent.inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(workoutContent.inventory=newValue)" />
@@ -68,6 +74,7 @@ export default {
   props: ['workout'],
   data() {
     return {
+      showURL: false,
       confirmation: '',
       file: '',
       radio: {
@@ -92,14 +99,14 @@ export default {
   computed: {
     workoutContent() {
       let workout = {
-        name: this.workout.name,
-        desc: this.workout.desc,
+        title: this.workout.title,
+        description: this.workout.description,
         difficulty: this.workout.difficulty,
         time: this.workout.time,
-        cal: this.workout.cal,
+        calories: this.workout.calories,
         type: this.workout.type,
         inventory: this.workout.inventory,
-        image: this.workout.image,
+        media: this.workout.media,
         gender: this.workout.gender,
       };
       return workout;
@@ -113,7 +120,7 @@ export default {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
-        console.log(1);
+        console.log(this.workoutContent);
       }
     },
     newFile(e) {
@@ -221,6 +228,33 @@ export default {
     height: 60px;
   }
 
+}
+
+
+.popup__input-file {
+  width: calc(100% - 48px);
+}
+
+.popup__url-button {
+  cursor: pointer;
+  height: 44px;
+  width: 44px;
+  margin-top: 4px;
+  color: #24292f;
+  background-color: #f6f8fa;
+  border-color: rgba(28, 36, 27, 0.15);
+  text-decoration: none;
+  border: 1px solid;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.42;
+  text-align: center;
+  box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.popup__form-row--full {
+  justify-content: space-between;
+  gap: 4px;
 }
 
 @media screen and (max-width: 900px) {

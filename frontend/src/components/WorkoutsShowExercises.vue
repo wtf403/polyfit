@@ -5,13 +5,13 @@
     </h3>
     <ul class="exercises__list">
       <li v-for="(exercise, index) in exercises" :key="index" class="exercises__item">
-        <img :src="exercise.exerciseImage" alt="Image for exercise" class="exercises__image">
+        <img :src="exercise.media" alt="Image for exercise" class="exercises__image">
         <div class="exercises__info">
           <h4 class="exercises__name">
-            {{exercise.exerciseName}}
+            {{exercise.title}}
           </h4>
           <p class="exercises__count">
-            {{exercise.exerciseCount}}
+            {{exercise.amount}}
           </p>
         </div>
       </li>

@@ -105,9 +105,9 @@ export default {
     };
   },
   mounted() {
-    let exercoses = this.workout.exercises;
+    // let exercises = this.workout.exercises;
     this.workout = this.$route.query.item;
-    this.workout['exercises'] = exercoses;
+    // this.workout['exercises'] = exercises;
   },
 };
 </script>
