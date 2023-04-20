@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"github.com/julienschmidt/httprouter"
+	"github.com/go-chi/chi"
 )
 
 type Handler interface {
-	Register(router *httprouter.Router)
+	Register(router chi.Router)
 }

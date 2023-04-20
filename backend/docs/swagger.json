@@ -1,0 +1,12 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Polyfit API",
+        "title": "Polyfit API",
+        "contact": {},
+        "version": "1.0.0"
+    },
+    "host": "localhost:8087",
+    "basePath": "/api",
+    "paths": {}
+}

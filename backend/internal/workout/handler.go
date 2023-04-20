@@ -6,16 +6,15 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/go-chi/chi"
 	"github.com/polyfit-live/polyfit/backend/internal/apperror"
 	"github.com/polyfit-live/polyfit/backend/internal/handlers"
 	"github.com/polyfit-live/polyfit/backend/pkg/logging"
-
-	"github.com/julienschmidt/httprouter"
 )
 
 const (
 	workoutsURL = "/api/workout"
-	workoutURL  = "/api/workout/:uuid"
+	workoutURL  = "/api/workout/{uuid}"
 )
 
 type handler struct {
@@ -30,14 +29,22 @@ func NewHandler(repository Repository, logger *logging.Logger) handlers.Handler 
 	}
 }
 
-func (h *handler) Register(router *httprouter.Router) {
-	router.HandlerFunc(http.MethodPost, workoutsURL, apperror.Middleware(h.Create))
-	router.HandlerFunc(http.MethodGet, workoutURL, apperror.Middleware(h.FindOne))
-	router.HandlerFunc(http.MethodGet, workoutsURL, apperror.Middleware(h.FindAll))
-	router.HandlerFunc(http.MethodPatch, workoutURL, apperror.Middleware(h.Update))
-	router.HandlerFunc(http.MethodDelete, workoutURL, apperror.Middleware(h.Delete))
+func (h *handler) Register(router chi.Router) {
+	router.Post(workoutsURL, apperror.Middleware(h.Create))
+	router.Get(workoutURL, apperror.Middleware(h.FindOne))
+	router.Get(workoutsURL, apperror.Middleware(h.FindAll))
+	router.Patch(workoutURL, apperror.Middleware(h.Update))
+	router.Delete(workoutURL, apperror.Middleware(h.Delete))
 }
 
+// @Summary	Create a new workout
+// @Accept		json
+// @Produce	json
+// @Param		body	body	Workout	true	"Workout to be created"
+// @Success	201		"Created"
+// @Failure	400		{object}	error
+// @Force		202
+// @Router		/api/workouts [post]
 func (h *handler) Create(w http.ResponseWriter, r *http.Request) error {
 	h.logger.Info("Create exercise")
 
@@ -64,8 +71,17 @@ func (h *handler) Create(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
+// @Summary	Returns the specified workout
+// @Accept		json
+// @Produce	json
+// @Param		uuid	path	string	true	"UUID of the workout you want to fetch"
+// @Success	200		"OK"
+// @Failure	400		{object}	error
+// @Force		202
+// @Resource	/workouts{uuid}
+// @Router		/workouts/{uuid} [get]
 func (h *handler) FindOne(w http.ResponseWriter, r *http.Request) error {
-	id := httprouter.ParamsFromContext(r.Context()).ByName("uuid")
+	id := chi.URLParam(r, "uuid")
 	h.logger.Info("Find exercise by ID, %s", id)
 
 	ex, err := h.repository.FindOne(context.TODO(), id)
@@ -85,6 +101,14 @@ func (h *handler) FindOne(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
+// @Summary	Returns all stored workouts
+// @Accept		json
+// @Produce	json
+// @Success	200	"OK"
+// @Failure	400	{object}	error
+// @Force		202
+// @Resource	/workouts
+// @Router		/workouts [get]
 func (h *handler) FindAll(w http.ResponseWriter, r *http.Request) error {
 	all, err := h.repository.FindAll(context.TODO())
 	if err != nil {
@@ -103,8 +127,18 @@ func (h *handler) FindAll(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
+// @Summary	Updates the specified workout
+// @Accept		json
+// @Produce	json
+// @Param		body	body	Workout	true	"Exercise to be updated"
+// @Param		uuid	path	string					true	"UUID of the workout you want to update"
+// @Success	204		"OK"
+// @Failure	400		{object}	error
+// @Force		202
+// @Resource	/workouts{uuid}
+// @Router		/workouts/{uuid} [patch]
 func (h *handler) Update(w http.ResponseWriter, r *http.Request) error {
-	id := httprouter.ParamsFromContext(r.Context()).ByName("uuid")
+	id := chi.URLParam(r, "uuid")
 	h.logger.Info("Update exercise by ID: %s", id)
 
 	ex := Workout{}
@@ -123,8 +157,17 @@ func (h *handler) Update(w http.ResponseWriter, r *http.Request) error {
 	return nil
 }
 
+// @Summary	Deletes the specified workout
+// @Accept		json
+// @Produce	json
+// @Param		uuid	path	string	true	"UUID of the workout you want to delete"
+// @Success	204		"OK"
+// @Failure	400		{object}	error
+// @Force		202
+// @Resource	/workouts{uuid}
+// @Router		/workouts/{uuid} [delete]
 func (h *handler) Delete(w http.ResponseWriter, r *http.Request) error {
-	id := httprouter.ParamsFromContext(r.Context()).ByName("uuid")
+	id := chi.URLParam(r, "uuid")
 	h.logger.Info("Delete exercise ID: %s", id)
 
 	err := h.repository.Delete(context.TODO(), id)

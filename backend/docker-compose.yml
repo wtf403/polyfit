@@ -1,53 +1,74 @@
-version: "3.7"
-
 services:
   postgresql:
-    image: postgres:latest
+    image: postgres
     container_name: polyfit-postgresql
-    restart: always
     ports:
-      - "5432:5432"
+      - ${DB_PORT:-127.0.0.1:5432}:5432
     volumes:
-      - pg_data:/var/lib/postgresql/data
-    networks:
-      default:
-        aliases:
-            - database
+      - ./db/.pg_data:/var/lib/postgresql/data
+      - ./db/init-db.sh:/init-db.sh
+      - ./db/fake.sql:/fake.sql
+
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=polyfit
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    networks:
+      - net
+    healthcheck:
+      test:
+        ["CMD-SHELL", "sh -c 'pg_isready -U ${DB_USERNAME} -d ${DB_DATABASE}'"]
+      interval: 10s
+      timeout: 0s
+      retries: 2
 
   migrate:
     image: migrate/migrate
     container_name: polyfit-migrations
+    env_file:
+      - .env
     networks:
-      - default
+      - net
     volumes:
-      - ./migrations:/migrations
-    command: ["-path", "./migrations", "-database", "postgres://postgres:password@database:5432/polyfit?sslmode=disable", "up"]
+      - ./db/migrations:/migrations
+    command:
+      [
+        "-path",
+        "/migrations",
+        "-database",
+        "postgres://${DB_USERNAME}:${DB_PASSWORD}@postgresql/${DB_DATABASE}?sslmode=disable",
+        "up",
+      ]
     depends_on:
-      - postgresql
+      postgresql:
+        condition: service_healthy
 
   server:
-    container_name: polyfit-app
-    restart: on-failure
+    container_name: polyfit-server
     build:
-      context: .
       dockerfile: Dockerfile
-    networks:
-      - default
-    depends_on:
-      - postgresql
-      - migrate
-    environment:
-      - DATABASE_DSN=postgres://postgres:password@database:5432/polyfit?sslmode=disable
+      args:
+        - APP_DIR=$APP_DIR
+        - APP_NAME=$APP_NAME
+    restart: "${DOCKER_RESTART_POLICY:-unless-stopped}"
+    env_file:
+      - .env
     ports:
-      - "8087:8087"
-
-volumes:
-  pg_data:
+      - ${APP_PORT:-127.0.0.1:8080}:8080
+    environment:
+      - APP_ENV=${APP_ENV:-prod}
+    networks:
+      - net
+    volumes:
+      - ./:/opt/polyfit
+    depends_on:
+      postgresql:
+        condition: service_healthy
 
 networks:
-  default:
+  net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 10.0.0.0/24
