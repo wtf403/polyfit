@@ -23,7 +23,7 @@
 
 <script>
 import ProfilePopup from '@/components/ProfilePopup.vue';
-
+import { mapActions } from 'vuex';
 
 export default {
   name: 'AdminPopupDelete',
@@ -42,11 +42,13 @@ export default {
     },
   },
   methods: {
+    ...mapActions(['deleteWorkouts']),
     async DeleteWorkout() {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
         console.log(1);
+        this.deleteWorkouts(this.workout.id);
       }
     },
   },

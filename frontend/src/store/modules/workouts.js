@@ -1376,12 +1376,23 @@ export default {
         alert(error);
       }
     },
+    async deleteWorkouts({ commit }, workoutID) {
+      try {
+        const response = await axios.delete(`https://polyfit.live/api/workout/${workoutID}`);
+        commit('dltWorkout', workoutID);
+      } catch (error) {
+        alert(error);
+      }
+    },
   },
   mutations: {
     updateWorkouts(state, workouts) {
       state.workouts = workouts;
     },
     newWorkout: (state, workout) => state.workouts.push(workout),
+    dltWorkout: (state, workoutID) => state.workouts.filter(function(item) {
+      return item.id !== workoutID;
+    }),
   },
   state: {
     workoutse: [{
