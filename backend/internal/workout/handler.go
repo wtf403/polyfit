@@ -10,13 +10,11 @@ import (
 	"github.com/polyfit-live/polyfit/backend/internal/apperror"
 	"github.com/polyfit-live/polyfit/backend/internal/handlers"
 	"github.com/polyfit-live/polyfit/backend/pkg/logging"
-
-	"github.com/julienschmidt/httprouter"
 )
 
 const (
 	workoutsURL = "/api/workout"
-	workoutURL  = "/api/workout/:uuid"
+	workoutURL  = "/api/workout/{uuid}"
 )
 
 type handler struct {
@@ -83,7 +81,7 @@ func (h *handler) Create(w http.ResponseWriter, r *http.Request) error {
 // @Resource	/workouts{uuid}
 // @Router		/workouts/{uuid} [get]
 func (h *handler) FindOne(w http.ResponseWriter, r *http.Request) error {
-	id := httprouter.ParamsFromContext(r.Context()).ByName("uuid")
+	id := chi.URLParam(r, "uuid")
 	h.logger.Info("Find exercise by ID, %s", id)
 
 	ex, err := h.repository.FindOne(context.TODO(), id)
@@ -140,7 +138,7 @@ func (h *handler) FindAll(w http.ResponseWriter, r *http.Request) error {
 // @Resource	/workouts{uuid}
 // @Router		/workouts/{uuid} [patch]
 func (h *handler) Update(w http.ResponseWriter, r *http.Request) error {
-	id := httprouter.ParamsFromContext(r.Context()).ByName("uuid")
+	id := chi.URLParam(r, "uuid")
 	h.logger.Info("Update exercise by ID: %s", id)
 
 	ex := Workout{}
@@ -169,7 +167,7 @@ func (h *handler) Update(w http.ResponseWriter, r *http.Request) error {
 // @Resource	/workouts{uuid}
 // @Router		/workouts/{uuid} [delete]
 func (h *handler) Delete(w http.ResponseWriter, r *http.Request) error {
-	id := httprouter.ParamsFromContext(r.Context()).ByName("uuid")
+	id := chi.URLParam(r, "uuid")
 	h.logger.Info("Delete exercise ID: %s", id)
 
 	err := h.repository.Delete(context.TODO(), id)
