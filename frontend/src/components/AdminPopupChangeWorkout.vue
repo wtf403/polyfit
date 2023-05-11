@@ -61,7 +61,7 @@ import TheTextarea from '@/components/TheTextarea.vue';
 import TheDropdown from './TheDropdown.vue';
 import TheRadio from './TheRadio.vue';
 
-// import { mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'AdminPopupChangeWorkout',
@@ -110,6 +110,7 @@ export default {
         inventory: this.workout.inventory,
         media: this.workout.media,
         gender: this.workout.gender,
+        // id: this.workout.id,
       };
       return workout;
     },
@@ -118,7 +119,7 @@ export default {
     },
   },
   methods: {
-    // ...mapActions(['editWorkouts']),
+    ...mapActions(['patchWorkouts']),
     async ChangeWorkout() {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
@@ -132,7 +133,7 @@ export default {
         //   media: this.file,
         // };
         console.log(this.workoutContent);
-        // this.editWorkouts(this.workoutContent);
+        this.patchWorkouts(this.workoutContent, this.workout.id);
       }
     },
     newFile(e) {

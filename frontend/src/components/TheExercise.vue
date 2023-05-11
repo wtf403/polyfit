@@ -7,7 +7,7 @@
       </h4>
     </div>
     <p class="exercises__count">
-      {{exercise.amount}}
+      {{exercise.amount + (!exercise.show_timer?' повторений':' секунд')}}
     </p>
   </button>
 </template>

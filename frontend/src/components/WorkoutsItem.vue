@@ -7,9 +7,9 @@
       <div class="workouts-card__flags">
         <p
           class="workouts-card__type"
-          :class="{ 'workouts-card__type--speed': workout.type=='Скоростная', 'workouts-card__type--stamina': workout.type=='Выносливость' }"
+          :class="{ 'workouts-card__type--speed': workout.type==2, 'workouts-card__type--stamina': workout.type==3 }"
         >
-          {{workout.type}}
+          {{workout.type==2?'Скоростная':(workout.type==3?'Выносливая':'Силовая')}}
         </p>
         <!-- <p
           v-if="workout.rec"

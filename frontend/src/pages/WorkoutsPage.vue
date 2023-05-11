@@ -254,9 +254,9 @@ export default {
   },
   methods: {
     sortByType(list, type) {
-      if (type === 'power') { return list.filter(function(item) { return item.type === 'Силовая'; }); }
-      if (type === 'stamina') { return list.filter(function(item) { return item.type === 'Выносливость'; }); }
-      if (type === 'speed') { return list.filter(function(item) { return item.type === 'Скоростная'; }); }
+      if (type === 'power') { return list.filter(function(item) { return (item.type === null || item.type === 1); }); }
+      if (type === 'stamina') { return list.filter(function(item) { return item.type === 2; }); }
+      if (type === 'speed') { return list.filter(function(item) { return item.type === 3; }); }
       return list;
     },
     sortByDifficulty(list, difficulty) {
@@ -271,7 +271,7 @@ export default {
     sortBySearch(list, text) {
       // return list.filter(function(item) { return item.difficulty === 'сложно'; });
       return list.filter(function(item) {
-        return (item.title.toLowerCase().includes(text.toLowerCase()) & item.description.toLowerCase().includes(text.toLowerCase()));
+        return (item.title.toLowerCase().includes(text.toLowerCase()) || item.description.toLowerCase().includes(text.toLowerCase()));
       });
     },
     ChangeSort(variant) {

@@ -1380,6 +1380,16 @@ export default {
       try {
         const response = await axios.delete(`https://polyfit.live/api/workout/${workoutID}`);
         commit('dltWorkout', workoutID);
+        console.log(response);
+      } catch (error) {
+        alert(error);
+      }
+    },
+    async patchWorkouts({ commit }, workout, workoutID) {
+      try {
+        const response = await axios.patch(`https://polyfit.live/api/workout/${workout.id}`);
+        commit('ptchWorkout', workout, workoutID);
+        // console.log(response);
       } catch (error) {
         alert(error);
       }
@@ -1393,6 +1403,9 @@ export default {
     dltWorkout: (state, workoutID) => state.workouts.filter(function(item) {
       return item.id !== workoutID;
     }),
+    ptchWorkout(state, workout, workoutID) {
+      state.workouts[state.workouts.findIndex((obj) => obj.id === workoutID)] = workout;
+    },
   },
   state: {
     workoutse: [{
