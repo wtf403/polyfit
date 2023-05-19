@@ -3,13 +3,13 @@ import axios from 'axios';
 export default {
   actions: {
     async fetchExercises({ commit }) {
-      const res = await fetch('https://polyfit.live/api/exercise');
+      const res = await fetch('https://polyfit.live/api/exercises');
       let exercises = await res.json();
       commit('updateExercises', exercises);
     },
     async addExercise({ commit }, exercise) {
       try {
-        const response = await axios.post('https://polyfit.live/api/exercise', exercise);
+        const response = await axios.post('https://polyfit.live/api/exercises', exercise);
         commit('newExercise', response.data);
       } catch (error) {
         alert(error);

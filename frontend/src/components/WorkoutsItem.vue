@@ -1,7 +1,7 @@
 <template>
   <router-link :to="{ path: '/workouts/'+workout.id, query: {item: workout}}" class="workouts-content__workouts-card workouts-card">
     <div class="workouts-card__cover">
-      <img :src="workout.media" alt="Image for workout" class="workouts-card__image">
+      <img :src="workout.image" alt="Image for workout" class="workouts-card__image">
     </div>
     <div class="workouts-card__info">
       <div class="workouts-card__flags">
@@ -9,7 +9,7 @@
           class="workouts-card__type"
           :class="{ 'workouts-card__type--speed': workout.type==2, 'workouts-card__type--stamina': workout.type==3 }"
         >
-          {{workout.type==2?'Скоростная':(workout.type==3?'Выносливая':'Силовая')}}
+          {{workout.type}}
         </p>
         <!-- <p
           v-if="workout.rec"
@@ -21,8 +21,7 @@
       </div>
       <h3 class="workouts-card__name">{{workout.title}}</h3>
       <p class="workouts-card__features">
-        <!-- ⏱️ {{workout.time}} мин. • 💪 {{workout.difficulty}} •  -->
-        🔥 {{workout.calories}} Ккал
+        ⏱️ {{workout.time}} мин. • 💪 {{workout.difficulty}} • 🔥 {{workout.calories}} Ккал
       </p>
     </div>
   </router-link>

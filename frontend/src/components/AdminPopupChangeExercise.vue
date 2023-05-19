@@ -3,22 +3,22 @@
     <template #actions="{ confirm, close }">
       <div class="popup__content">
         <form action="#" class="popup__form">
-          <TheInput v-model="exerciseContent.name" type="text" label="Наименование" @update:model-value="(newValue)=>(exerciseContent.name=newValue)" />
+          <TheInput v-model="exerciseContent.title" type="text" label="Наименование" @update:model-value="(newValue)=>(exerciseContent.title=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Обложка
             </p>
             <TheInputFile label="Обновите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
             <div class="popup__form-row">
-              <img :src="file?file:exerciseContent.image" alt="Big cover" class="popup__cover popup__cover--big">
-              <img :src="file?file:exerciseContent.image" alt="Small cover" class="popup__cover popup__cover--small">
+              <img :src="file?file:exerciseContent.media" alt="Big cover" class="popup__cover popup__cover--big">
+              <img :src="file?file:exerciseContent.media" alt="Small cover" class="popup__cover popup__cover--small">
             </div>
           </div>
           <TheDropdown v-model="exerciseContent.type" label="Тип" :model-value="radio.type" @update:model-value="(newValue)=>(exerciseContent.type=newValue)" />
           <div class="popup__form-row">
             <TheInput v-model="exerciseContent.time" type="number" label="Длительность (сек.)" @update:model-value="(newValue)=>(exerciseContent.time=newValue)" />
-            <TheInput v-model="exerciseContent.count" :disable="(exerciseContent.type==='На время')" type="text" label="Количество повторений" @update:model-value="(newValue)=>(exerciseContent.count=newValue)" />
-            <TheInput v-model="exerciseContent.cal" type="number" label="Каллории" @update:model-value="(newValue)=>(exerciseContent.cal=newValue)" />
+            <TheInput v-model="exerciseContent.amount" :disable="(exerciseContent.type==='На время')" type="text" label="Количество повторений" @update:model-value="(newValue)=>(exerciseContent.amount=newValue)" />
+            <TheInput v-model="exerciseContent.calories" type="number" label="Каллории" @update:model-value="(newValue)=>(exerciseContent.calories=newValue)" />
           </div>
           <div class="popup__actions">
             <button class="profile__button" @click="confirm">
@@ -65,12 +65,12 @@ export default {
   computed: {
     exerciseContent() {
       let exercise = {
-        name: this.exercise.exerciseName,
-        time: '',
-        cal: '',
-        count: this.exercise.exerciseCount,
-        type: '',
-        image: this.exercise.exerciseImage,
+        title: this.exercise.title,
+        time: this.exercise.time,
+        calories: this.exercise.calories,
+        amount: this.exercise.amount,
+        type: this.exercise.type,
+        media: this.exercise.media,
       };
       return exercise;
     },

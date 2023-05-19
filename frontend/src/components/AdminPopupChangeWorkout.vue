@@ -10,15 +10,15 @@
               Обложка
             </p>
             <div class="popup__form-row popup__form-row--full">
-              <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(workoutContent.media=newValue)" />
+              <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(workoutContent.image=newValue)" />
               <TheInputFile v-if="!showURL" class="popup__input-file" label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
               <button class="popup__url-button" @click="()=>showURL = !showURL">
                 URL
               </button>
             </div>
             <div class="popup__form-row">
-              <img :src="file?file:workoutContent.media" alt="Big cover" class="popup__cover popup__cover--big">
-              <img :src="file?file:workoutContent.media" alt="Small cover" class="popup__cover popup__cover--small">
+              <img :src="file?file:workoutContent.image" alt="Big cover" class="popup__cover popup__cover--big">
+              <img :src="file?file:workoutContent.image" alt="Small cover" class="popup__cover popup__cover--small">
             </div>
           </div>
           <div class="popup__form-column">
@@ -108,7 +108,7 @@ export default {
         calories: this.workout.calories,
         type: this.workout.type,
         inventory: this.workout.inventory,
-        media: this.workout.media,
+        image: this.workout.image,
         gender: this.workout.gender,
         // id: this.workout.id,
       };
@@ -128,9 +128,9 @@ export default {
         //   title: this.name,
         //   description: this.desc,
         //   calories: Number(this.cal),
-        //   // type: this.type,
-        //   // gender: this.gender,
-        //   media: this.file,
+        //   type: this.type,
+        //   gender: this.gender,
+        //   image: this.file,
         // };
         console.log(this.workoutContent);
         this.patchWorkouts(this.workoutContent, this.workout.id);

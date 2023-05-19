@@ -139,8 +139,8 @@ export default {
           title: this.name,
           description: this.desc,
           calories: Number(this.cal),
-          // type: this.type,
-          // gender: this.gender,
+          type: this.type,
+          gender: this.gender,
           media: this.file,
         };
         console.log(obj);

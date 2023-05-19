@@ -1,6 +1,6 @@
 <template>
   <div class="workout__wrapper">
-    <img :src="workout.media" alt="Image for workout" class="workout__cover">
+    <img :src="workout.image" alt="Image for workout" class="workout__cover">
     <div clas="workout__info">
       <h2 class="workout__name">
         {{workout.title}}
@@ -33,7 +33,7 @@
             💪
           </p>
           <p class="workout__features-content">
-            <!-- {{workout.difficulty}} -->
+            {{workout.difficulty}}
           </p>
           <p class="workout__features-title">
             уровень
@@ -44,7 +44,7 @@
             ⏱️
           </p>
           <p class="workout__features-content">
-            <!-- ~{{workout.time}} -->
+            ~{{workout.time}}
           </p>
           <p class="workout__features-title">
             минут
