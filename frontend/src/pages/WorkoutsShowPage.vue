@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import ExercisesComponent from '@/components/WorkoutsShowExercises';
-import WorkoutInfoComponent from '@/components/WorkoutsShowInfo';
+import ExercisesComponent from '@/components/WorkoutsShowPage/WorkoutsShowExercises';
+import WorkoutInfoComponent from '@/components/WorkoutsShowPage/WorkoutsShowInfo';
 
 export default {
   components: {
@@ -105,9 +105,9 @@ export default {
     };
   },
   mounted() {
-    let exercoses = this.workout.exercises;
     this.workout = this.$route.query.item;
-    this.workout['exercises'] = exercoses;
+    let exercises = this.workout.exercises;
+    this.workout['exercises'] = exercises;
   },
 };
 </script>

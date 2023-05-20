@@ -14,12 +14,12 @@
 </template>
 
 <script>
-import ProfileWelcome from '@/components/ProfileWelcome.vue';
-import ProfilePurpose from '@/components/ProfilePurpose.vue';
-import ProfileUser from '@/components/ProfileUser.vue';
-import ProfilePurposes from '@/components/ProfilePurposes.vue';
-import ProfileControl from '@/components/ProfileControl.vue';
-import ProfilePopupKPI from '@/components/ProfilePopupKPI.vue';
+import ProfileWelcome from '@/components/ProfilePage/ProfileWelcome.vue';
+import ProfilePurpose from '@/components/ProfilePage/ProfilePurpose.vue';
+import ProfileUser from '@/components/ProfilePage/ProfileUser.vue';
+import ProfilePurposes from '@/components/ProfilePage/ProfilePurposes.vue';
+import ProfileControl from '@/components/ProfilePage/ProfileControl.vue';
+import ProfilePopupKPI from '@/components/ProfilePage/ProfilePopupKPI.vue';
 
 export default {
   components: {

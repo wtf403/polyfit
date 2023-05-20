@@ -4,7 +4,7 @@
     <ul class="radio__list">
       <li v-for="(item, index) in radioContent" :key="index" class="radio__item">
         <label :for="index" class="radio__label" :class="(radioActive == index)?'radio__label--active':''">
-          <input :id="index" v-model="radioActive" :value="index" class="radio__base" type="radio" name="radio">
+          <input :id="index" v-model="radioActive" :value="index" class="radio__base" type="radio" name="radio" @change="RadioEmit(item)">
           {{item}}
         </label>
       </li>
@@ -15,7 +15,20 @@
 <script>
 export default {
   name: 'RadioComponent',
-  props: ['radioContent', 'radioSelected'],
+  props: {
+    radioContent: {
+      type: Object,
+      default: null,
+    },
+    modelValue: {
+      type: Object,
+      default: null,
+    },
+    radioSelected: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       radioActive: '',
@@ -25,8 +38,8 @@ export default {
     this.radioActive = this.radioSelected;
   },
   methods: {
-    RadioEmit() {
-      this.$emit('get-radio', this.radioActive);
+    RadioEmit(item) {
+      this.$emit('update:model-value', item);
     },
   },
 };

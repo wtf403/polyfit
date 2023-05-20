@@ -1,33 +1,90 @@
 <template>
-  <router-link :to="{ path: '/exercises/'+exercise.id, query: {item: exercise}}" class="exercises-content__exercises-card exercises-card">
-    <img :src="exercise.exerciseImage" alt="Image for exercise" class="exercises__image">
+  <button class="exercises-content__exercises-card exercises-card" :class="{'exercises-card--mini': type=='mini', 'exercises-card--select': select==true}" @click="()=>select = !select">
+    <img :src="exercise.media" alt="Image for exercise" class="exercises__image">
     <div class="exercises__info">
       <h4 class="exercises__name">
-        {{exercise.exerciseName}}
+        {{exercise.title}}
       </h4>
     </div>
     <p class="exercises__count">
-      {{exercise.exerciseCount}}
+      {{exercise.amount + (!exercise.show_timer?' повторений':' секунд')}}
     </p>
-  </router-link>
+  </button>
 </template>
 
 <script>
 
 export default {
   name: 'ExersicesItemComponent',
-  props: ['exercise'],
+  props: {
+    exercise: {
+      type: Object,
+      default: null,
+    },
+    type: {
+      type: String,
+      default: '',
+    },
+    check: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  data() {
+    return {
+      select: false,
+    };
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 
 .exercises-card {
+  display: block;
+  border: none;
+  background: none;
   position: relative;
-}
-.exercises__image {
   width: 250px;
   height: 250px;
+
+
+  &--mini {
+    width: 180px;
+    height: 180px;
+
+    & .exercises__info {
+      padding: 6px 10px;
+      min-height: 60px;
+
+      & .exercises__name {
+        font-size: 14px;
+        max-height: 100%;
+      }
+    }
+    & .exercises__count {
+        font-size: 11px;
+        padding: 4px 6 px;
+      }
+  }
+
+  &--select {
+    border: 2px solid #f66c1e;
+    border-radius: 10px;
+    padding: 4px;
+
+
+    & .exercises__info {
+      padding: 6px 10px;
+      width: 168px;
+      min-height: 56px;
+      bottom: 4px;
+    }
+  }
+}
+.exercises__image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 8px;
 }
@@ -70,7 +127,7 @@ export default {
   line-height: 1;
   background-color: #000000AA;
   border-radius: 8px;
-  bottom: 216px;
+  top: 5%;
   right: 8px;
 }
 </style>
