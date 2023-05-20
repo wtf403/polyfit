@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import CalendarPopupAddWorkout from '@/components/CalendarPopupAddWorkout.vue';
-import CalendarWorkoutsCard from '@/components/CalendarWorkoutsCard.vue';
+import CalendarPopupAddWorkout from '@/components/CalendarPage/CalendarPopupAddWorkout.vue';
+import CalendarWorkoutsCard from '@/components/CalendarPage/CalendarWorkoutsCard.vue';
 
 export default {
   components: {

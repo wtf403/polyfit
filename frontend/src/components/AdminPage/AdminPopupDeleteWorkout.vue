@@ -1,5 +1,5 @@
 <template>
-  <ProfilePopup ref="Popup">
+  <ThePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <div class="popup__content">
         <p class="popup__title">
@@ -18,17 +18,17 @@
         </div>
       </div>
     </template>
-  </ProfilePopup>
+  </ThePopup>
 </template>
 
 <script>
-import ProfilePopup from '@/components/ProfilePopup.vue';
+import ThePopup from '@/components/ThePopup.vue';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'AdminPopupDelete',
   components: {
-    ProfilePopup,
+    ThePopup,
   },
   props: ['workout'],
   data() {

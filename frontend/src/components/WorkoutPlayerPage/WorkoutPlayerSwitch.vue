@@ -15,12 +15,6 @@
   </div>
 </template>
 
-<script>
-export default {
-
-};
-</script>
-
 <style scoped>
 .switch {
   z-index: 1;

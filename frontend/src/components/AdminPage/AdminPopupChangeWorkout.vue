@@ -1,52 +1,44 @@
 <template>
-  <ProfilePopup ref="Popup">
+  <ThePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <div class="popup__content">
         <form action="#" class="popup__form" @submit.prevent>
-          <TheInput v-model="name" type="text" label="Название" @update:model-value="(newValue)=>(name=newValue)" />
-          <TheTextarea v-model="desc" type="text" label="Описание" @update:model-value="(newValue)=>(desc=newValue)" />
+          <TheInput v-model="workoutContent.title" type="text" label="Название" @update:model-value="(newValue)=>(workoutContent.title=newValue)" />
+          <TheTextarea v-model="workoutContent.description" type="text" label="Описание" @update:model-value="(newValue)=>(workoutContent.description=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Обложка
             </p>
             <div class="popup__form-row popup__form-row--full">
-              <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(file=newValue)" />
+              <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(workoutContent.image=newValue)" />
               <TheInputFile v-if="!showURL" class="popup__input-file" label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
               <button class="popup__url-button" @click="()=>showURL = !showURL">
                 URL
               </button>
             </div>
             <div class="popup__form-row">
-              <img v-if="file" :src="file" alt="Big cover" class="popup__cover--big">
-              <img v-if="file" :src="file" alt="Small cover" class="popup__cover--small">
+              <img :src="file?file:workoutContent.image" alt="Big cover" class="popup__cover popup__cover--big">
+              <img :src="file?file:workoutContent.image" alt="Small cover" class="popup__cover popup__cover--small">
             </div>
           </div>
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Тип
             </p>
-            <TheRadio v-model="type" :radio-content="radio.type" :radio-selected="type" @update:model-value="(newValue)=>(type=newValue)" />
+            <TheRadio v-model="workoutContent.type" :radio-content="radio.type" :radio-selected="workoutContent.type" @update:model-value="(newValue)=>(workoutContent.type=newValue)" />
           </div>
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Сложность
             </p>
-            <TheRadio v-model="difficulty" :radio-content="radio.difficulty" :radio-selected="difficulty" @update:model-value="(newValue)=>(difficulty=newValue)" />
+            <TheRadio v-model="workoutContent.difficulty" :radio-content="radio.difficulty" :radio-selected="workoutContent.difficulty" @update:model-value="(newValue)=>(workoutContent.difficulty=newValue)" />
           </div>
           <div class="popup__form-row">
-            <TheInput v-model="time" type="number" label="Длительность" @update:model-value="(newValue)=>(time=newValue)" />
-            <TheInput v-model="cal" type="number" label="Калории" @update:model-value="(newValue)=>(cal=newValue)" />
-            <TheDropdown v-model="gender" label="Пол" :model-value="radio.gender" @update:model-value="(newValue)=>(gender=newValue)" />
+            <TheInput v-model="workoutContent.time" type="number" label="Длительность" @update:model-value="(newValue)=>(workoutContent.time=newValue)" />
+            <TheInput v-model="workoutContent.calories" type="number" label="Калории" @update:model-value="(newValue)=>(workoutContent.calories=newValue)" />
+            <TheDropdown v-model="workoutContent.gender" :default-value="workout.gender" label="Пол" :model-value="radio.gender" @update:model-value="(newValue)=>(workoutContent.gender=newValue)" />
           </div>
-          <TheInput v-model="inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(inventory=newValue)" />
-          <div class="popup__form-row">
-            <TheInput v-model="search" label="Поиск среди упражнений" @update:model-value="(newValue)=>(search=newValue)" />
-            <ul class="popup__list-exercises">
-              <li v-for="(item,index) in allExercises" :key="index" class="popup__item-exercises">
-                <TheExercise class="popup__object-exercises" :exercise="item" :check="true" type="mini" />
-              </li>
-            </ul>
-          </div>
+          <TheInput v-model="workoutContent.inventory" type="text" label="Инвентарь" @update:model-value="(newValue)=>(workoutContent.inventory=newValue)" />
           <div class="popup__actions">
             <button class="profile__button" @click="confirm">
               Сохранить
@@ -58,53 +50,35 @@
         </form>
       </div>
     </template>
-  </ProfilePopup>
+  </ThePopup>
 </template>
 
 <script>
-import ProfilePopup from '@/components/ProfilePopup.vue';
+import ThePopup from '@/components/ThePopup.vue';
 import TheInput from '@/components/TheInput.vue';
 import TheInputFile from '@/components/TheInputFile.vue';
 import TheTextarea from '@/components/TheTextarea.vue';
 import TheDropdown from '@/components/TheDropdown.vue';
-import TheRadio from './TheRadio.vue';
-import TheExercise from '@/components/TheExercise.vue';
+import TheRadio from '@/components/TheRadio.vue';
 
 import { mapActions } from 'vuex';
 
-
 export default {
-  name: 'AdminPopupCreateWorkout',
+  name: 'AdminPopupChangeWorkout',
   components: {
-    ProfilePopup,
+    ThePopup,
     TheInput,
     TheTextarea,
     TheRadio,
     TheInputFile,
     TheDropdown,
-    TheExercise,
   },
-  props: {
-    allExercises: {
-      type: Array,
-      default: null,
-    },
-  },
+  props: ['workout'],
   data() {
     return {
       showURL: false,
       confirmation: '',
-      name: '',
-      desc: '',
       file: '',
-      difficulty: '',
-      time: '',
-      cal: '',
-      type: '',
-      inventory: '',
-      gender: '',
-      search: '',
-      selectedExercises: [],
       radio: {
         difficulty: {
           'легко': 'Легко',
@@ -125,26 +99,41 @@ export default {
     };
   },
   computed: {
+    workoutContent() {
+      let workout = {
+        title: this.workout.title,
+        description: this.workout.description,
+        difficulty: this.workout.difficulty,
+        time: this.workout.time,
+        calories: this.workout.calories,
+        type: this.workout.type,
+        inventory: this.workout.inventory,
+        image: this.workout.image,
+        gender: this.workout.gender,
+        // id: this.workout.id,
+      };
+      return workout;
+    },
     isConfirmationCorrect() {
       return this.confirmation === this.$options.CONFIRMATION_TEXT;
     },
   },
   methods: {
-    ...mapActions(['addWorkouts']),
-    async CreateWorkout() {
+    ...mapActions(['patchWorkouts']),
+    async ChangeWorkout() {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
-        let obj = {
-          title: this.name,
-          description: this.desc,
-          calories: Number(this.cal),
-          type: this.type,
-          gender: this.gender,
-          media: this.file,
-        };
-        console.log(obj);
-        this.addWorkouts(obj);
+        // let obj = {
+        //   title: this.name,
+        //   description: this.desc,
+        //   calories: Number(this.cal),
+        //   type: this.type,
+        //   gender: this.gender,
+        //   image: this.file,
+        // };
+        console.log(this.workoutContent);
+        this.patchWorkouts(this.workoutContent, this.workout.id);
       }
     },
     newFile(e) {
@@ -232,33 +221,28 @@ export default {
 
 .popup__actions{
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   margin-top: 12px;
 }
 
-.popup__list-exercises {
-  display: flex;
-  gap: 10px;
-  overflow-x: scroll;
-}
-
 
 .popup__cover{
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 2px 0 12px;
   &--big {
-    width: 316px;
+    max-width: 316px;
+    width: 100%;
     height: 198px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 4px;
   }
   &--small {
     width: 60px;
     height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 4px;
   }
+
 }
+
 
 .popup__input-file {
   width: calc(100% - 48px);

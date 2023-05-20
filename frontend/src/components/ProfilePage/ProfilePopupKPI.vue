@@ -1,5 +1,5 @@
 <template>
-  <ProfilePopup ref="Popup">
+  <ThePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <p class="popup__title">
         Сделайте выбор KPI
@@ -29,16 +29,16 @@
         </button>
       </div>
     </template>
-  </ProfilePopup>
+  </ThePopup>
 </template>
 
 <script>
-import ProfilePopup from '@/components/ProfilePopup.vue';
+import ThePopup from '@/components/ThePopup.vue';
 
 export default {
-  name: 'ProfilePopupKPIComponent',
+  name: 'ThePopupKPIComponent',
   components: {
-    ProfilePopup,
+    ThePopup,
   },
   props: ['purpose', 'idSelectedPurpose', 'content'],
   data() {

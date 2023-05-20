@@ -63,9 +63,9 @@
 </template>
 
 <script>
-import AdvantagesCard from '@/components/AdvantagesCard';
-import TypesCard from '@/components/TypesCard';
-import FunctionsList from '@/components/FunctionsList';
+import AdvantagesCard from '@/components/MainPage/AdvantagesCard';
+import TypesCard from '@/components/MainPage/TypesCard';
+import FunctionsList from '@/components/MainPage/FunctionsList';
 
 export default {
   components: {

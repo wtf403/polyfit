@@ -1,29 +1,24 @@
 <template>
-  <ProfilePopup ref="Popup">
+  <ThePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <div class="popup__content">
-        <form action="#" class="popup__form" @submit.prevent>
-          <TheInput v-model="title" type="text" label="Наименование" @update:model-value="(newValue)=>(title=newValue)" />
+        <form action="#" class="popup__form">
+          <TheInput v-model="exerciseContent.title" type="text" label="Наименование" @update:model-value="(newValue)=>(exerciseContent.title=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
               Обложка
             </p>
-            <div class="popup__form-row popup__form-row--full">
-              <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(file=newValue)" />
-              <TheInputFile v-if="!showURL" class="popup__input-file" label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
-              <button class="popup__url-button" @click="()=>showURL = !showURL">
-                URL
-              </button>
-            </div>            <div class="popup__form-row">
-              <img v-if="file" :src="file" alt="Big cover" class="popup__cover--big">
-              <img v-if="file" :src="file" alt="Small cover" class="popup__cover--small">
+            <TheInputFile label="Обновите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
+            <div class="popup__form-row">
+              <img :src="file?file:exerciseContent.media" alt="Big cover" class="popup__cover popup__cover--big">
+              <img :src="file?file:exerciseContent.media" alt="Small cover" class="popup__cover popup__cover--small">
             </div>
           </div>
-          <TheDropdown v-model="type" label="Тип" :model-value="radio.type" @update:model-value="(newValue)=>(type=newValue)" />
+          <TheDropdown v-model="exerciseContent.type" label="Тип" :model-value="radio.type" @update:model-value="(newValue)=>(exerciseContent.type=newValue)" />
           <div class="popup__form-row">
-            <TheInput v-model="time" type="number" label="Длительность (сек.)" @update:model-value="(newValue)=>(time=newValue)" />
-            <TheInput v-model="amount" type="number" label="Количество повторений" @update:model-value="(newValue)=>(amount=newValue)" />
-            <TheInput v-model="cal" type="number" label="Каллории" @update:model-value="(newValue)=>(cal=newValue)" />
+            <TheInput v-model="exerciseContent.time" type="number" label="Длительность (сек.)" @update:model-value="(newValue)=>(exerciseContent.time=newValue)" />
+            <TheInput v-model="exerciseContent.amount" :disable="(exerciseContent.type==='На время')" type="text" label="Количество повторений" @update:model-value="(newValue)=>(exerciseContent.amount=newValue)" />
+            <TheInput v-model="exerciseContent.calories" type="number" label="Каллории" @update:model-value="(newValue)=>(exerciseContent.calories=newValue)" />
           </div>
           <div class="popup__actions">
             <button class="profile__button" @click="confirm">
@@ -36,69 +31,59 @@
         </form>
       </div>
     </template>
-  </ProfilePopup>
+  </ThePopup>
 </template>
 
 <script>
-import ProfilePopup from '@/components/ProfilePopup.vue';
+import ThePopup from '@/components/ThePopup.vue';
 import TheInput from '@/components/TheInput.vue';
 import TheInputFile from '@/components/TheInputFile.vue';
 import TheDropdown from '@/components/TheDropdown.vue';
-import { mapActions } from 'vuex';
-
 
 export default {
-  name: 'AdminPopupCreateExercise',
+  name: 'AdminPopupChangeExercise',
   components: {
-    ProfilePopup,
+    ThePopup,
     TheInput,
     TheInputFile,
     TheDropdown,
   },
+  props: ['exercise'],
   data() {
     return {
-      showURL: false,
       confirmation: '',
-      title: '',
       file: '',
-      amount: '',
-      time: '',
-      cal: '',
-      type: '',
       radio: {
         type: {
           'На время': 'На время',
-          'Повторения': 'Повторение',
+          'Повторения': 'Повторения',
         },
-        gender: {
-          'муж': 'Мужской',
-          'жен': 'Женский',
-          'общая': 'Общий',
-        },
+
       },
     };
   },
   computed: {
+    exerciseContent() {
+      let exercise = {
+        title: this.exercise.title,
+        time: this.exercise.time,
+        calories: this.exercise.calories,
+        amount: this.exercise.amount,
+        type: this.exercise.type,
+        media: this.exercise.media,
+      };
+      return exercise;
+    },
     isConfirmationCorrect() {
       return this.confirmation === this.$options.CONFIRMATION_TEXT;
     },
   },
   methods: {
-    ...mapActions(['addExercise']),
-    async CreateExercise() {
+    async ChangeExercise() {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
-        let obj = {
-          title: this.title,
-          amount: Number(this.amount),
-          media: this.file,
-          hardness: 1,
-          show_timer: false,
-          calories: Number(this.cal),
-        };
-        console.log(obj);
-        this.addExercise(obj);
+        console.log(1);
       }
     },
     newFile(e) {
@@ -126,12 +111,10 @@ export default {
   border-radius: 12px;
 }
 
-
 .popup__text {
   margin-bottom: 12px;
   font-size: 18px;
 }
-
 
 .popup__form {
   display: flex;
@@ -140,7 +123,6 @@ export default {
   max-height: calc(90vh - 80px);
   gap: 6px;
 }
-
 
 .popup__button {
   margin-top: 12px;
@@ -190,49 +172,18 @@ export default {
   margin-top: 12px;
 }
 
-
 .popup__cover{
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 4px 0 12px;
   &--big {
-    width: 316px;
+    width: 198px;
     height: 198px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 4px;
   }
   &--small {
     width: 60px;
     height: 60px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 4px;
   }
-
-}
-
-.popup__input-file {
-  width: calc(100% - 48px);
-}
-
-.popup__url-button {
-  cursor: pointer;
-  height: 44px;
-  width: 44px;
-  margin-top: 4px;
-  color: #24292f;
-  background-color: #f6f8fa;
-  border-color: rgba(28, 36, 27, 0.15);
-  text-decoration: none;
-  border: 1px solid;
-  border-radius: 6px;
-  font-size: 14px;
-  line-height: 1.42;
-  text-align: center;
-  box-shadow: 0 1px 0 rgba(27, 31, 36, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.03);
-}
-
-.popup__form-row--full {
-  justify-content: space-between;
-  gap: 4px;
 }
 
 @media screen and (max-width: 900px) {

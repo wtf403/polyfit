@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import WorkoutsItem from '@/components/WorkoutsItem';
-import WorkoutsSettings from '@/components/WorkoutsSettings';
+import WorkoutsItem from '@/components/WorkoutsPage/WorkoutsItem';
+import WorkoutsSettings from '@/components/WorkoutsPage/WorkoutsSettings';
 
 export default {
   components: {
@@ -236,12 +236,12 @@ export default {
     sortWorkouts() {
       let variant = this.varSort;
       let type = this.varType;
-      // let time = this.varTime;
+      let time = this.varTime;
       let text = this.varSearch;
-      // let difficulty = this.varDifficulty;
+      let difficulty = this.varDifficulty;
       let list = this.sortByType(this.allWorkouts, type);
-      // list = this.sortByTime(list, time);
-      // list = this.sortByDifficulty(list, difficulty);
+      list = this.sortByTime(list, time);
+      list = this.sortByDifficulty(list, difficulty);
       list = this.sortBySearch(list, text);
       if (variant === 'По новизне') { return list; }
       return list.slice().sort(function(a, b) {
@@ -254,9 +254,9 @@ export default {
   },
   methods: {
     sortByType(list, type) {
-      if (type === 'power') { return list.filter(function(item) { return (item.type === null || item.type === 1); }); }
-      if (type === 'stamina') { return list.filter(function(item) { return item.type === 2; }); }
-      if (type === 'speed') { return list.filter(function(item) { return item.type === 3; }); }
+      if (type === 'Cиловая') { return list.filter(function(item) { return (item.type === null || item.type === 1); }); }
+      if (type === 'Вынословая') { return list.filter(function(item) { return item.type === 2; }); }
+      if (type === 'Скоростная') { return list.filter(function(item) { return item.type === 3; }); }
       return list;
     },
     sortByDifficulty(list, difficulty) {

@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import WorkoutPlayerInfo from '@/components/WorkoutPlayerInfo';
-import WorkoutPlayerSwitch from '@/components/WorkoutPlayerSwitch';
+import WorkoutPlayerInfo from '@/components/WorkoutPlayerPage/WorkoutPlayerInfo';
+import WorkoutPlayerSwitch from '@/components/WorkoutPlayerPage/WorkoutPlayerSwitch';
 export default {
   components: {
     WorkoutPlayerInfo, WorkoutPlayerSwitch,

@@ -70,10 +70,10 @@
 </template>
 
 <script>
-import DropdownComponent from '@/components/WorkoutsSettingsDropdown';
-import RadioComponent from '@/components/WorkoutsSettingsRadio';
-import FiltersButton from '@/components/WorkoutsSettingsButton';
-import RangeComponent from '@/components/WorkoutsSettingsRange';
+import DropdownComponent from '@/components/WorkoutsPage/WorkoutsSettingsDropdown';
+import RadioComponent from '@/components/WorkoutsPage/WorkoutsSettingsRadio';
+import FiltersButton from '@/components/WorkoutsPage/WorkoutsSettingsButton';
+import RangeComponent from '@/components/WorkoutsPage/WorkoutsSettingsRange';
 
 
 

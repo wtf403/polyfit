@@ -1,5 +1,5 @@
 <template>
-  <ProfilePopup ref="Popup">
+  <ThePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <div class="popup__content">
         <div class="popup__head">
@@ -59,18 +59,18 @@
         </div>
       </div>
     </template>
-  </ProfilePopup>
+  </ThePopup>
 </template>
 
 <script>
-import ProfilePopup from '@/components/ProfilePopup.vue';
+import ThePopup from '@/components/ThePopup.vue';
 import CalendarPopupWorkoutsCard from './CalendarPopupWorkoutsCard.vue';
-import TheInput from './TheInput.vue';
+import TheInput from '@/components/TheInput.vue';
 
 export default {
   name: 'CalendarPopupAddWorkout',
   components: {
-    ProfilePopup,
+    ThePopup,
     TheInput,
     CalendarPopupWorkoutsCard,
   },

@@ -83,14 +83,14 @@
 </template>
 
 <script>
-import WorkoutsItem from '@/components/WorkoutsItem';
+import WorkoutsItem from '@/components/WorkoutsPage/WorkoutsItem';
 import TheInput from '@/components/TheInput';
-import AdminPopupChangeWorkout from '@/components/AdminPopupChangeWorkout';
-import AdminPopupDeleteWorkout from '@/components/AdminPopupDeleteWorkout.vue';
-import AdminPopupCreateWorkout from '@/components/AdminPopupCreateWorkout.vue';
+import AdminPopupChangeWorkout from '@/components/AdminPage/AdminPopupChangeWorkout.vue';
+import AdminPopupDeleteWorkout from '@/components/AdminPage/AdminPopupDeleteWorkout.vue';
+import AdminPopupCreateWorkout from '@/components/AdminPage/AdminPopupCreateWorkout.vue';
 import TheExercise from '@/components/TheExercise.vue';
-import AdminPopupCreateExercise from '@/components/AdminPopupCreateExercise.vue';
-import AdminPopupChangeExercise from '@/components/AdminPopupChangeExercise.vue';
+import AdminPopupCreateExercise from '@/components/AdminPage/AdminPopupCreateExercise.vue';
+import AdminPopupChangeExercise from '@/components/AdminPage/AdminPopupChangeExercise.vue';
 
 export default {
   components: {
