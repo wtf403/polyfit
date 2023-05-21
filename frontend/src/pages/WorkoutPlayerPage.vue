@@ -14,6 +14,7 @@
 import WorkoutPlayerInfo from '@/components/WorkoutPlayerPage/WorkoutPlayerInfo';
 import WorkoutPlayerSwitch from '@/components/WorkoutPlayerPage/WorkoutPlayerSwitch';
 export default {
+  name: 'WorkoutsPlayer',
   components: {
     WorkoutPlayerInfo, WorkoutPlayerSwitch,
   },

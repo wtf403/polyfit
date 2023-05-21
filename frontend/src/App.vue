@@ -14,6 +14,7 @@ import TheHeader from '@/components/TheHeader';
 import TheFooter from '@/components/TheFooter';
 import TheBottomNavigation from '@/components/TheBottomNavigation';
 
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
@@ -27,12 +28,20 @@ export default {
       timer: 0,
     };
   },
-  mounted: function() {
+  created() {
+    if (localStorage.token) {
+      this.meFetch(localStorage.token);
+    }
+  },
+  mounted() {
     this.$nextTick(function() {
       window.setInterval(() => {
         this.timer = this.timer + 1;
       }, 1000);
     });
+  },
+  methods: {
+    ...mapActions(['meFetch']),
   },
 };
 </script>

@@ -19,16 +19,13 @@ const bgVideo = [
           class="login__logo"
           :srcset="require('@/assets/logo.svg') + ' 3x'"
         >
-        <form class="login__form" action="/profile" @submit="isAutorized">
+        <form class="login__form" action="#" @submit="login" @submit.prevent>
           <TheInput type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
           <TheInput type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
           <TheCheckbox type="checkbox" label="Запомнить меня" @update:model-value="(newValue)=>(userSave=newValue)" />
-          <!-- <button type="submit" class="login__button">
+          <button class="login__button">
             Войти
-          </button> -->
-          <router-link :to="(userEmail=='admin'&userPassword=='admin')?'/admin':'/profile'" class="login__button">
-            Войти
-          </router-link>
+          </button>
         </form>
         <p>
           Еще нет аккаунта?
@@ -46,6 +43,8 @@ const bgVideo = [
 import TheInput from '@/components/TheInput.vue';
 import TheCheckbox from '@/components/TheCheckbox.vue';
 
+import { mapActions } from 'vuex';
+
 export default {
   components: {
     TheInput,
@@ -60,8 +59,14 @@ export default {
     };
   },
   methods: {
-    isAutorized() {
-      return;
+    ...mapActions(['loginFetch']),
+    async login() {
+      let obj = {
+        email: this.userEmail,
+        password: this.userPassword,
+      };
+      this.loginFetch(obj);
+      this.$router.push({ path: '/profile'});
     },
   },
 };

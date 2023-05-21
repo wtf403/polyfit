@@ -107,9 +107,9 @@ export default {
       selectedExercises: [],
       radio: {
         difficulty: {
-          'легко': 'Легко',
-          'средне': 'Средне',
-          'сложно': 'Сложно',
+          'Легко': 'Легко',
+          'Средне': 'Средне',
+          'Сложно': 'Сложно',
         },
         type: {
           'Силовая': 'Силовая',
@@ -139,9 +139,13 @@ export default {
           title: this.name,
           description: this.desc,
           calories: Number(this.cal),
+          difficulty: this.difficulty,
           type: this.type,
+          time: this.time,
           gender: this.gender,
-          media: this.file,
+          image: this.file,
+          inventory: this.inventory,
+          // exercise: [],
         };
         console.log(obj);
         this.addWorkouts(obj);
