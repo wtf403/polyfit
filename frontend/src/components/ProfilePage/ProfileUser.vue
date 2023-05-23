@@ -41,7 +41,6 @@ export default {
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 36px;
-  width: calc(50% - 40px);
 }
 
 .profile__info {

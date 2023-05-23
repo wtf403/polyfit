@@ -1,11 +1,11 @@
 <template>
   <section class="profile">
     <div class="profile__wrapper">
-      <ProfileWelcome :firstname="userData.firstname" />
-      <ProfileUser :user="{firstname:userData.firstname, age:userData.age, gender:userData.gender, weight: userData.weight, image: userData.avatar}" />
-      <ProfilePurpose :purpose="testUser.purposes[testUser.purposes.length-1]" />
-      <ProfileControl :purposes="testUser.purposes" :id-selected-purpose="IdSelectedPurpose" @change-kpi="ChangeKPI" />
-      <ProfilePurposes :purposes="testUser.purposes" @change-purpose="ChangePurpose" />
+      <ProfileWelcome id="welcome" :firstname="userData.firstname" />
+      <ProfileUser id="info" :user="{firstname:userData.firstname, age:userData.age, gender:userData.gender, weight: userData.weight, image: userData.avatar}" />
+      <ProfilePurpose id="purpose" :purpose="testUser.purposes[testUser.purposes.length-1]" />
+      <ProfileControl id="control" :purposes="testUser.purposes" :id-selected-purpose="IdSelectedPurpose" @change-kpi="ChangeKPI" />
+      <ProfilePurposes id="pall" :purposes="testUser.purposes" @change-purpose="ChangePurpose" />
     </div>
     <Transition name="fade">
       <ProfilePopupKPI ref="modal" :id-selected-purpose="IdSelectedPurpose" :purpose="testUser.purposes[testUser.purposes.length-1].name" @update-kpi="UpdateKPI" />
@@ -361,13 +361,39 @@ export default {
 
 
 .profile__wrapper {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template:
+    'welcome welcome welcome welcome' auto
+    'info info purpose purpose' auto
+    'control control control pall' auto
+    'control control control pall' auto/1fr 1fr 1fr 1fr;
   justify-content: space-between;
+  gap: 20px;
+  width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 24px 40px 60px;
   padding-top: 120px;
+}
+
+@media screen and (max-width: 1030px){
+  .profile__wrapper {
+    grid-template:
+      'welcome welcome' auto
+      'info purpose' auto
+      'pall pall' auto
+      'control control' auto/1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .profile__wrapper {
+    grid-template:
+      'welcome welcome' auto
+      'info info' auto
+      'purpose purpose' auto
+      'pall pall' auto
+      'control control' auto/1fr 1fr;
+  }
 }
 
 .profile__title {
@@ -391,8 +417,7 @@ export default {
 }
 
 .profile__purpose, .profile__kpi, .profile__user, .profile__purposes-list, .profile__chart{
-  margin-bottom: 40px;
-  padding: 40px;
+  padding: 24px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.08);
@@ -460,4 +485,23 @@ export default {
   }
 }
 
+#welcome {
+  grid-area: welcome;
+}
+
+#info {
+  grid-area: info;
+}
+
+#purpose {
+  grid-area: purpose;
+}
+
+#control {
+  grid-area: control;
+}
+
+#pall {
+  grid-area: pall;
+}
 </style>

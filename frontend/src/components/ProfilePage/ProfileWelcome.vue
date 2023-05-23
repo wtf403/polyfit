@@ -29,7 +29,6 @@ export default {
 <style scoped>
 
 .profile__welcome {
-  width: 100%;
   margin-bottom: 36px;
 }
 

@@ -27,7 +27,6 @@ export default {
 .profile__purpose {
   display: flex;
   flex-direction: column;
-  width: calc(50% - 40px);
 }
 
 .profile__purpose .profile__button {
