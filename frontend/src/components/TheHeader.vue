@@ -45,8 +45,11 @@ export default {
   },
   methods: {
     exit() {
-      localStorage.token = null;
-      this.$router.go(0);
+      setTimeout(() => {
+        localStorage.token = null;
+        this.$router.push({ path: '/log'});
+        this.$router.go(0);
+      }, 1000);
     },
   },
 };

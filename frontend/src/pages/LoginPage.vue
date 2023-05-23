@@ -19,11 +19,15 @@ const bgVideo = [
           class="login__logo"
           :srcset="require('@/assets/logo.svg') + ' 3x'"
         >
-        <form class="login__form" action="#" @submit="login" @submit.prevent>
-          <TheInput type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
-          <TheInput type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
+
+        <form class="login__form" action="#" @submit.prevent="login">
+          <p class="login__error">
+            {{$store.state.auth.authError === 'user with this email was not found'? 'Данный email неверный, проверьте введенные данные.' : ($store.state.auth.authError === 'incorrect password'?'Данный пароль неверный, проверьте введенные данные.':'')}}
+          </p>
+          <TheInput :class="{'input__error': $store.state.auth.authError === 'user with this email was not found'}" type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
+          <TheInput :class="{'input__error': $store.state.auth.authError === 'incorrect password'}" type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
           <TheCheckbox type="checkbox" label="Запомнить меня" @update:model-value="(newValue)=>(userSave=newValue)" />
-          <button class="login__button">
+          <button type="submit" class="login__button">
             Войти
           </button>
         </form>
@@ -65,8 +69,9 @@ export default {
         email: this.userEmail,
         password: this.userPassword,
       };
-      this.loginFetch(obj);
-      this.$router.push({ path: '/profile'});
+      await this.loginFetch(obj);
+      console.log(this.$store.state.auth.authError);
+      setTimeout(() => this.$store.state.auth.authError === null ? this.$router.push({ path: '/'}) : false, 100);
     },
   },
 };
@@ -185,5 +190,20 @@ export default {
 
 .login__link:hover{
   text-decoration: underline;
+}
+
+.login__error {
+  margin-bottom: 20px;
+  color: red;
+  font-size: 14px;
+}
+
+.input__error .input__base{
+  background-color: rgb(255, 249, 249);
+  border: 0.4px solid rgb(238, 60, 60);
+}
+
+.input__error .input__base:hover {
+  border: 0.4px solid rgb(246, 10, 10);
 }
 </style>

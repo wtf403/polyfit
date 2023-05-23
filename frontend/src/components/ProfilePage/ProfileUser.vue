@@ -1,18 +1,18 @@
 <template>
   <div class="profile__user">
     <a href="#" class="profile__cover">
-      <img :src="user.image" alt="User Photo" class="profile__image">
+      <img :src="'https://polyfit.live/'+user.image" alt="User Photo" class="profile__image">
     </a>
     <div class="profile__info">
       <p class="profile__title">
-        {{user.name}}
+        {{user.firstname}}
       </p>
       <div class="profile__about">
         <p class="profile__text">
           Пол: {{user.gender}}
         </p>
         <p class="profile__text">
-          Возраст: {{user.age}} лет (года)
+          Возраст: {{user.age}} {{user.age%10==0||user.age%10>=5?'лет':(user.age%10==1?'год':'года')}}
         </p>
         <p class="profile__text">
           Вес: {{user.weight}} кг
@@ -29,6 +29,9 @@
 export default {
   name: 'ProfileUserComponent',
   props: ['user'],
+  created() {
+    console.log(this.user);
+  },
 };
 </script>
 

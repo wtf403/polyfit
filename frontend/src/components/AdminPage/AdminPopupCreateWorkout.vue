@@ -2,8 +2,11 @@
   <ThePopup ref="Popup">
     <template #actions="{ confirm, close }">
       <div class="popup__content">
+        <p v-if="showError" class="popup__error">
+          Введены не все поля для создания тренировки
+        </p>
         <form action="#" class="popup__form" @submit.prevent>
-          <TheInput v-model="name" type="text" label="Название" @update:model-value="(newValue)=>(name=newValue)" />
+          <TheInput v-model="title" type="text" label="Название" @update:model-value="(newValue)=>(title=newValue)" />
           <TheTextarea v-model="desc" type="text" label="Описание" @update:model-value="(newValue)=>(desc=newValue)" />
           <div class="popup__form-column">
             <p class="popup__radio-label">
@@ -11,7 +14,7 @@
             </p>
             <div class="popup__form-row popup__form-row--full">
               <TheInput v-if="showURL" v-model="file" class="popup__input-file" type="text" placeholder="Введите ссылку на изображение" @update:model-value="(newValue)=>(file=newValue)" />
-              <TheInputFile v-if="!showURL" class="popup__input-file" label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(newValue))" />
+              <TheInputFile v-if="!showURL" class="popup__input-file" label="Загрузите обложку" type="file" @update:model-value="(newValue)=>(newFile(event, newValue))" />
               <button class="popup__url-button" @click="()=>showURL = !showURL">
                 URL
               </button>
@@ -92,9 +95,10 @@ export default {
   },
   data() {
     return {
+      showError: false,
       showURL: false,
       confirmation: '',
-      name: '',
+      title: '',
       desc: '',
       file: '',
       difficulty: '',
@@ -136,24 +140,24 @@ export default {
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
         let obj = {
-          title: this.name,
-          description: this.desc,
-          calories: Number(this.cal),
-          difficulty: this.difficulty,
-          type: this.type,
-          time: this.time,
-          gender: this.gender,
-          image: this.file,
-          inventory: this.inventory,
+          title: this.title,
+          description: this.cal === '' ? 'Обычная тренировка для обычных спортсменов.' : this.desc,
+          calories: this.cal === '' ? 0 : Number(this.cal),
+          // difficulty: this.difficulty,
+          // type: this.type,
+          // time: this.time,
+          // gender: this.gender,
+          // image: this.file,
+          // inventory: this.inventory,
           // exercise: [],
         };
-        console.log(obj);
-        this.addWorkouts(obj);
+
+        obj.title ? this.addWorkouts(obj) : console.log(0);
       }
     },
-    newFile(e) {
-      const file = e.target.files[0];
-      this.file = URL.createObjectURL(file);
+    newFile(event) {
+      // this.file = URL.createObjectURL(e.target.files[0]);
+      this.file = event.target.files[0];
     },
   },
 };
@@ -309,5 +313,9 @@ export default {
     max-height: 240px;
     overflow: scroll;
   }
+}
+
+.popup_error {
+  color:red;
 }
 </style>

@@ -97,7 +97,6 @@ export default {
           show_timer: false,
           calories: Number(this.cal),
         };
-        console.log(obj);
         this.addExercise(obj);
       }
     },

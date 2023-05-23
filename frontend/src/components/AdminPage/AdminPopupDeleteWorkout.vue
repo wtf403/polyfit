@@ -47,7 +47,8 @@ export default {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
-        this.deleteWorkouts(this.workout.id);
+        await this.deleteWorkouts(this.workout.id);
+        this.$router.go(0);
       }
     },
   },

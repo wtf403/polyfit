@@ -1,14 +1,14 @@
 <template>
   <section class="profile">
     <div class="profile__wrapper">
-      <ProfileWelcome :name="user.name" />
-      <ProfileUser :user="{name:user.name, age:user.age, gender:user.gender, weight: user.weight, image: user.image}" />
-      <ProfilePurpose :purpose="user.purposes[user.purposes.length-1]" />
-      <ProfileControl :purposes="user.purposes" :id-selected-purpose="IdSelectedPurpose" @change-kpi="ChangeKPI" />
-      <ProfilePurposes :purposes="user.purposes" @change-purpose="ChangePurpose" />
+      <ProfileWelcome :firstname="userData.firstname" />
+      <ProfileUser :user="{firstname:userData.firstname, age:userData.age, gender:userData.gender, weight: userData.weight, image: userData.avatar}" />
+      <ProfilePurpose :purpose="testUser.purposes[testUser.purposes.length-1]" />
+      <ProfileControl :purposes="testUser.purposes" :id-selected-purpose="IdSelectedPurpose" @change-kpi="ChangeKPI" />
+      <ProfilePurposes :purposes="testUser.purposes" @change-purpose="ChangePurpose" />
     </div>
     <Transition name="fade">
-      <ProfilePopupKPI ref="modal" :id-selected-purpose="IdSelectedPurpose" :purpose="user.purposes[user.purposes.length-1].name" @update-kpi="UpdateKPI" />
+      <ProfilePopupKPI ref="modal" :id-selected-purpose="IdSelectedPurpose" :purpose="testUser.purposes[testUser.purposes.length-1].name" @update-kpi="UpdateKPI" />
     </Transition>
   </section>
 </template>
@@ -33,8 +33,8 @@ export default {
   data() {
     return {
       IdSelectedPurpose: 3,
-      user: {
-        name: 'Артем Крылов',
+      testUser: {
+        firstname: 'Артем Крылов',
         image: require('@/assets/profileImage.png'),
         gender: 'мужской',
         age: 24,
@@ -338,7 +338,11 @@ export default {
       },
     };
   },
-
+  computed: {
+    userData() {
+      return this.$store.getters.myUser;
+    },
+  },
   methods: {
     ChangePurpose(obj) {
       this.IdSelectedPurpose = obj;

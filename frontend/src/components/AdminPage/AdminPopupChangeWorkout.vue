@@ -132,7 +132,6 @@ export default {
           // gender: this.gender,
           // image: this.file,
         };
-        console.log(this.workoutContent);
         this.patchWorkouts(obj, this.workout.id);
       }
     },

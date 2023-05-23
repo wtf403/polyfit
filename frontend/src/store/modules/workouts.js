@@ -16,13 +16,8 @@ export default {
     },
     async addWorkouts({ commit }, workout) {
       try {
-        let response = await fetch('https://polyfit.live/api/workouts', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json;charset=utf-8',
-          },
-          body: JSON.stringify(workout),
-        });
+        console.log(workout);
+        let response = await axios.post(`https://polyfit.live/api/workouts/`, workout);
         commit('newWorkout', response.data);
       } catch (error) {
         alert(error);
@@ -30,7 +25,9 @@ export default {
     },
     async deleteWorkouts({ commit }, workoutID) {
       try {
-        await axios.delete(`https://polyfit.live/api/workouts/${workoutID}`);
+        await axios.delete(`https://polyfit.live/api/workouts/${workoutID}`, {
+          headers: { Authorization: `Bearer ${localStorage.token}` },
+        });
         commit('dltWorkout', workoutID);
       } catch (error) {
         alert(error);
@@ -38,7 +35,9 @@ export default {
     },
     async patchWorkouts({ commit }, workout, workoutID) {
       try {
-        await axios.patch(`https://polyfit.live/api/workouts/${workout.id}`);
+        await axios.patch(`https://polyfit.live/api/workouts/${workout.id}`, {
+          headers: { Authorization: `Bearer ${localStorage.token}` },
+        });
         commit('ptchWorkout', workout, workoutID);
       } catch (error) {
         alert(error);

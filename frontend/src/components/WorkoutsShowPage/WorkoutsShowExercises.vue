@@ -15,9 +15,6 @@
           <h4 class="exercises__name">
             {{exercise.title}}
           </h4>
-          <p class="exercises__cal">
-            {{exercise.calories}}
-          </p>
           <p class="exercises__count">
             {{exercise.amount}} повторов • {{exercise.time}} сек.
           </p>
@@ -77,7 +74,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 8px;
 }
 
 .exercises__name {

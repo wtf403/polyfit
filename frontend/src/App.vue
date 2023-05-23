@@ -1,12 +1,12 @@
 <template>
-  <v-app>
+  <div>
     <TheHeader />
     <TheBottomNavigation />
     <div id="app">
       <router-view :timer="timer" />
     </div>
     <TheFooter />
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -29,8 +29,9 @@ export default {
     };
   },
   created() {
-    if (localStorage.token) {
-      this.meFetch(localStorage.token);
+    const token = localStorage.token;
+    if (typeof token !== 'undefined' && token !== 'null') {
+      this.meFetch(token);
     }
   },
   mounted() {
