@@ -1,14 +1,14 @@
 <template>
   <section class="profile">
     <div class="profile__wrapper">
-      <ProfileWelcome :name="user.name" />
-      <ProfileUser :user="{name:user.name, age:user.age, gender:user.gender, weight: user.weight, image: user.image}" />
-      <ProfilePurpose :purpose="user.purposes[user.purposes.length-1]" />
-      <ProfileControl :purposes="user.purposes" :id-selected-purpose="IdSelectedPurpose" @change-kpi="ChangeKPI" />
-      <ProfilePurposes :purposes="user.purposes" @change-purpose="ChangePurpose" />
+      <ProfileWelcome id="welcome" :firstname="userData.firstname" />
+      <ProfileUser id="info" :user="{firstname:userData.firstname, age:userData.age, gender:userData.gender, weight: userData.weight, image: userData.avatar}" />
+      <ProfilePurpose id="purpose" :purpose="testUser.purposes[testUser.purposes.length-1]" />
+      <ProfileControl id="control" :purposes="testUser.purposes" :id-selected-purpose="IdSelectedPurpose" @change-kpi="ChangeKPI" />
+      <ProfilePurposes id="pall" :purposes="testUser.purposes" @change-purpose="ChangePurpose" />
     </div>
     <Transition name="fade">
-      <ProfilePopupKPI ref="modal" :id-selected-purpose="IdSelectedPurpose" :purpose="user.purposes[user.purposes.length-1].name" @update-kpi="UpdateKPI" />
+      <ProfilePopupKPI ref="modal" :id-selected-purpose="IdSelectedPurpose" :purpose="testUser.purposes[testUser.purposes.length-1].name" @update-kpi="UpdateKPI" />
     </Transition>
   </section>
 </template>
@@ -33,8 +33,8 @@ export default {
   data() {
     return {
       IdSelectedPurpose: 3,
-      user: {
-        name: 'Артем Крылов',
+      testUser: {
+        firstname: 'Артем Крылов',
         image: require('@/assets/profileImage.png'),
         gender: 'мужской',
         age: 24,
@@ -338,7 +338,11 @@ export default {
       },
     };
   },
-
+  computed: {
+    userData() {
+      return this.$store.getters.myUser;
+    },
+  },
   methods: {
     ChangePurpose(obj) {
       this.IdSelectedPurpose = obj;
@@ -357,13 +361,51 @@ export default {
 
 
 .profile__wrapper {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template:
+    'welcome welcome welcome welcome' auto
+    'info info purpose purpose' auto
+    'control control control pall' auto
+    'control control control pall' auto/1fr 1fr 1fr 1fr;
   justify-content: space-between;
+  gap: 20px;
+  width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 24px 40px 60px;
-  padding-top: 120px;
+  padding: 100px 40px 40px 40px;
+}
+
+@media screen and (max-width: 1300px){
+  .profile__wrapper {
+    grid-template:
+      'welcome welcome welcome welcome' auto
+      'info info info info' auto
+      'purpose purpose purpose purpose' auto
+      'control control control pall' auto
+      'control control control pall' auto/1fr 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 1030px){
+  .profile__wrapper {
+    grid-template:
+      'welcome welcome' auto
+      'info info' auto
+      'purpose purpose' auto
+      'pall pall' auto
+      'control control' auto/1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 600px){
+  .profile__wrapper {
+    grid-template:
+      'welcome welcome' auto
+      'info info' auto
+      'purpose purpose' auto
+      'pall pall' auto
+      'control control' auto/1fr 1fr;
+  }
 }
 
 .profile__title {
@@ -387,8 +429,7 @@ export default {
 }
 
 .profile__purpose, .profile__kpi, .profile__user, .profile__purposes-list, .profile__chart{
-  margin-bottom: 40px;
-  padding: 40px;
+  padding: 24px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.08), 0 4px 16px rgba(0, 0, 0, 0.08);
@@ -456,4 +497,23 @@ export default {
   }
 }
 
+#welcome {
+  grid-area: welcome;
+}
+
+#info {
+  grid-area: info;
+}
+
+#purpose {
+  grid-area: purpose;
+}
+
+#control {
+  grid-area: control;
+}
+
+#pall {
+  grid-area: pall;
+}
 </style>

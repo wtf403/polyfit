@@ -21,7 +21,7 @@
         readonly
         min="0"
         step="1"
-        max="67"
+        :max="$store.state.workouts.workouts.reduce((max, obj) => obj.time > max ? obj.time : max, -Infinity)"
         value="0"
         data-values="1 67"
         @change="RangeEmit"

@@ -17,12 +17,18 @@
           </li>
         </ul>
       </nav>
-      <div class="header__auth auth">
+      <div v-if="!userData" class="header__auth auth">
         <router-link class="auth__reg" to="/reg" :class="{'auth__reg--active': $route.path == '/reg'}">Регистрация</router-link>
         <span class="auth__block">
           |
         </span>
         <router-link class="auth__login" :class="{'auth__login--active': $route.path == '/log'}" to="/log">{{'Войти'}}</router-link>
+      </div>
+      <div v-if="userData" class="header__auth auth">
+        <router-link class="auth__login" :class="{'auth__login--active': $route.path == '/profile'}" to="/profile">Мой профиль</router-link>
+        <button class="auth__exit" @click="exit">
+          Выйти
+        </button>
       </div>
     </div>
   </div>
@@ -31,7 +37,21 @@
 <script>
 
 export default {
-
+  name: 'HeaderComponent',
+  computed: {
+    userData() {
+      return this.$store.getters.myUser;
+    },
+  },
+  methods: {
+    exit() {
+      setTimeout(() => {
+        localStorage.token = null;
+        this.$router.push({ path: '/log'});
+        this.$router.go(0);
+      }, 1000);
+    },
+  },
 };
 </script>
 
@@ -116,6 +136,24 @@ $primary: #f66c1e;
   &--active {
     color: black;
     font-weight: 500;
+  }
+}
+
+.auth__exit {
+  padding-top: 2px;
+  color: #393939;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  transition: color 200ms ease-in-out;
+  opacity: 0.9;
+  background: none;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    color: rgb(24, 24, 24);
+    opacity: 1;
   }
 }
 

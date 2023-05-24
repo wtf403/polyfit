@@ -101,22 +101,20 @@ export default {
 
 .hero {
   padding-top: 52px;
-  margin-bottom: 60px;
-}
-
-.hero__info {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(40deg, #f76e1e69 0%, #f76e1e2b 30%, #f76e1e10 45%, #f76e1e00 100%);
-  padding: calc(100vh - 52px - 240px) 40px 60px 60px;
-}
-.hero__wrapper {
-  @include wrapper;
-  height: calc(100vh - 52px);
   background-image: url('../assets/homeCover.webp');
   background-position-x: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.hero__info {
+  @include wrapper;
+}
+.hero__wrapper {
+  width: 100%;
+  background: linear-gradient(40deg, #f76e1e69 0%, #f76e1e2b 30%, #f76e1e10 45%, #f76e1e00 100%);
+  padding: calc(100vh - 52px - 240px) 40px 40px 60px;
+  height: calc(100vh - 52px);
 }
 
 .hero__title {

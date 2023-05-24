@@ -19,13 +19,13 @@ const bgVideo = [
           class="registration__logo"
           :srcset="require('@/assets/logo.svg') + ' 3x'"
         >
-        <form class="registration__form" @submit="addUser">
+        <form class="registration__form" @submit="registration" @submit.prevent>
           <TheInput type="text" label="Имя" required @update:model-value="(newValue)=>(userName=newValue)" />
-          <TheInput type="tel" label="Телефон" required @update:model-value="(newValue)=>(userPhone=newValue)" />
+          <TheInput type="number" label="Возраст" required @update:model-value="(newValue)=>(userAge=newValue)" />
           <TheInput type="email" label="Email" required @update:model-value="(newValue)=>(userEmail=newValue)" />
           <TheInput type="password" minlength="6" maxlength="36" label="Пароль" required @update:model-value="(newValue)=>(userPassword=newValue)" />
           <TheCheckbox type="checkbox" label="Я согласен на обработку персональных данных" @update:model-value="(newValue)=>(userCheck=newValue)" />
-          <button type="submit" class="registration__button">
+          <button type="submit" class="registration__button" @click="registration">
             Зарегестрироваться
           </button>
         </form>
@@ -39,6 +39,8 @@ const bgVideo = [
 import TheInput from '@/components/TheInput.vue';
 import TheCheckbox from '@/components/TheCheckbox.vue';
 
+import { mapActions } from 'vuex';
+
 export default {
   components: {
     TheInput,
@@ -48,17 +50,24 @@ export default {
   data() {
     return {
       userName: '',
-      userPhone: '',
+      userAge: '',
       userEmail: '',
       userPassword: '',
       userCheck: '',
-      users: [],
       sitekey: 'ВАШ SITE KEY',
     };
   },
   methods: {
-    addUser() {
-      return;
+    ...mapActions(['regFetch', 'loginFetch']),
+    async registration() {
+      let obj = {
+        email: this.userEmail,
+        password: this.userPassword,
+        firstname: this.userName,
+        age: this.userAge,
+      };
+      this.regFetch(obj);
+      setTimeout(() => { this.$router.push({ path: '/'}); }, 1200);
     },
   },
 };

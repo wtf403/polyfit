@@ -88,9 +88,6 @@ export default {
 </script>
 
 <style scoped>
-.profile__control {
-  width: calc(100vw - 520px);
-}
 
 .profile__kpi {
   margin-bottom: 20px;
@@ -104,8 +101,6 @@ export default {
   max-width: 380px;
   height: 48px;
   margin-bottom: 12px;
-
-  /* padding: 10px 14px; */
   font-size: 14px;
   line-height: 1.2;
   background-color: #ffd2b8;

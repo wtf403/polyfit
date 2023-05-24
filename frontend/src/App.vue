@@ -1,12 +1,12 @@
 <template>
-  <v-app>
+  <div>
     <TheHeader />
     <TheBottomNavigation />
     <div id="app">
       <router-view :timer="timer" />
     </div>
     <TheFooter />
-  </v-app>
+  </div>
 </template>
 
 <script>
@@ -14,6 +14,7 @@ import TheHeader from '@/components/TheHeader';
 import TheFooter from '@/components/TheFooter';
 import TheBottomNavigation from '@/components/TheBottomNavigation';
 
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
@@ -27,12 +28,21 @@ export default {
       timer: 0,
     };
   },
-  mounted: function() {
+  created() {
+    const token = localStorage.token;
+    if (typeof token !== 'undefined' && token !== 'null') {
+      this.meFetch(token);
+    }
+  },
+  mounted() {
     this.$nextTick(function() {
       window.setInterval(() => {
         this.timer = this.timer + 1;
       }, 1000);
     });
+  },
+  methods: {
+    ...mapActions(['meFetch']),
   },
 };
 </script>

@@ -5,13 +5,18 @@
     </h3>
     <ul class="exercises__list">
       <li v-for="(exercise, index) in exercises" :key="index" class="exercises__item">
-        <img :src="exercise.media" alt="Image for exercise" class="exercises__image">
+        <div class="exercises__cover">
+          <p class="exercises__cal">
+            {{exercise.calories}} кал.
+          </p>
+          <img :src="exercise.media" alt="Image for exercise" class="exercises__image">
+        </div>
         <div class="exercises__info">
           <h4 class="exercises__name">
             {{exercise.title}}
           </h4>
           <p class="exercises__count">
-            {{exercise.amount}}
+            {{exercise.amount}} повторов • {{exercise.time}} сек.
           </p>
         </div>
       </li>
@@ -23,12 +28,6 @@
 export default {
   name: 'ExercisesComponent',
   props: ['exercises'],
-  data() {
-    return {
-      // exercises: {},
-    };
-  },
-
 };
 </script>
 
@@ -41,9 +40,9 @@ export default {
 }
 
 .exercises__title {
-  margin: 40px auto;
+  margin: 36px auto;
   font-weight: 500;
-  font-size: 56px;
+  font-size: 36px;
   line-height: 1.1;
   text-align: center;
 }
@@ -68,34 +67,51 @@ export default {
   width: 100px;
   height: 100px;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: 6px;
 }
 
 .exercises__info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 8px;
 }
 
 .exercises__name {
-  display: -webkit-box;
-  max-height: 48px;
+  /* display: -webkit-box;
+  max-height: 48px; */
   overflow: hidden;
   font-weight: 400;
-  font-size: 24px;
-  line-height: 1;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  font-size: 18px;
+  line-height: 1.1;
+
+  /* -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; */
 }
 
 .exercises__count {
-  padding: 8px 12px;
+  padding: 6px 8px;
   color: #f66c1e;
   font-weight: 400;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1;
   background-color: #f6f6f6;
   border-radius: 8px;
+}
+
+.exercises__cal {
+  position: absolute;
+  right: 2px;
+  bottom: 6px;
+  padding: 2px 4px;
+  color: white;
+  font-size: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  backdrop-filter: blur(2px);
+}
+
+.exercises__cover {
+  position: relative;
 }
 </style>

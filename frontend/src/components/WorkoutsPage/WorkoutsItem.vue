@@ -1,5 +1,5 @@
 <template>
-  <router-link :to="{ path: '/workouts/'+workout.id, query: {item: workout}}" class="workouts-content__workouts-card workouts-card">
+  <router-link :to="{ path: '/workouts/'+workout.id}" class="workouts-content__workouts-card workouts-card">
     <div class="workouts-card__cover">
       <img :src="workout.image" alt="Image for workout" class="workouts-card__image">
     </div>
@@ -7,17 +7,17 @@
       <div class="workouts-card__flags">
         <p
           class="workouts-card__type"
-          :class="{ 'workouts-card__type--speed': workout.type==2, 'workouts-card__type--stamina': workout.type==3 }"
+          :class="{ 'workouts-card__type--speed': workout.type=='Скоростная', 'workouts-card__type--stamina': workout.type=='Выносливая' }"
         >
           {{workout.type}}
         </p>
-        <!-- <p
-          v-if="workout.rec"
+        <p
+          v-if="workout.id == 1"
           class="
           workouts-card__recomandate"
         >
           Рекомендуем
-        </p> -->
+        </p>
       </div>
       <h3 class="workouts-card__name">{{workout.title}}</h3>
       <p class="workouts-card__features">
@@ -36,11 +36,6 @@ export default {
       type: Object,
       default: null,
     },
-  },
-  data() {
-    return {
-      // workout: this.$route.query;
-    };
   },
 };
 </script>

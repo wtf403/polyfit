@@ -47,8 +47,8 @@ export default {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
-        console.log(1);
-        this.deleteWorkouts(this.workout.id);
+        await this.deleteWorkouts(this.workout.id);
+        this.$router.go(0);
       }
     },
   },
@@ -74,8 +74,9 @@ export default {
 
 
 .popup__text {
-  margin-bottom: 12px;
+  margin-bottom: 24px;
   font-size: 18px;
+  color:#6f645d;
 }
 
 

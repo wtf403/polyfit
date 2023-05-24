@@ -81,9 +81,9 @@ export default {
       file: '',
       radio: {
         difficulty: {
-          'легко': 'Легко',
-          'средне': 'Средне',
-          'сложно': 'Сложно',
+          'Легко': 'Легко',
+          'Средне': 'Средне',
+          'Сложно': 'Сложно',
         },
         type: {
           'Силовая': 'Силовая',
@@ -91,9 +91,9 @@ export default {
           'Выносливость': 'Выносливая',
         },
         gender: {
-          'муж': 'Мужской',
-          'жен': 'Женский',
-          'общая': 'Общий',
+          'Мужской': 'Мужской',
+          'Женский': 'Женский',
+          'Общий': 'Общий',
         },
       },
     };
@@ -124,16 +124,15 @@ export default {
       this.confirmation = '';
       const popupResult = await this.$refs.Popup.open();
       if (popupResult) {
-        // let obj = {
-        //   title: this.name,
-        //   description: this.desc,
-        //   calories: Number(this.cal),
-        //   type: this.type,
-        //   gender: this.gender,
-        //   image: this.file,
-        // };
-        console.log(this.workoutContent);
-        this.patchWorkouts(this.workoutContent, this.workout.id);
+        let obj = {
+          title: this.name,
+          // description: this.desc,
+          // calories: Number(this.cal),
+          // type: this.type,
+          // gender: this.gender,
+          // image: this.file,
+        };
+        this.patchWorkouts(obj, this.workout.id);
       }
     },
     newFile(e) {

@@ -19,16 +19,17 @@ const bgVideo = [
           class="login__logo"
           :srcset="require('@/assets/logo.svg') + ' 3x'"
         >
-        <form class="login__form" action="/profile" @submit="isAutorized">
-          <TheInput type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
-          <TheInput type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
+
+        <form class="login__form" action="#" @submit.prevent="login">
+          <p class="login__error">
+            {{$store.state.auth.authError === 'user with this email was not found'? 'Данный email неверный, проверьте введенные данные.' : ($store.state.auth.authError === 'incorrect password'?'Данный пароль неверный, проверьте введенные данные.':'')}}
+          </p>
+          <TheInput :class="{'input__error': $store.state.auth.authError === 'user with this email was not found'}" type="email" label="Email" @update:model-value="(newValue)=>(userEmail=newValue)" />
+          <TheInput :class="{'input__error': $store.state.auth.authError === 'incorrect password'}" type="password" label="Пароль" @update:model-value="(newValue)=>(userPassword=newValue)" />
           <TheCheckbox type="checkbox" label="Запомнить меня" @update:model-value="(newValue)=>(userSave=newValue)" />
-          <!-- <button type="submit" class="login__button">
+          <button type="submit" class="login__button">
             Войти
-          </button> -->
-          <router-link :to="(userEmail=='admin'&userPassword=='admin')?'/admin':'/profile'" class="login__button">
-            Войти
-          </router-link>
+          </button>
         </form>
         <p>
           Еще нет аккаунта?
@@ -46,6 +47,8 @@ const bgVideo = [
 import TheInput from '@/components/TheInput.vue';
 import TheCheckbox from '@/components/TheCheckbox.vue';
 
+import { mapActions } from 'vuex';
+
 export default {
   components: {
     TheInput,
@@ -60,8 +63,15 @@ export default {
     };
   },
   methods: {
-    isAutorized() {
-      return;
+    ...mapActions(['loginFetch']),
+    async login() {
+      let obj = {
+        email: this.userEmail,
+        password: this.userPassword,
+      };
+      await this.loginFetch(obj);
+      console.log(this.$store.state.auth.authError);
+      setTimeout(() => this.$store.state.auth.authError === null ? this.$router.push({ path: '/'}) : false, 100);
     },
   },
 };
@@ -180,5 +190,20 @@ export default {
 
 .login__link:hover{
   text-decoration: underline;
+}
+
+.login__error {
+  margin-bottom: 20px;
+  color: red;
+  font-size: 14px;
+}
+
+.input__error .input__base{
+  background-color: rgb(255, 249, 249);
+  border: 0.4px solid rgb(238, 60, 60);
+}
+
+.input__error .input__base:hover {
+  border: 0.4px solid rgb(246, 10, 10);
 }
 </style>

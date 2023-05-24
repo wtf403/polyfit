@@ -69,7 +69,6 @@
       </div>
       <div class="workout__actions">
         <router-link to="/player" class="workout__start">Начать тренировку</router-link>
-        <!-- <a to="/player" class="workout__start">Начать тренировку</a> -->
         <a href="#" class="workout__add-calendar">Добавить в календарь</a>
       </div>
     </div>
@@ -88,7 +87,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .workout__wrapper {
   display: flex;
   gap: 20px;
@@ -108,7 +107,7 @@ export default {
 
 @media screen and (max-width: 1080px) {
   .workout__cover{
-    max-width: 464px;
+    max-width: 50%;
   }
 }
 
@@ -135,8 +134,8 @@ export default {
 
 .workout__category {
   margin-bottom: 6px;
-  color: #00000099;
-  font-weight: 400;
+  color: #000000c8;
+  font-weight: 600;
   font-size: 14px;
   line-height: 1;
   text-transform: uppercase;
@@ -144,9 +143,10 @@ export default {
 
 .workout__text {
   margin-bottom: 12px;
+  color: #000000aa;
   font-weight: 400;
   font-size: 18px;
-  line-height: 1;
+  line-height: 1.2;
 }
 
 .workout__features-list {
@@ -164,7 +164,12 @@ export default {
   line-height: 1.1;
   text-transform: uppercase;
   background: #f66c1e;
+  opacity: 0.95;
   border-radius: 14px;
+  transition: all 150ms ease;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .workout__actions {
@@ -176,7 +181,7 @@ export default {
 }
 
 .workout__add-calendar {
-  padding: 16px 16px 14px;
+  padding: 14px 16px 14px;
   color: #f66c1e;
   font-weight: 500;
   font-size: 18px;
@@ -184,6 +189,11 @@ export default {
   text-transform: uppercase;
   background: #f66c1e29;
   border-radius: 14px;
+  border: 2px solid transparent;
+  transition: all 150ms ease;
+  &:hover {
+    border: 2px solid #f66c1e;
+  }
 }
 
 .workout__features-item {
@@ -195,19 +205,23 @@ export default {
   height: 132px;
   padding: 20px 40px;
   background: #f4f4f4;
+  border: 1px solid #d0d0d0;
   border-radius: 16px;
 }
 
 .workout__features-item--cal {
   background: #ffecec;
+  border: 1px solid #fccccc;
 }
 
 .workout__features-item--difficulty {
   background: #fff6e9;
+  border: 1px solid #ffe1b7;
 }
 
 .workout__features-item--time {
-  background: #d7f2f4;
+  background: #ddf6f8;
+  border: 1px solid #ace9ec;
 }
 
 

@@ -1,5 +1,5 @@
 <template>
-  <button class="exercises-content__exercises-card exercises-card" :class="{'exercises-card--mini': type=='mini', 'exercises-card--select': select==true}" @click="()=>select = !select">
+  <button class="exercises-content__exercises-card exercises-card" :class="{'exercises-card--mini': type=='mini', 'exercises-card--select': select==true}" @click="sendEx()">
     <img :src="exercise.media" alt="Image for exercise" class="exercises__image">
     <div class="exercises__info">
       <h4 class="exercises__name">
@@ -35,12 +35,19 @@ export default {
       select: false,
     };
   },
+  methods: {
+    sendEx() {
+      this.select = !this.select;
+      this.$emit('addEx', this.exercise);
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 
 .exercises-card {
+  position: relative;
   display: block;
   border: none;
   background: none;
@@ -50,16 +57,23 @@ export default {
 
 
   &--mini {
-    width: 180px;
-    height: 180px;
+    width: 200px;
+    height: 200px;
+    border: 2px solid transparent;
+    padding: 2px;
+
 
     & .exercises__info {
       padding: 6px 10px;
       min-height: 60px;
+      bottom: 2px;
+      width: 192px;
 
       & .exercises__name {
         font-size: 14px;
+        text-align: left;
         max-height: 100%;
+        color: rgba(255, 255, 255, 0.85);
       }
     }
     & .exercises__count {
@@ -70,15 +84,13 @@ export default {
 
   &--select {
     border: 2px solid #f66c1e;
-    border-radius: 10px;
-    padding: 4px;
+    border-radius: 12px;
+    padding: 2px;
 
 
     & .exercises__info {
-      padding: 6px 10px;
-      width: 168px;
-      min-height: 56px;
-      bottom: 4px;
+      min-height: 60px;
+      bottom: 2px;
     }
   }
 }
@@ -120,7 +132,7 @@ export default {
 .exercises__count {
   position: absolute;
   font-weight: 800;
-  padding: 8px 12px;
+  padding: 6px 10px;
   color: #f66c1e;
   font-weight: 500;
   font-size: 12px;

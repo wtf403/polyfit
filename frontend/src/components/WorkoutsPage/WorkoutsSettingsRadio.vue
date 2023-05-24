@@ -17,7 +17,7 @@ export default {
   props: ['radioContent'],
   data() {
     return {
-      radioSelected: 'all',
+      radioSelected: 'Все тренировки',
       radioActive: false,
     };
   },

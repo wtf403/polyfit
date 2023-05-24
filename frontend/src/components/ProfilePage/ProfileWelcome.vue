@@ -6,7 +6,7 @@
         (12<=hourse<18)?
           ['🌁', '🏙', '🌞', '🏞'][Math.floor(Math.random() * ['🌁', '🏙', '🌞', '🏞'].length)]+' Добрый день, ':
           (18<=hourse<24)?['🌉', '🌄', '🌃', '🏙' ][Math.floor(Math.random() * ['🌉', '🌄', '🌃', '🏙' ].length)]+' Добрый вечер, ':
-          ['🌙', '🌌', '🌠', '🌉', '🌃'][Math.floor(Math.random() * ['🌙', '🌌', '🌠', '🌉', '🌃'].length)]+' Доброй ночи, '}}{{name}}!
+          ['🌙', '🌌', '🌠', '🌉', '🌃'][Math.floor(Math.random() * ['🌙', '🌌', '🌠', '🌉', '🌃'].length)]+' Доброй ночи, '}}{{firstname}}!
     </p>
   </div>
 </template>
@@ -14,11 +14,14 @@
 <script>
 export default {
   name: 'ProfileWelcomeComponent',
-  props: ['name'],
+  props: ['firstname'],
   date() {
     return {
-      hours: new Date().getHours(),
+      hours: '',
     };
+  },
+  created() {
+    this.hourse = new Date().getHours();
   },
 };
 </script>
@@ -26,8 +29,7 @@ export default {
 <style scoped>
 
 .profile__welcome {
-  width: 100%;
-  margin-bottom: 36px;
+  margin-bottom: 8px;
 }
 
 .profile__welcome-text {
