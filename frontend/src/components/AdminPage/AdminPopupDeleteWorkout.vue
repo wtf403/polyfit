@@ -74,8 +74,9 @@ export default {
 
 
 .popup__text {
-  margin-bottom: 12px;
+  margin-bottom: 24px;
   font-size: 18px;
+  color:#6f645d;
 }
 
 

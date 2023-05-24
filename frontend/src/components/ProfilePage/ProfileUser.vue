@@ -53,6 +53,7 @@ export default {
 .profile__image {
   width: 220px;
   height: 220px;
+  border-radius: 8px;
 }
 
 .profile__about {

@@ -58,6 +58,7 @@ export default {
   },
   async mounted() {
     this.$store.dispatch('fetchWorkouts');
+    console.log(this.$store.state.workouts.workouts);
   },
   methods: {
     sortByType(list, type) {
@@ -69,7 +70,7 @@ export default {
       return list;
     },
     sortByTime(list, time) {
-      return list.filter(function(item) { return (item.time <= time[1]) & (item.time >= time[0]); });
+      return list.filter(function(item) { return (Number(item.time) <= time[1]) & (Number(item.time) >= time[0]); });
     },
     sortBySearch(list, text) {
       // return list.filter(function(item) { return item.difficulty === 'сложно'; });

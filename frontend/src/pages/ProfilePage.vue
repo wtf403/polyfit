@@ -372,14 +372,26 @@ export default {
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding-top: 120px;
+  padding: 100px 40px 40px 40px;
+}
+
+@media screen and (max-width: 1300px){
+  .profile__wrapper {
+    grid-template:
+      'welcome welcome welcome welcome' auto
+      'info info info info' auto
+      'purpose purpose purpose purpose' auto
+      'control control control pall' auto
+      'control control control pall' auto/1fr 1fr 1fr 1fr;
+  }
 }
 
 @media screen and (max-width: 1030px){
   .profile__wrapper {
     grid-template:
       'welcome welcome' auto
-      'info purpose' auto
+      'info info' auto
+      'purpose purpose' auto
       'pall pall' auto
       'control control' auto/1fr 1fr;
   }

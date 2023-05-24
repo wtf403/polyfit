@@ -29,7 +29,7 @@ export default {
 <style scoped>
 
 .profile__welcome {
-  margin-bottom: 36px;
+  margin-bottom: 8px;
 }
 
 .profile__welcome-text {

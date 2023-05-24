@@ -46,7 +46,7 @@
             <TheInput v-model="search" label="Поиск среди упражнений" @update:model-value="(newValue)=>(search=newValue)" />
             <ul class="popup__list-exercises">
               <li v-for="(item,index) in allExercises" :key="index" class="popup__item-exercises">
-                <TheExercise class="popup__object-exercises" :exercise="item" :check="true" type="mini" />
+                <TheExercise class="popup__object-exercises" :exercise="item" :check="true" type="mini" @addEx="addExercise" />
               </li>
             </ul>
           </div>
@@ -143,17 +143,21 @@ export default {
           title: this.title,
           description: this.cal === '' ? 'Обычная тренировка для обычных спортсменов.' : this.desc,
           calories: this.cal === '' ? 0 : Number(this.cal),
-          // difficulty: this.difficulty,
-          // type: this.type,
-          // time: this.time,
-          // gender: this.gender,
+          difficulty: this.difficulty,
+          type: this.type,
+          time: this.time,
+          gender: this.gender,
           // image: this.file,
-          // inventory: this.inventory,
-          // exercise: [],
+          inventory: this.inventory,
+          exercise: this.selectedExercises,
         };
 
         obj.title ? this.addWorkouts(obj) : console.log(0);
       }
+    },
+    addExercise(obj) {
+      let objectExists = this.selectedExercises.some(item => JSON.stringify(item) === JSON.stringify(obj));
+      !objectExists ? this.selectedExercises.push(obj) : this.selectedExercises = this.selectedExercises.filter(item => JSON.stringify(item) !== JSON.stringify(obj));
     },
     newFile(event) {
       // this.file = URL.createObjectURL(e.target.files[0]);
