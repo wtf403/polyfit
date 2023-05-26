@@ -38,7 +38,7 @@ const routes = [
   },
 
   {
-    path: '/player',
+    path: '/player/:id',
     component: WorkoutPlayerPage,
   },
 

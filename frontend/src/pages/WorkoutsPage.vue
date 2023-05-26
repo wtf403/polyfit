@@ -58,7 +58,6 @@ export default {
   },
   async mounted() {
     this.$store.dispatch('fetchWorkouts');
-    console.log(this.$store.state.workouts.workouts);
   },
   methods: {
     sortByType(list, type) {

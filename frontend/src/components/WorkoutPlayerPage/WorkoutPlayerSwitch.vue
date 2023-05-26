@@ -1,6 +1,5 @@
 <template>
   <div class="player__switch switch">
-    <img :src="require('@/assets/player-img-time.png')" alt="player-img-time" class="switch__img">
     <div class="switch__buttons">
       <p class="switch__button">
         Предыдущее упражнение
@@ -21,6 +20,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 100px;
+  margin-top: 400px;
   padding-top: 48px;
 }
 

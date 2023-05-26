@@ -3,7 +3,7 @@
     <div class="info__card card card--gray">
       <img :src="require('@/assets/player-icon-type.svg')" alt="player-icon-type" class="card__img">
       <p class="card__title">
-        силовая
+        {{type}}
       </p>
       <p class="card__subtitle">
         тренировка
@@ -12,7 +12,7 @@
     <div class="info__card card card--red">
       <img :src="require('@/assets/player-icon-burning.svg')" alt="player-icon-burning" class="card__img">
       <p class="card__title">
-        140
+        {{calories}}
       </p>
       <p class="card__subtitle">
         Ккал
@@ -21,7 +21,7 @@
     <div class="info__card card card--yellow">
       <img :src="require('@/assets/player-icon-difficult.svg')" alt="player-icon-difficult" class="card__img">
       <p class="card__title">
-        легкий
+        {{difficulty}}
       </p>
       <p class="card__subtitle">
         уровень
@@ -30,7 +30,7 @@
     <div class="info__card card card--blue">
       <img :src="require('@/assets/player-icon-time.svg')" alt="player-icon-time" class="card__img">
       <p class="card__title">
-        ~25
+        ~{{time}}
       </p>
       <p class="card__subtitle">
         МИНУТ
@@ -41,7 +41,24 @@
 
 <script>
 export default {
-
+  props: {
+    calories: {
+      type: Number,
+      default: 220,
+    },
+    type: {
+      type: String,
+      default: 'Силовая',
+    },
+    difficulty: {
+      type: String,
+      default: 'Легкий',
+    },
+    time: {
+      type: Number,
+      default: 25,
+    },
+  },
 };
 </script>
 
@@ -57,6 +74,7 @@ export default {
 .card__title {
   font-weight: 500;
   font-size: 22px;
+  text-transform: lowercase;
 }
 
 .card__subtitle {
@@ -68,8 +86,11 @@ export default {
 .card {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  padding: 20px 40px;
+  width: 160px;
+  height: 160px;
+  padding: 20px;
 }
 
 .card__img {
