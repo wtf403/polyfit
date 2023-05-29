@@ -66,8 +66,11 @@ export default {
 .info {
   z-index: 1;
   display: flex;
-  flex-direction: column;
-  row-gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 0 auto;
   padding-top: 126px;
 }
 

@@ -1,21 +1,31 @@
 <template>
-  <button class="exercises-content__exercises-card exercises-card" :class="{'exercises-card--active': active}" @click="sendEx()">
+  <button class="exercises-content__exercises-card exercises-card" :class="{'exercises-card--active': active, 'exercises-card--none': exercise.name == ''}" @click="sendID">
     <img :src="exercise.media" alt="Image for exercise" class="exercises__image">
     <div class="exercises__info">
+      <div class="exercises__details">
+        <p class="exercises__count">
+          {{exercise.calories}} Кал.
+        </p>
+      </div>
       <h4 class="exercises__name">
         {{exercise.title}}
       </h4>
+      <div class="exercises__details">
+        <p class="exercises__count">
+          {{exercise.amount + (!exercise.show_timer?' повтор.':' сек.')}}
+        </p>
+        <p v-if="active" class="exercises__count">
+          {{exercise.time}} сек.
+        </p>
+      </div>
     </div>
-    <p class="exercises__count">
-      {{exercise.amount + (!exercise.show_timer?' повторений':' секунд')}}
-    </p>
   </button>
 </template>
 
 <script>
 
 export default {
-  name: 'ExersicesItemComponent',
+  name: 'ExersicePlayerItemComponent',
   props: {
     exercise: {
       type: Object,
@@ -25,16 +35,19 @@ export default {
       type: Boolean,
       default: false,
     },
-  },
-  data() {
-    return {
-      select: false,
-    };
+    next: {
+      type: Boolean,
+      default: false,
+    },
+    back: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
-    sendEx() {
-      this.select = !this.select;
-      // this.$emit('addEx', this.exercise);
+    sendID() {
+      console.log(1);
+      this.next ? this.$emit('changid', 1) : this.$emit('changid', -1);
     },
   },
 };
@@ -44,17 +57,33 @@ export default {
 
 .exercises-card {
   position: relative;
+  cursor: pointer;
   display: block;
   border: none;
   background: none;
   position: relative;
-  width: 440px;
-  height: 440px;
-  opacity: 0.4;
+  width: 320px;
+  height: 320px;
   backdrop-filter: blur(6px);
 
+  &--none {
+    visibility: hidden;
+  }
+
   &--active {
-    opacity: 1;
+    cursor: default;
+    width: 480px;
+    height: 480px;
+
+    & .exercises__info {
+      background-color: #000000de;
+      display: grid;
+      grid-template-columns: 20% 60% 20%;
+      height: auto;
+      border-radius: 14px;
+      position: relative;
+      flex-direction: row;
+    }
   }
 
     & .exercises__count {
@@ -66,48 +95,49 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 14px;
 }
 
 .exercises__info {
   position: absolute;
   padding: 12px 20px;
-  background-color: #00000080;
-  backdrop-filter: blur(4px);
-  border-radius: 0 0 8px 8px;
+  background-color: #00000099;
+  backdrop-filter: blur(6px);
   width: 100%;
   bottom: 0;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 12px;
+  align-items: center;
+  column-gap: 12px;
   min-height: 80px;
   justify-content: center;
+  height: 100%;
+  border-radius: 14px;
+  flex-direction: column;
+
+}
+
+.exercises__details {
+  border: 1.4 solid #f66c1e;
+  padding: 4px;
+  border-radius: 8px;
+  font-size: 16px;
 }
 
 .exercises__name {
-  display: -webkit-box;
-  max-height: 40px;
-  overflow: hidden;
-  font-weight: 400;
-  font-size: 18px;
+  font-weight: 500;
+  font-size: 20px;
   color: white;
+  padding: 6px;
   line-height: 1.2;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  text-align: center;
 }
 
 .exercises__count {
-  position: absolute;
   font-weight: 800;
   padding: 6px 10px;
   color: #f66c1e;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1;
-  background-color: #000000AA;
-  border-radius: 8px;
-  top: 5%;
-  right: 8px;
 }
 </style>

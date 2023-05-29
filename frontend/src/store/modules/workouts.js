@@ -3,14 +3,14 @@ import axios from 'axios';
 export default {
   actions: {
     async fetchWorkouts({ commit }) {
-      const res = await fetch('https://polyfit.live/api/workouts');
+      const res = await fetch('https://polyfit.live/api/workouts/');
       let workouts = await res.json();
       // const res = await axios.get('https://polyfit.live/api/workouts', {mode: 'no-cors'});
       // let workouts = res.data;
       commit('updateWorkouts', workouts);
     },
     async getWorkoutsByID({ commit }, id) {
-      const res = await fetch('https://polyfit.live/api/workouts/' + id);
+      const res = await fetch('https://polyfit.live/api/workouts/' + id + '/');
       let workout = await res.json();
       commit('selectWorkout', workout);
     },

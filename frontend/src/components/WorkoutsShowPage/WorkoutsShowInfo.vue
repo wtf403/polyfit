@@ -68,7 +68,7 @@
         </p>
       </div>
       <div class="workout__actions">
-        <BaseButton type="link" :to="'/player/'+workout.id" fill>
+        <BaseButton type="link" :to="'/player/'+workout.id" fill @click="$router.go(0);">
           Начать тренировку
         </BaseButton>
         <BaseButton type="link" :to="'/calendar'" light>
