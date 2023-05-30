@@ -1,6 +1,6 @@
 
 <template>
-  <div class="animate__animated animate__fadeIn">
+  <div class="workouts__wrapper animate__animated animate__fadeIn">
     <section class="workouts-settings">
       <WorkoutsSettings @change-sort="ChangeSort" @change-type="ChangeType" @change-range="ChangeTime" @change-difficulty="ChangeDifficulty" @change-search="ChangeSearch" />
     </section>
@@ -72,7 +72,7 @@ export default {
       return list.filter(function(item) { return (Number(item.time) <= time[1]) & (Number(item.time) >= time[0]); });
     },
     sortBySearch(list, text) {
-      // return list.filter(function(item) { return item.difficulty === 'сложно'; });
+    // return list.filter(function(item) { return item.difficulty === 'сложно'; });
       return list.filter(function(item) {
         return (item.title.toLowerCase().includes(text.toLowerCase()) || item.description.toLowerCase().includes(text.toLowerCase()));
       });
@@ -96,19 +96,25 @@ export default {
 };
 </script>
 
-<style scoped>
-.workouts-content__wrapper {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 24px 40px 60px;
-}
+  <style scoped>
+  .workouts__wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 40px 40px 70px;
+  }
 
-.workouts-content__list {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  list-style: none;
-}
-</style>
+  .workouts-content__wrapper {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 80px 40px 70px;
+  }
+
+  .workouts-content__list {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    list-style: none;
+  }
+  </style>

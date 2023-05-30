@@ -61,11 +61,17 @@ $primary: #f66c1e;
 
 .header {
   position: fixed;
+  max-width: 2200px;
   z-index: 5;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  top: 10px;
+  border-radius: 28px;
+  padding: 3px 0;
+  width: calc(100% - 20px);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  background: rgba(255, 255, 255);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05), 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .header__link-logo {
@@ -88,24 +94,48 @@ $primary: #f66c1e;
 }
 
 .nav__link {
+  position: relative;
   padding-bottom: 2px;
-  color: #6e6d7a;
-  font-size: 14px;
+  color: #000000;
+  font-size: 15px;
   text-transform: uppercase;
   border: none;
-  font-weight: 500;
+  font-weight: 400;
   -webkit-transition: color 200ms ease;
-  transition: color 200ms ease;
+  transition: all 200ms ease;
+  opacity: 0.96;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 1.4px;
+    display: block;
+    transition: all 0.2s ease-in-out;
+    bottom: -2px;
+    border-radius: 4px;
+  }
   &:hover {
     color: black;
-  }
+    opacity: 1;
+      &::after {
+        width: 100%;
+        height: 1.4px;
+        background-color: #000000;
+      }
+    }
 }
 
 .nav__item--active .nav__link{
-  color: black;
+  color: $primary;
   border-radius: 2px;
   opacity: 1;
+  &::after {
+        width: 100%;
+        height: 1.4px;
+        background-color: $primary;;
+      }
 }
+
 
 .header__nav {
   position: absolute;
@@ -123,36 +153,54 @@ $primary: #f66c1e;
 
 .auth__reg {
   padding-top: 2px;
-  color: #6e6d7a;
-  font-weight: 500;
-  font-size: 14px;
+  position: relative;
+  color: #000;
+  font-weight: 400;
+  font-size: 15px;
   text-transform: uppercase;
-  transition: color 200ms ease-in-out;
-  opacity: 0.9;
+  opacity: 0.96;
+  &:after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 1.4px;
+    display: block;
+    transition: all 0.2s ease-in-out;
+    bottom: -2px;
+    border-radius: 4px;
+  }
   &:hover {
-    color: black;
     opacity: 1;
+    &::after {
+        width: 100%;
+        height: 1.4px;
+        background-color: black;
+      }
   }
   &--active {
-    color: black;
-    font-weight: 500;
+    color: $primary;
+    opacity: 1;
+    &::after {
+        width: 100%;
+        height: 1.4px;
+        background-color: $primary;
+      }
   }
 }
 
 .auth__exit {
   padding-top: 2px;
-  color: #393939;
-  font-weight: 500;
-  font-size: 14px;
+  color: #000;
+  font-weight: 400;
+  font-size: 15px;
   text-transform: uppercase;
   transition: color 200ms ease-in-out;
-  opacity: 0.9;
   background: none;
   cursor: pointer;
   border: none;
 
   &:hover {
-    color: rgb(24, 24, 24);
+    color: rgb(0, 0, 0);
     opacity: 1;
   }
 }
@@ -161,7 +209,7 @@ $primary: #f66c1e;
   padding: 6px 14px 5px;
   color: white;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 15px;
   text-transform: uppercase;
   background-color: $primary;
   border-radius: 10px;

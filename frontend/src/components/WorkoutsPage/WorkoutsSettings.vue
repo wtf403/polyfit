@@ -39,18 +39,18 @@
             </p>
             <DropdownComponent :dropdown-content="dropdowns.gender" />
           </div>
-          <div class="filters__dropdowm dropdown">
+          <!-- <div class="filters__dropdowm dropdown">
             <p class="dropdown__category">
               Инвентарь
             </p>
             <DropdownComponent :dropdown-content="dropdowns.inventory" />
-          </div>
-          <div class="filters__dropdowm dropdown">
+          </div> -->
+          <!-- <div class="filters__dropdowm dropdown">
             <p class="dropdown__category">
               Группа мышц
             </p>
             <DropdownComponent :dropdown-content="dropdowns.muscles" />
-          </div>
+          </div> -->
           <div class="filters__dropdowm dropdown">
             <p class="dropdown__category">
               Сложность
