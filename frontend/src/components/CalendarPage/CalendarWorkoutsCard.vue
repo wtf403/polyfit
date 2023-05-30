@@ -7,7 +7,7 @@
       </p>
       <div class="mini-workouts-card__text">
         <h4 class="mini-workouts-card__name" :title="workout.name">
-          {{workout.name}}
+          {{workout.title}}
         </h4>
       </div>
       <p class="mini-workouts-card__features">

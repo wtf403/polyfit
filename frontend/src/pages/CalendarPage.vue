@@ -2,12 +2,25 @@
   <section class="calendar">
     <div class="calendar__wrapper">
       <div class="calendar__head">
-        <p class="calendar__mode" :class="editMode?'calendar__mode--edit':'calendar__mode--simple'">
-          {{!editMode?'Режим просмотра':'Режим редактирования'}}
-        </p>
-        <button class="calendar__button calendar__change-mode" :class="!editMode?'calendar__button--edit':'calendar__button--save'" @click="editMode = !editMode">
-          {{!editMode?'Изменить':'Сохранить'}}
-        </button>
+        <div class="calendar__actions-mode">
+          <p class="calendar__mode" :class="editMode?'calendar__mode--edit':'calendar__mode--simple'">
+            {{!editMode?'Режим просмотра':'Режим редактирования'}}
+          </p>
+          <button class="calendar__button calendar__change-mode" :class="!editMode?'calendar__button--edit':'calendar__button--save'" @click="editMode = !editMode">
+            {{!editMode?'Изменить':'Сохранить'}}
+          </button>
+        </div>
+        <div class="calendar__actions-mode">
+          <button class="calendar__button calendar__button--back" @click="todayMonth = Math.abs((todayMonth - 1) % 13)">
+            Предыдущий
+          </button>
+          <p class="calendar__month">
+            {{months[todayMonth]}}
+          </p>
+          <button class="calendar__button calendar__button--next" @click="todayMonth = Math.abs((todayMonth + 1) % 13)">
+            Следующий
+          </button>
+        </div>
       </div>
       <div class="calendar__content">
         <ul class="calendar__weekdays weekdays">
@@ -65,11 +78,11 @@ export default {
     return {
       editMode: false,
       selectDay: {},
-      todayMonth: new Date().getMonth(),
+      todayMonth: new Date().getMonth() + 1,
       todayWeekday: new Date().getDay(),
       todayDay: new Date().getDate(),
       weekdays: ['понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', 'воскресение'],
-      months: ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'],
+      months: ['', 'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'],
       calendar: {
         2: [
           {
@@ -171,28 +184,30 @@ export default {
       },
     };
   },
-
   computed: {
     allWorkouts() {
       return this.$store.getters.allWorkouts;
     },
+    allSchedule() {
+      return this.$store.getters.allSchedule;
+    },
     getCalendar() {
       let date = new Date();
-      let month = date.getMonth();
+      let month = this.todayMonth;
       let year = date.getFullYear();
-      let daysInMonth = new Date(year, month + 1, 0).getDate();
+      let daysInMonth = new Date(year, month, 0).getDate();
       let daysObj = {};
       for (let i = 1; i <= daysInMonth; i++) {
-        let dayOfWeek = new Date(year, month, i).getDay();
+        let dayOfWeek = new Date(year, month - 1, i).getDay();
         daysObj[(month * 10).toString() + (i).toString()] = {
           active: true,
           weekday: dayOfWeek !== 0 ? this.weekdays[dayOfWeek - 1] : 'воскресение',
-          date: new Date(year, month, i),
+          date: new Date(year, month - 1, i),
           workouts: this.calendar[i] ? this.calendar[i] : [ ],
         };
       }
-      for (let i = 1; i < new Date(year, month, 1).getDay(); i++) {
-        let dayOfWeek = new Date(year, month, i).getDay();
+      for (let i = 1; i < new Date(year, month - 1, 1).getDay(); i++) {
+        let dayOfWeek = new Date(year, month - 1, i).getDay();
         let oldObj = {
           active: false,
           weekday: dayOfWeek !== 0 ? this.weekdays[dayOfWeek - 1] : 'воскресение',
@@ -201,11 +216,18 @@ export default {
         let daysInLastMonth = new Date(year, month, 0).getDate();
         daysObj = Object.assign({[Number((month - 1).toString() + (daysInLastMonth - i + 1).toString())]: oldObj}, daysObj);
       }
-
+      for (let i = 0; i < this.allSchedule.length; i++) {
+        let workoutDate = this.allSchedule[i].date.split('-');
+        let workoutID = (workoutDate[1] * 10).toString() + (workoutDate[2]).toString();
+        let workoutItem = daysObj[workoutID];
+        workoutItem ? daysObj[workoutID].workouts = (this.allSchedule[i].workout) : false;
+      }
       return daysObj;
     },
   },
-
+  async mounted() {
+    this.$store.dispatch('fetchSchedule');
+  },
   methods: {
     addWorkout(obj) {
       this.selectDay = obj;
@@ -227,10 +249,16 @@ $speed: #1070FF;
 .calendar__wrapper {
   max-width: 1440px;
   margin: 0 auto;
-  padding: 64px 40px 60px;
+  padding: 80px 40px 60px;
 }
 
 .calendar__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.calendar__actions-mode {
   display: flex;
   padding: 4px 0 8px;
   gap: 8px;
@@ -366,7 +394,7 @@ $speed: #1070FF;
   }
 }
 
-.calendar__mode {
+.calendar__mode, .calendar__month {
   min-width: 160px;
   font-size: 14px;
   color: black;
@@ -385,6 +413,14 @@ $speed: #1070FF;
     color: #58c2a9;
     border: 1px solid #58c2a9;
   }
+}
+
+.calendar__month {
+  min-width: 100px;
+  width: 100%;
+  background-color: #e0fbf6;
+  color: #58c2a9;
+  border: 1px solid #58c2a9;
 }
 
 .calendar__workouts-object {

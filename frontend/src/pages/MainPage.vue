@@ -100,7 +100,6 @@ export default {
 }
 
 .hero {
-  padding-top: 52px;
   background-image: url('../assets/homeCover.webp');
   background-position-x: center;
   background-repeat: no-repeat;
@@ -109,12 +108,15 @@ export default {
 
 .hero__info {
   @include wrapper;
+  position: absolute;
+  left: 40px;
+  bottom: 40px;
 }
 .hero__wrapper {
   width: 100%;
   background: linear-gradient(40deg, #f76e1e69 0%, #f76e1e2b 30%, #f76e1e10 45%, #f76e1e00 100%);
-  padding: calc(100vh - 52px - 240px) 40px 40px 60px;
-  height: calc(100vh - 52px);
+  height: calc(100vh);
+  position: relative;
 }
 
 .hero__title {

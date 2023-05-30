@@ -68,16 +68,23 @@
         </p>
       </div>
       <div class="workout__actions">
-        <router-link to="/player" class="workout__start">Начать тренировку</router-link>
-        <a href="#" class="workout__add-calendar">Добавить в календарь</a>
+        <BaseButton type="link" :to="'/player/'+workout.id" fill @click="$router.go(0);">
+          Начать тренировку
+        </BaseButton>
+        <BaseButton type="link" :to="'/calendar'" light>
+          Добавить в календарь
+        </BaseButton>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BaseButton from '../BaseButton.vue';
+
 export default {
   name: 'WorkoutInfoComponent',
+  components: { BaseButton },
   props: {
     workout: {
       type: Object,
