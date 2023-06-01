@@ -1,6 +1,10 @@
 <template>
   <div class="player__switch switch">
-    <img :src="require('@/assets/player-img-time.png')" alt="player-img-time" class="switch__img">
+    <img
+      :src="require('@/assets/player-img-time.png')"
+      alt="player-img-time"
+      class="switch__img"
+    >
     <div class="switch__buttons">
       <p class="switch__button">
         Предыдущее упражнение
@@ -59,4 +63,33 @@
   background: rgba(16, 112, 255, 0.16);
 }
 
+@media (max-width: 1024px) {
+  .switch__buttons {
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+  }
+  .switch {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .switch__img {
+    width: 100px;
+  }
+
+  .switch__button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 120px;
+    margin: auto;
+    padding: 13px 0;
+    font-weight: 500;
+    font-size: 13px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
 </style>

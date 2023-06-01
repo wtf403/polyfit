@@ -52,6 +52,7 @@ export default {
   flex-direction: column;
   row-gap: 20px;
   padding-top: 126px;
+  margin-bottom: 126px;
 }
 
 .card__title {
@@ -94,5 +95,19 @@ export default {
 .card--blue {
   background-color: #d7f2f4;
   border-radius: 16px;
+}
+
+
+
+@media (max-width: 1024px) {
+  .info {
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.info__card {
+  width: 15%;
+}
+
 }
 </style>

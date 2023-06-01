@@ -2,9 +2,12 @@
   <div class="player">
     <div class="player__wrapper wrapper">
       <div class="player__content">
-        <WorkoutPlayerInfo />
+        <WorkoutPlayerInfo class=".WorkoutPlayerInfo" />
+        <div class="player__img-wrapper">
+          <img :src="require('@/assets/player-img.png')" alt="player-img" class="player__img">
+        </div>
         <WorkoutPlayerSwitch />
-        <img :src="require('@/assets/player-img.png')" alt="player-img" class="player__img">
+        <!-- <img :src="require('@/assets/player-img.png')" alt="player-img" class="player__img"> -->
       </div>
     </div>
   </div>
@@ -32,12 +35,24 @@ export default {
   flex-direction: row;
   justify-content: space-between;
   padding: 0 40px;
-}
 
+}
+.player__img-wrapper{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
 .player__img {
-  position: absolute;
-  z-index: 0;
+
+  max-width: 100%;
 }
 
+@media (max-width: 1024px) {
+  .player__content {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+}
 
 </style>
